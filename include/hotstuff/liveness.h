@@ -318,7 +318,7 @@ class PMRoundRobinProposer: virtual public PaceMaker {
         reg_receive_proposal();
         prop_blk.clear();
         rotating = true;
-        proposer = (proposer + 1) % hsc->get_config().nreplicas;
+        proposer = (proposer + 1) % hsc->get_config().nreplicas(); //!!!
         HOTSTUFF_LOG_PROTO("Pacemaker: rotate to %d", proposer);
         pm_qc_finish.reject();
         pm_wait_propose.reject();

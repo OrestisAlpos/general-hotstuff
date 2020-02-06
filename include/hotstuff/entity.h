@@ -29,6 +29,7 @@
 #include "hotstuff/type.h"
 #include "hotstuff/util.h"
 #include "hotstuff/crypto.h"
+#include "hotstuff/quorums.h"
 
 namespace hotstuff {
 
@@ -58,16 +59,20 @@ struct ReplicaInfo {
 
 class ReplicaConfig {
     std::unordered_map<ReplicaID, ReplicaInfo> replica_map;
+    hotstuff::quorums::Msp accessStructure;
 
     public:
-    size_t nreplicas;
-    size_t nmajority;
+    //size_t nreplicas;
+    //size_t nmajority;
+    
 
-    ReplicaConfig(): nreplicas(0), nmajority(0) {}
+    ReplicaConfig(){}; //nreplicas(0), nmajority(0) {}
 
-    void add_replica(ReplicaID rid, const ReplicaInfo &info) {
+    void add_replica(ReplicaID rid, const ReplicaInfo &info) { //!!!(8A)
         replica_map.insert(std::make_pair(rid, info));
-        nreplicas++;
+        PubKeySecp256k1 pubKey = static_cast<const PubKeySecp256k1 &>(*(info.pubkey));
+        HOTSTUFF_LOG_INFO(">> Added Replica with ID: %d and Pub Key: %s", rid, std::string(pubKey).c_str());
+        //nreplicas++;
     }
 
     const ReplicaInfo &get_info(ReplicaID rid) const {
@@ -84,6 +89,21 @@ class ReplicaConfig {
 
     const salticidae::NetAddr &get_addr(ReplicaID rid) const {
         return get_info(rid).addr;
+    }
+
+    void initializeAccessStructure() {
+        hotstuff::quorums::AccessStructureParser parser;
+        accessStructure = parser.parse();
+        HOTSTUFF_LOG_INFO("** Access Structure Initialization finished. The parsed MSP is: *");
+        HOTSTUFF_LOG_INFO(std::string(accessStructure).c_str());
+    }
+
+    bool isAuthorizedGroup(std::unordered_set<ReplicaID> reps) const{
+        return true;
+    }
+
+    int nreplicas() const{
+        return accessStructure.M.size();
     }
 };
 

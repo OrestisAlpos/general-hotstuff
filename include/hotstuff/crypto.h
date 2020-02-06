@@ -213,6 +213,11 @@ class PubKeySecp256k1: public PubKey {
     PubKeySecp256k1 *clone() override {
         return new PubKeySecp256k1(*this);
     }
+
+     operator std::string () const {
+        std::string s = to_hex();
+        return s;
+    }
 };
 
 class PrivKeySecp256k1: public PrivKey {

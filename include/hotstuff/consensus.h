@@ -80,7 +80,7 @@ class HotStuffCore {
 
     /** Call to initialize the protocol, should be called once before all other
      * functions. */
-    void on_init(uint32_t nfaulty);
+    void on_init();
 
     /* TODO: better name for "delivery" ? */
     /** Call to inform the state machine that a block is ready to be handled.

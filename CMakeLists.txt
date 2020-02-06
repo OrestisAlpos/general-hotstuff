@@ -46,6 +46,7 @@ add_dependencies(secp256k1 libsecp256k1)
 
 include_directories(./)
 include_directories(include)
+include_directories(nlohmann_json/single_include)
 add_library(hotstuff
     OBJECT
     src/util.cpp
@@ -54,6 +55,7 @@ add_library(hotstuff
     src/entity.cpp
     src/consensus.cpp
     src/hotstuff.cpp
+    src/quorums.cpp
     )
 
 option(BUILD_SHARED "build shared library." OFF)
