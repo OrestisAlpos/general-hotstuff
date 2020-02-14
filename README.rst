@@ -59,7 +59,10 @@ section may be incomplete and subject to changes.
     git submodule update --init --recursive
 
     # ensure openssl and libevent are installed on your machine
-    cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED=ON -DHOTSTUFF_PROTO_LOG=ON
+    # ensure GMP and NTL are installed on your machine. 
+    https://shoup.net/ntl/doc/tour-gmp.html 
+    https://shoup.net/ntl/doc/tour-unix.html
+    #cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED=OFF -DHOTSTUFF_PROTO_LOG=ON 
     make
 
     # start 4 demo replicas with scripts/run_demo.sh
