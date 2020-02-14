@@ -62,17 +62,17 @@ class ReplicaConfig {
     hotstuff::quorums::Msp accessStructure;
 
     public:
-    //size_t nreplicas;
+    size_t nreplicas;
     //size_t nmajority;
     
 
-    ReplicaConfig(){}; //nreplicas(0), nmajority(0) {}
+    ReplicaConfig(): nreplicas(0){}; //, nmajority(0) {}
 
     void add_replica(ReplicaID rid, const ReplicaInfo &info) { //!!!(8A)
         replica_map.insert(std::make_pair(rid, info));
         PubKeySecp256k1 pubKey = static_cast<const PubKeySecp256k1 &>(*(info.pubkey));
         HOTSTUFF_LOG_INFO(">> Added Replica with ID: %d and Pub Key: %s", rid, std::string(pubKey).c_str());
-        //nreplicas++;
+        nreplicas++;
     }
 
     const ReplicaInfo &get_info(ReplicaID rid) const {
@@ -99,11 +99,7 @@ class ReplicaConfig {
     }
 
     bool isAuthorizedGroup(std::unordered_set<ReplicaID> reps) const{
-        return true;
-    }
-
-    int nreplicas() const{
-        return accessStructure.M.size();
+        return accessStructure.isAuthorisedGroup(reps);
     }
 };
 
