@@ -7,14 +7,35 @@
 #include "hotstuff/util.h"
 
 using json = nlohmann::json;
+using namespace NTL;
 
 namespace hotstuff::quorums {
 
-void to_json(json& j, const Theta& t) {
+//Operators and functions overload for type hotstuff::quorums::Theta
+std::ostream& operator<<(std::ostream& os, const Theta& t){   
+    os << "[";
+    os << "Threshold: " << t.threshold << " Elements: ";
+    for (auto it = t.elements.begin(); it != t.elements.end(); ++it)
+        os << *it << ", "; 
+    if (t.nestedElements.size() > 0){
+        for (auto it = t.nestedElements.begin(); it != t.nestedElements.end(); ++it)
+            os << *it << ", ";
+    }
+    os << "]";    
+    return os;
+};
+
+bool operator==(const Theta& lhs, const Theta& rhs){
+    return (lhs.threshold == rhs.threshold &&
+            lhs.elements == rhs.elements &&
+            lhs.nestedElements == rhs.nestedElements);
+};
+
+void to_json(json& j, const Theta& t){
     throw std::runtime_error("");
 }
 
-void from_json(const json& j, Theta& t) {
+void from_json(const json& j, Theta& t){
     j.at("select").get_to(t.threshold);
     auto j2 = j.at("out-of");
     for (json::iterator it = j2.begin(); it != j2.end(); ++it) {
@@ -30,34 +51,40 @@ void from_json(const json& j, Theta& t) {
         }  
     }
 }
- 
-std::ostream& operator<<(std::ostream& os, const Theta& t){   
-    os << "[";
-    os << "Threshold: " << t.threshold << " Elements: ";
-    for (auto it = t.elements.begin(); it != t.elements.end(); ++it)
-        os << *it << ", "; 
-    if (t.nestedElements.size() > 0){
-        for (auto it = t.nestedElements.begin(); it != t.nestedElements.end(); ++it)
-            os << *it << ", ";
-    }
-    os << "]";    
-    return os;
-};
- 
-std::vector< std::vector<int> > hotstuff::quorums::AccessStructureParser::getVandermonde(const Theta &t){
+
+
+//Json Parser class implemementation
+hotstuff::quorums::Theta hotstuff::quorums::JsonParser::parse_IdBased(){
+   std::ifstream infile("quorums.json");
+    json j;
+    infile >> j;
+    return j.get<Theta>();
+
+}
+
+hotstuff::quorums::Theta hotstuff::quorums::JsonParser::parse_IdBased(const std::string& conf){
+    json j = json::parse(conf);
+    return j.get<Theta>();
+}
+
+
+//MspCreator class implementation
+std::vector< std::vector<int> > hotstuff::quorums::MspCreator::getVandermonde(const Theta &t){
+    return getVandermonde(t.threshold, t.elements.size() + t.nestedElements.size());
+}
+
+std::vector< std::vector<int> > hotstuff::quorums::MspCreator::getVandermonde(int threshold, int numPoints){
     std::vector< std::vector<int> > v;
-    int numPoints = t.elements.size() + t.nestedElements.size();
     for (int i = 1; i <= numPoints; i++) {
         std::vector<int> row;
-        for (int power = 0; power < t.threshold; power++)
+        for (int power = 0; power < threshold; power++)
             row.push_back(pow(i, power));
         v.push_back(row);  
     }
-    return v;    
+    return v; 
 }
 
-//insertion of matrix M2 (2D, described by t) in the row of matrix M (2D) specified by the index r, with r in [0, m1-1]
-void hotstuff::quorums::AccessStructureParser::performInsertion(
+void hotstuff::quorums::MspCreator::performInsertion(
         std::vector< std::vector<int> > &M1, // m1 x d1
         std::vector< std::vector<int> > M2,  // m2 x d2
         const int r){
@@ -96,76 +123,68 @@ void hotstuff::quorums::AccessStructureParser::performInsertion(
     
 }
 
-//insertion of access structure t in the row of matrix M (2D) specified by the index r, with r in [0, m1-1]
-void hotstuff::quorums::AccessStructureParser::insertNextTheta(Msp &msp, int &insertionIndex, const Theta &t){
+void hotstuff::quorums::MspCreator::insertNextTheta(std::vector<std::vector<int> > &M, 
+                                                               std::vector<hotstuff::ReplicaID> &L,
+                                                               int &insertionIndex, 
+                                                               const Theta &t){
     std::vector< std::vector<int> > M2 = getVandermonde(t);
-    performInsertion(msp.M, M2, insertionIndex);
+    performInsertion(M, M2, insertionIndex);
     for (auto it = t.elements.begin(); it != t.elements.end(); ++it){
-        msp.L.push_back(*it);
+        L.push_back(*it);
     }
     insertionIndex += t.elements.size();
     for (auto it = t.nestedElements.begin(); it != t.nestedElements.end(); ++it) {
-        insertNextTheta(msp, insertionIndex, (*it));
+        insertNextTheta(M, L, insertionIndex, (*it));
     }
 }
 
-Msp hotstuff::quorums::AccessStructureParser::getLcwMsp(const Theta &t){
-    Msp msp;
-    msp.M = {{1}}; 
+Msp hotstuff::quorums::MspCreator::createWithLcwAlgorithm(const Theta &t){
+    std::vector<std::vector<int> > M = {{1}};
+    std::vector<hotstuff::ReplicaID> L;
     int insertionIndex = 0;
-    insertNextTheta(msp, insertionIndex, t);
+    insertNextTheta(M, L, insertionIndex, t);
+    Msp msp;
+    msp.M.SetDims(M.size(), M[0].size());
+    for (auto i = 0; i < M.size(); i++)
+        for (auto j = 0; j < M[0].size(); j++)
+            msp.M[i][j] = ZZ_p(M[i][j]);
+    msp.L = L;
     return msp;
 }
 
-Msp hotstuff::quorums::AccessStructureParser::parse(){
-    std::ifstream infile("quorums.json");
-    json j;
-    infile >> j;
-    Theta t;
-    j.get_to<Theta>(t);
-    return getLcwMsp(t);
+bool hotstuff::quorums::Msp::isAuthorisedGroup(std::unordered_set<ReplicaID> reps) const{
+    mat_ZZ_p Ma = getRowsOwnedByGroup(reps);
+    mat_ZZ_p Ma_T = NTL::transpose(Ma);
+    mat_ZZ_p Ma_T_augm = getAugmentedMatrix(Ma_T, e1());
+    int deg_Ma_T = NTL::gauss(Ma_T);
+    int deg_Ma_T_augm = NTL::gauss(Ma_T_augm);
+    return deg_Ma_T == deg_Ma_T_augm;
+}
+
+NTL::mat_ZZ_p hotstuff::quorums::Msp::getAugmentedMatrix(NTL::mat_ZZ_p coefMatrix, NTL::vec_ZZ_p constMatrix) const{
+    mat_ZZ_p augmMatrix;
+    assert(coefMatrix.NumRows() == constMatrix.length());
+    augmMatrix.SetDims(coefMatrix.NumRows(), coefMatrix.NumCols() + 1);
+    for (int i = 0; i < augmMatrix.NumRows(); i++){
+        for (int j = 0; j < augmMatrix.NumCols() - 1; j++){
+            augmMatrix[i][j] = coefMatrix[i][j];
+        }
+        augmMatrix[i][augmMatrix.NumCols() - 1] = constMatrix[i];
+    }
+    return augmMatrix;
+}
+
+NTL::mat_ZZ_p hotstuff::quorums::Msp::getRowsOwnedByGroup(std::unordered_set<ReplicaID> reps) const{
+    mat_ZZ_p Ma;
+    Ma.SetDims(0, d());
+    for (int i = 0; i < m(); i++){
+        if (reps.count(L[i]) > 0){
+            Ma.SetDims(Ma.NumRows() + 1, d());
+            for (int j = 0; j < d(); j++)
+                Ma[Ma.NumRows() - 1][j] = M[i][j];
+        }
+    }
+    return Ma;
 }
 
 }
-
-
-
-
-// int main(int argc, char const *argv[]) {
-//     // testThetaStruct();
-    
-//     std::ifstream infile("quorums.json");
-//     json j;
-//     infile >> j;
-//     hotstuff::Theta p2;
-//     j.get_to<hotstuff::Theta>(p2);
-//     std::cout << p2 << std::endl;
-    
-//     // printVect(getVandermonde(3,3));
-//     // printVect(getVandermonde(4,3));
-//     // printVect(getVandermonde(4,4));
-//     // printVect(getVandermonde(7,5));  
-
-//     // hotstuff::Msp msp = getLcwMsp(p2);
-//     // printVect(msp.M);
-//     // for (auto const& pair: hotstuff::allReplicas) {
-//     //     std::cout << "{" << pair.first << ": " << pair.second << "}\n";
-//     // }
-//     // printVect(msp.L);
-//     return  0;
-// }
-
-
-
-// void testThetaStruct(){
-//     // auto j = json::parse(" { \"select\": 3,\"out-of\": [ {\"select\": 1, \"out-of\":[2,3]}, {\"select\": 1, \"out-of\":[4,5]}, 1]}");
-//     std::cout << ">> THETA TEST START\n";
-//     std::vector<hotstuff::ReplicaID> e1 = {1, 2, 3, 4};
-//     std::vector<hotstuff::ReplicaID> e2 = {11, 12, 13, 14};
-//     std::vector<hotstuff::ReplicaID> e3 = {21, 22, 23, 24};
-//     hotstuff::Theta theta1 {3, e1, {}};
-//     hotstuff::Theta theta2 {2, e2, {}};
-//     hotstuff::Theta theta3(4, e3, std::vector<hotstuff::Theta>{theta1, theta2});
-//     std::cout << theta3;
-//     std::cout << "\n>> THETA TEST FINISH\n";
-// }

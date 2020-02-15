@@ -47,6 +47,7 @@ add_dependencies(secp256k1 libsecp256k1)
 include_directories(./)
 include_directories(include)
 include_directories(nlohmann_json/single_include)
+include_directories(catch2/single_include)
 add_library(hotstuff
     OBJECT
     src/util.cpp

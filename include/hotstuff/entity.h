@@ -59,7 +59,7 @@ struct ReplicaInfo {
 
 class ReplicaConfig {
     std::unordered_map<ReplicaID, ReplicaInfo> replica_map;
-    hotstuff::quorums::Msp accessStructure;
+    hotstuff::quorums::AccessStructure accessStructure;
 
     public:
     size_t nreplicas;
@@ -92,8 +92,7 @@ class ReplicaConfig {
     }
 
     void initializeAccessStructure() {
-        hotstuff::quorums::AccessStructureParser parser;
-        accessStructure = parser.parse();
+        accessStructure.initialize();
         HOTSTUFF_LOG_INFO("** Access Structure Initialization finished. The parsed MSP is: *");
         HOTSTUFF_LOG_INFO(std::string(accessStructure).c_str());
     }
