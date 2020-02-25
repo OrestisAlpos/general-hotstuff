@@ -57,6 +57,7 @@ add_library(hotstuff
     src/consensus.cpp
     src/hotstuff.cpp
     src/quorums.cpp
+    src/linalg_util.cpp
     )
 
 find_library(NTL_LIB ntl)

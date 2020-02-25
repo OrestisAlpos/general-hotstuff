@@ -15,6 +15,7 @@
 #include <NTL/matrix.h>
 
 #include "hotstuff/type.h"
+#include "hotstuff/linalg_util.h"
 
 
 namespace hotstuff::quorums{
@@ -63,12 +64,23 @@ class Msp{
         e1[0] = 1;
         return e1;
     }
+    
+    NTL::mat_ZZ_p U; //The U matrix from PLU factorization, such that P M^T = L U
+    
+    NTL::vec_ZZ_p y; //The solution of L y = P e1. 
+    //Use this in equation Ua x = y. See method isAuthorizedGroupWithPLU
 
-    bool isAuthorisedGroup(std::unordered_set<ReplicaID> reps) const;
+    bool isAuthorisedGroupWithoutPLU(std::unordered_set<ReplicaID> reps) const;
+    bool isAuthorisedGroupWithPLU(std::unordered_set<ReplicaID> reps) const;
+    
+    bool isAuthorisedGroup(std::unordered_set<ReplicaID> reps) const{
+        return isAuthorisedGroupWithPLU(reps);
+    }
 
-    NTL::mat_ZZ_p getRowsOwnedByGroup(std::unordered_set<ReplicaID> reps) const;
+    NTL::mat_ZZ_p getRowsOfMOwnedByReps(std::unordered_set<ReplicaID> reps) const;
+    NTL::mat_ZZ_p getColsOfUOwnedByReps(std::unordered_set<ReplicaID> reps) const;
 
-    NTL::mat_ZZ_p getAugmentedMatrix(NTL::mat_ZZ_p coefMatrix, NTL::vec_ZZ_p constMatrix) const;
+    NTL::mat_ZZ_p getAugmentedMatrix(NTL::mat_ZZ_p& augmMatrix, const NTL::mat_ZZ_p& coefMatrix, const NTL::vec_ZZ_p& constMatrix) const;
 
     operator std::string() const {
         std::string s;
@@ -98,10 +110,15 @@ class MspCreator{
     void insertNextTheta(std::vector<std::vector<int> > &M, std::vector<hotstuff::ReplicaID> &L, int &insertionIndex, const Theta &t);
     //insertion of access structure t in the row of matrix M (2D) specified by the index r, with r in [0, m1-1]
 
-    hotstuff::quorums::Msp createWithLcwAlgorithm(const hotstuff::quorums::Theta& t);
+    hotstuff::quorums::Msp createMspWithLcwAlgorithm(const hotstuff::quorums::Theta& t);
+
+    void performPLU(hotstuff::quorums::Msp& msp);
+    //Updates msp.U and msp.y with the results of PLU (P M^T = L U) and of the equation L y = msp.e1
 
     hotstuff::quorums::Msp create(const hotstuff::quorums::Theta& t){
-        return createWithLcwAlgorithm(t);
+        Msp msp = createMspWithLcwAlgorithm(t);
+        performPLU(msp);
+        return msp;
     }
 };
 
@@ -119,6 +136,7 @@ class AccessStructure{
     void initialize(){
         Theta t = jsonParser.parse();
         msp = mspCreator.create(t); 
+        
     }
 
     bool isAuthorisedGroup(std::unordered_set<ReplicaID> reps) const{

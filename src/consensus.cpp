@@ -20,6 +20,7 @@
 
 #include "hotstuff/util.h"
 #include "hotstuff/consensus.h"
+#include "hotstuff/quorums.h"
 
 #define LOG_INFO HOTSTUFF_LOG_INFO
 #define LOG_DEBUG HOTSTUFF_LOG_DEBUG
@@ -176,8 +177,8 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds,
         throw std::runtime_error("new block should be higher than vheight");
     vheight = bnew->height;
     on_receive_vote(
-        Vote(id, bnew_hash,
-            create_part_cert(*priv_key, bnew_hash), this));
+        Vote(id, bnew_hash,         //I (the creator of the block) vote for it - implicitly by calling on_receive_vote.
+            create_part_cert(*priv_key, bnew_hash), this)); // Don't know why required, since I will eventually receive this block, so I will vote then.
     on_propose_(prop);
     /* boradcast to other replicas */
     do_broadcast_proposal(prop);
@@ -216,7 +217,7 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
     on_receive_proposal_(prop);
     if (opinion && !vote_disabled)
         do_vote(prop.proposer,
-            Vote(id, bnew->get_hash(),
+            Vote(id, bnew->get_hash(),          //Here is the (only?) place where I vote for a received block. 
                 create_part_cert(*priv_key, bnew->get_hash()), this));
 }
 
@@ -225,8 +226,9 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
     LOG_PROTO("now state: %s", std::string(*this).c_str());
     block_t blk = get_delivered_blk(vote.blk_hash);
     assert(vote.cert);
-    size_t qsize = blk->voted.size();
-    if (qsize >= config.nmajority) return;
+    //size_t qsize = blk->voted.size();
+    //if (qsize >= config.nmajority) return; //!!!    
+    if (config.isAuthorizedGroup(blk->voted)) return; //Here I check whether I have already observed a quorum
     if (!blk->voted.insert(vote.voter).second)
     {
         LOG_WARN("duplicate vote for %s from %d", get_hex10(vote.blk_hash).c_str(), vote.voter);
@@ -239,16 +241,18 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
         qc = create_quorum_cert(blk->get_hash());
     }
     qc->add_part(vote.voter, *vote.cert);
-    if (qsize + 1 == config.nmajority)
-    {
-        qc->compute();
-        update_hqc(blk, qc);
+    //if (qsize + 1 == config.nmajority) //!!!
+    if (config.isAuthorizedGroup(blk->voted))
+    {                                    //Here I check whether this vote was the last needed for me to observe a quorum
+        qc->compute();                 // Quorum received, create threshold signature. Dummy implementation, they don't combine the signatures.
+        update_hqc(blk, qc);           // They just verify each signature separately. (QuorumCertSecp256k1::verify in crypto.cpp). 
         on_qc_finish(blk);
     }
 }
 /*** end HotStuff protocol logic ***/
-void HotStuffCore::on_init(uint32_t nfaulty) {
-    config.nmajority = config.nreplicas - nfaulty;
+void HotStuffCore::on_init() { //!!!(7B)
+    // config.nmajority = config.nreplicas - nfaulty; //!!!
+    config.initializeAccessStructure();
     b0->qc = create_quorum_cert(b0->get_hash());
     b0->qc->compute();
     b0->self_qc = b0->qc->clone();
@@ -279,7 +283,7 @@ void HotStuffCore::prune(uint32_t staleness) {
     }
 }
 
-void HotStuffCore::add_replica(ReplicaID rid, const NetAddr &addr,
+void HotStuffCore::add_replica(ReplicaID rid, const NetAddr &addr, //!!!(7A)
                                 pubkey_bt &&pub_key) {
     config.add_replica(rid, 
             ReplicaInfo(rid, addr, std::move(pub_key)));
@@ -287,7 +291,7 @@ void HotStuffCore::add_replica(ReplicaID rid, const NetAddr &addr,
 }
 
 promise_t HotStuffCore::async_qc_finish(const block_t &blk) {
-    if (blk->voted.size() >= config.nmajority)
+    if (config.isAuthorizedGroup(blk->voted)) //!!!
         return promise_t([](promise_t &pm) {
             pm.resolve();
         });
@@ -353,5 +357,4 @@ HotStuffCore::operator std::string () const {
       << "tails=" << std::to_string(tails.size()) << ">";
     return std::move(s);
 }
-
 }

@@ -53,7 +53,7 @@ void from_json(const json& j, Theta& t){
 }
 
 
-//Json Parser class implemementation
+//JsonParser class implemementation
 hotstuff::quorums::Theta hotstuff::quorums::JsonParser::parse_IdBased(){
    std::ifstream infile("quorums.json");
     json j;
@@ -138,7 +138,7 @@ void hotstuff::quorums::MspCreator::insertNextTheta(std::vector<std::vector<int>
     }
 }
 
-Msp hotstuff::quorums::MspCreator::createWithLcwAlgorithm(const Theta &t){
+Msp hotstuff::quorums::MspCreator::createMspWithLcwAlgorithm(const Theta &t){
     std::vector<std::vector<int> > M = {{1}};
     std::vector<hotstuff::ReplicaID> L;
     int insertionIndex = 0;
@@ -152,21 +152,44 @@ Msp hotstuff::quorums::MspCreator::createWithLcwAlgorithm(const Theta &t){
     return msp;
 }
 
-bool hotstuff::quorums::Msp::isAuthorisedGroup(std::unordered_set<ReplicaID> reps) const{
-    mat_ZZ_p Ma = getRowsOwnedByGroup(reps);
-    mat_ZZ_p Ma_T = NTL::transpose(Ma);
-    mat_ZZ_p Ma_T_augm = getAugmentedMatrix(Ma_T, e1());
-    int deg_Ma_T = NTL::gauss(Ma_T);
-    int deg_Ma_T_augm = NTL::gauss(Ma_T_augm);
-    return deg_Ma_T == deg_Ma_T_augm;
+void hotstuff::quorums::MspCreator::performPLU(hotstuff::quorums::Msp& msp){
+    NTL::mat_ZZ_p P, L;
+    linalg::PLU(NTL::transpose(msp.M), P, L, msp.U);
+    linalg::solveByForwardSubstitution(L, msp.y, P * msp.e1());
 }
 
-NTL::mat_ZZ_p hotstuff::quorums::Msp::getAugmentedMatrix(NTL::mat_ZZ_p coefMatrix, NTL::vec_ZZ_p constMatrix) const{
-    mat_ZZ_p augmMatrix;
+
+//Msp class implementation
+bool hotstuff::quorums::Msp::isAuthorisedGroupWithoutPLU(std::unordered_set<ReplicaID> reps) const{
+    mat_ZZ_p Ma = getRowsOfMOwnedByReps(reps);
+    mat_ZZ_p Ma_T;
+    NTL::transpose(Ma_T, Ma);
+    mat_ZZ_p Ma_T_augm;
+    getAugmentedMatrix(Ma_T_augm, Ma_T, e1());
+    int rank_Ma_T = NTL::gauss(Ma_T);
+    int rank_Ma_T_augm = NTL::gauss(Ma_T_augm);
+    //system Ma^T x = e1 has solution iff rank of Ma^T is same as rank of Ma^T|e1
+    return rank_Ma_T == rank_Ma_T_augm;
+}
+
+bool hotstuff::quorums::Msp::isAuthorisedGroupWithPLU(std::unordered_set<ReplicaID> reps) const{
+    mat_ZZ_p Ua = getColsOfUOwnedByReps(reps);
+    mat_ZZ_p Ua_augm;
+    getAugmentedMatrix(Ua_augm, Ua, y);
+    int rank_Ua = linalg::gauss(Ua); //Ua is almost-upper-triangular. linalg::gauss checks for a 0 below the pivot.
+    int rank_Ua_augm = linalg::gauss(Ua_augm);
+    //system Ua x = y has solution iff rank of Ua is same as rank of Ua|y
+    return rank_Ua == rank_Ua_augm;
+}
+
+NTL::mat_ZZ_p hotstuff::quorums::Msp::getAugmentedMatrix(NTL::mat_ZZ_p& augmMatrix, 
+                                                         const NTL::mat_ZZ_p& coefMatrix,
+                                                         const NTL::vec_ZZ_p& constMatrix) const{
     assert(coefMatrix.NumRows() == constMatrix.length());
+    augmMatrix.kill();
     augmMatrix.SetDims(coefMatrix.NumRows(), coefMatrix.NumCols() + 1);
-    for (int i = 0; i < augmMatrix.NumRows(); i++){
-        for (int j = 0; j < augmMatrix.NumCols() - 1; j++){
+    for (long i = 0; i < augmMatrix.NumRows(); i++){
+        for (long j = 0; j < augmMatrix.NumCols() - 1; j++){
             augmMatrix[i][j] = coefMatrix[i][j];
         }
         augmMatrix[i][augmMatrix.NumCols() - 1] = constMatrix[i];
@@ -174,17 +197,40 @@ NTL::mat_ZZ_p hotstuff::quorums::Msp::getAugmentedMatrix(NTL::mat_ZZ_p coefMatri
     return augmMatrix;
 }
 
-NTL::mat_ZZ_p hotstuff::quorums::Msp::getRowsOwnedByGroup(std::unordered_set<ReplicaID> reps) const{
+NTL::mat_ZZ_p hotstuff::quorums::Msp::getRowsOfMOwnedByReps(std::unordered_set<ReplicaID> reps) const{
+    long Ma_NumRows = 0;
+    for (long i = 0; i < m(); i++)
+        if (reps.count(L[i]) > 0)
+            Ma_NumRows ++;
     mat_ZZ_p Ma;
-    Ma.SetDims(0, d());
-    for (int i = 0; i < m(); i++){
+    Ma.SetDims(Ma_NumRows, d());
+    long row_index = 0;
+    for (long i = 0; i < m(); i++){
         if (reps.count(L[i]) > 0){
-            Ma.SetDims(Ma.NumRows() + 1, d());
-            for (int j = 0; j < d(); j++)
-                Ma[Ma.NumRows() - 1][j] = M[i][j];
+            for (long j = 0; j < d(); j++)
+                Ma[row_index][j] = M[i][j];
+            row_index++;
         }
     }
     return Ma;
+}
+
+NTL::mat_ZZ_p hotstuff::quorums::Msp::getColsOfUOwnedByReps(std::unordered_set<ReplicaID> reps) const{
+    long Ua_NumCols = 0;
+      for (long j = 0; j < m(); j++)
+        if (reps.count(L[j]) > 0)
+            Ua_NumCols++; 
+    mat_ZZ_p Ua;
+    Ua.SetDims(d(), Ua_NumCols);
+    long last_col = 0;
+    for (long j = 0; j < m(); j++){
+        if (reps.count(L[j]) > 0){
+            for (long i = 0; i < d(); i++)
+                Ua[i][last_col] = U[i][j];
+            last_col++;
+        }
+    }
+    return Ua;
 }
 
 }
