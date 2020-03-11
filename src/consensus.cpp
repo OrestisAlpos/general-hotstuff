@@ -217,7 +217,7 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
     on_receive_proposal_(prop);
     if (opinion && !vote_disabled)
         do_vote(prop.proposer,
-            Vote(id, bnew->get_hash(),          //Here is the (only?) place where I vote for a received block. 
+            Vote(id, bnew->get_hash(),
                 create_part_cert(*priv_key, bnew->get_hash()), this));
 }
 
@@ -227,8 +227,8 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
     block_t blk = get_delivered_blk(vote.blk_hash);
     assert(vote.cert);
     //size_t qsize = blk->voted.size();
-    //if (qsize >= config.nmajority) return; //!!!    
-    if (config.isAuthorizedGroup(blk->voted)) return; //Here I check whether I have already observed a quorum
+    //if (qsize >= config.nmajority) return;
+    if (config.isAuthorizedGroup(blk->voted)) return;
     if (!blk->voted.insert(vote.voter).second)
     {
         LOG_WARN("duplicate vote for %s from %d", get_hex10(vote.blk_hash).c_str(), vote.voter);
@@ -241,17 +241,17 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
         qc = create_quorum_cert(blk->get_hash());
     }
     qc->add_part(vote.voter, *vote.cert);
-    //if (qsize + 1 == config.nmajority) //!!!
+    //if (qsize + 1 == config.nmajority)
     if (config.isAuthorizedGroup(blk->voted))
-    {                                    //Here I check whether this vote was the last needed for me to observe a quorum
-        qc->compute();                 // Quorum received, create threshold signature. Dummy implementation, they don't combine the signatures.
-        update_hqc(blk, qc);           // They just verify each signature separately. (QuorumCertSecp256k1::verify in crypto.cpp). 
+    {
+        qc->compute();
+        update_hqc(blk, qc);
         on_qc_finish(blk);
     }
 }
 /*** end HotStuff protocol logic ***/
-void HotStuffCore::on_init() { //!!!(7B)
-    // config.nmajority = config.nreplicas - nfaulty; //!!!
+void HotStuffCore::on_init() {
+    // config.nmajority = config.nreplicas - nfaulty;
     config.initializeAccessStructure();
     b0->qc = create_quorum_cert(b0->get_hash());
     b0->qc->compute();
@@ -283,7 +283,7 @@ void HotStuffCore::prune(uint32_t staleness) {
     }
 }
 
-void HotStuffCore::add_replica(ReplicaID rid, const NetAddr &addr, //!!!(7A)
+void HotStuffCore::add_replica(ReplicaID rid, const NetAddr &addr,
                                 pubkey_bt &&pub_key) {
     config.add_replica(rid, 
             ReplicaInfo(rid, addr, std::move(pub_key)));
@@ -291,7 +291,7 @@ void HotStuffCore::add_replica(ReplicaID rid, const NetAddr &addr, //!!!(7A)
 }
 
 promise_t HotStuffCore::async_qc_finish(const block_t &blk) {
-    if (config.isAuthorizedGroup(blk->voted)) //!!!
+    if (config.isAuthorizedGroup(blk->voted))
         return promise_t([](promise_t &pm) {
             pm.resolve();
         });

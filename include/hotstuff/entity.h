@@ -68,7 +68,7 @@ class ReplicaConfig {
 
     ReplicaConfig(): nreplicas(0){}; //, nmajority(0) {}
 
-    void add_replica(ReplicaID rid, const ReplicaInfo &info) { //!!!(8A)
+    void add_replica(ReplicaID rid, const ReplicaInfo &info) {
         replica_map.insert(std::make_pair(rid, info));
         PubKeySecp256k1 pubKey = static_cast<const PubKeySecp256k1 &>(*(info.pubkey));
         HOTSTUFF_LOG_INFO(">> Added Replica with ID: %d and Pub Key: %s", rid, std::string(pubKey).c_str());

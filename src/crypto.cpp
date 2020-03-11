@@ -24,7 +24,7 @@ secp256k1_context_t secp256k1_default_verify_ctx = new Secp256k1Context(false);
 
 QuorumCertSecp256k1::QuorumCertSecp256k1(
         const ReplicaConfig &config, const uint256_t &obj_hash):
-            QuorumCert(), obj_hash(obj_hash), rids(config.nreplicas) { //!!!
+            QuorumCert(), obj_hash(obj_hash), rids(config.nreplicas) {
     rids.clear();
 }
    
@@ -33,7 +33,7 @@ bool QuorumCertSecp256k1::verify(const ReplicaConfig &config) {
     std::unordered_set<hotstuff::ReplicaID> reps;
     for(auto k : sigs)
         reps.insert(k.first);
-    if (!config.isAuthorizedGroup(reps)) return false; //!!!
+    if (!config.isAuthorizedGroup(reps)) return false;
     for (size_t i = 0; i < rids.size(); i++)
         if (rids.get(i))
         {
@@ -52,7 +52,7 @@ promise_t QuorumCertSecp256k1::verify(const ReplicaConfig &config, VeriPool &vpo
     for(auto k : sigs)
         reps.insert(k.first);
     // if (sigs.size() < config.nmajority)
-    if (!config.isAuthorizedGroup(reps)) //!!!
+    if (!config.isAuthorizedGroup(reps))
         return promise_t([](promise_t &pm) { pm.resolve(false); });
     std::vector<promise_t> vpm;
     for (size_t i = 0; i < rids.size(); i++)

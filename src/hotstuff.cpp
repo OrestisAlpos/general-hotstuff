@@ -393,13 +393,13 @@ void HotStuffBase::do_decide(Finality &&fin) {
 
 HotStuffBase::~HotStuffBase() {}
 
-void HotStuffBase::start( //!!!(5)
+void HotStuffBase::start(
         std::vector<std::tuple<NetAddr, pubkey_bt, uint256_t>> &&replicas,
         bool ec_loop) {
     for (size_t i = 0; i < replicas.size(); i++)
     {
         auto &addr = std::get<0>(replicas[i]);
-        HotStuffCore::add_replica(i, addr, std::move(std::get<1>(replicas[i]))); //!!!(6A)
+        HotStuffCore::add_replica(i, addr, std::move(std::get<1>(replicas[i])));
         valid_tls_certs.insert(std::move(std::get<2>(replicas[i])));
         if (addr != listen_addr)
         {
@@ -412,7 +412,7 @@ void HotStuffBase::start( //!!!(5)
     // uint32_t nfaulty = peers.size() / 3;
     // if (nfaulty == 0)
     //     LOG_WARN("too few replicas in the system to tolerate any failure");
-    on_init(); //!!!(6B)
+    on_init();
     pmaker->init(this);
     if (ec_loop)
         ec.dispatch();
