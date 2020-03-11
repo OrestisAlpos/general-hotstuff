@@ -1,5 +1,5 @@
 #define CATCH_CONFIG_MAIN
-#include "catch.hpp"
+#include <catch2/catch.hpp>
 #include "hotstuff/quorums.h"
 #include "hotstuff/linalg_util.h"
 #include <NTL/mat_ZZ_p.h>

@@ -46,8 +46,6 @@ add_dependencies(secp256k1 libsecp256k1)
 
 include_directories(./)
 include_directories(include)
-include_directories(nlohmann_json/single_include)
-include_directories(catch2/single_include)
 add_library(hotstuff
     OBJECT
     src/util.cpp
@@ -60,26 +58,34 @@ add_library(hotstuff
     src/linalg_util.cpp
     )
 
+#NTL
 find_library(NTL_LIB ntl)
 if(NOT NTL_LIB)
   message(FATAL_ERROR "ntl library not found.  Rerun cmake with -DCMAKE_PREFIX_PATH=\"<path to lib1>;<path to lib2>\"")
 endif()
 
+#GMP
 find_library(GMP_LIB gmp)
 if(NOT GMP_LIB)
   message(FATAL_ERROR "GMP library not found.  Rerun cmake with -DCMAKE_PREFIX_PATH=\"<path to lib1>;<path to lib2>\"")
 endif()
+
+#nlohmann_json
+include_directories(json/single_include)
+
+#catch2
+include_directories(Catch2/signle_include)
 
 option(BUILD_SHARED "build shared library." OFF)
 if(BUILD_SHARED)
     set_property(TARGET hotstuff PROPERTY POSITION_INDEPENDENT_CODE 1)
     add_library(hotstuff_shared SHARED $<TARGET_OBJECTS:hotstuff>)
     set_target_properties(hotstuff_shared PROPERTIES OUTPUT_NAME "hotstuff")
-    target_link_libraries(hotstuff_shared salticidae_static secp256k1 crypto ${NTL_LIB} ${GMP_LIB} m ${CMAKE_THREAD_LIBS_INIT})
+    target_link_libraries(hotstuff_shared salticidae_static secp256k1 crypto ${NTL_LIB} ${GMP_LIB} m ${CMAKE_THREAD_LIBS_INIT} nlohmann_json::nlohmann_json)
 endif()
 add_library(hotstuff_static STATIC $<TARGET_OBJECTS:hotstuff>)
 set_target_properties(hotstuff_static PROPERTIES OUTPUT_NAME "hotstuff")
-target_link_libraries(hotstuff_static salticidae_static secp256k1 crypto ${NTL_LIB} ${GMP_LIB} m ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(hotstuff_static salticidae_static secp256k1 crypto ${NTL_LIB} ${GMP_LIB} m ${CMAKE_THREAD_LIBS_INIT} nlohmann_json::nlohmann_json)
 
 add_subdirectory(test)
 
