@@ -74,18 +74,18 @@ endif()
 include_directories(json/single_include)
 
 #catch2
-include_directories(Catch2/signle_include)
+include_directories(Catch2/single_include)
 
 option(BUILD_SHARED "build shared library." OFF)
 if(BUILD_SHARED)
     set_property(TARGET hotstuff PROPERTY POSITION_INDEPENDENT_CODE 1)
     add_library(hotstuff_shared SHARED $<TARGET_OBJECTS:hotstuff>)
     set_target_properties(hotstuff_shared PROPERTIES OUTPUT_NAME "hotstuff")
-    target_link_libraries(hotstuff_shared salticidae_static secp256k1 crypto ${NTL_LIB} ${GMP_LIB} m ${CMAKE_THREAD_LIBS_INIT} nlohmann_json::nlohmann_json)
+    target_link_libraries(hotstuff_shared salticidae_static secp256k1 crypto ${NTL_LIB} ${GMP_LIB} m ${CMAKE_THREAD_LIBS_INIT})
 endif()
 add_library(hotstuff_static STATIC $<TARGET_OBJECTS:hotstuff>)
 set_target_properties(hotstuff_static PROPERTIES OUTPUT_NAME "hotstuff")
-target_link_libraries(hotstuff_static salticidae_static secp256k1 crypto ${NTL_LIB} ${GMP_LIB} m ${CMAKE_THREAD_LIBS_INIT} nlohmann_json::nlohmann_json)
+target_link_libraries(hotstuff_static salticidae_static secp256k1 crypto ${NTL_LIB} ${GMP_LIB} m ${CMAKE_THREAD_LIBS_INIT})
 
 add_subdirectory(test)
 
