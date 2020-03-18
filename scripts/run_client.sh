@@ -1,24 +1,23 @@
 #!/bin/bash
 
 proj_client_bin="hotstuff-client"
-proj_client_path="/home/ted/hot-stuff/$proj_client_bin"
+proj_client_path="/root/git/libhotstuff/$proj_client_bin"
 proj_conf_name="hotstuff.conf"
 
 peer_list="./nodes.txt"     # the list of nodes
 client_list="./clients.txt"  # the list of clients
 conf_src="./hotstuff.gen.conf"
 template_dir="template"     # the dir that keeps the content shared among all nodes
-remote_base="/home/ted/testbed"  # remote dir used to keep files for the experiment
-#remote_base="/tmp/"  # remote dir used to keep files for the experiment
+remote_base="/root/git/libhotstuff"  # remote dir used to keep files for the experiment
 remote_log="log"   # log filename
-remote_user="ted"
+remote_user="root"
 copy_to_remote_pat="rsync -avz <local_path> <remote_user>@<remote_ip>:<remote_path>"
 copy_from_remote_pat="rsync -avz <remote_user>@<remote_ip>:<remote_path> <local_path>"
 exe_remote_pat="ssh <remote_user>@<remote_ip> bash"
-run_remote_pat="cd \"<rworkdir>\"; '$proj_client_path' --idx \"<node_id>\" --iter -1 --max-async 3"
+run_remote_pat="cd \"<rworkdir>\"; '$proj_client_path' --idx \"<node_id>\" --iter -1 --max-async 4"
 reset_remote_pat="pgrep -f '$proj_client_bin' | xargs kill -9"
 node_id_step=1
-
+ 
 function join { local IFS="$1"; shift; echo "$*"; }
 function split {
     local IFS="$1"

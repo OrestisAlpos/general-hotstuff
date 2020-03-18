@@ -26,3 +26,4 @@ core
 log*
 *.bak
 *OLD
+a_*

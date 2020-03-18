@@ -55,7 +55,7 @@ void from_json(const json& j, Theta& t){
 
 //JsonParser class implemementation
 hotstuff::quorums::Theta hotstuff::quorums::JsonParser::parse_IdBased(){
-   std::ifstream infile("quorums.json");
+    std::ifstream infile("quorums.json");
     json j;
     infile >> j;
     return j.get<Theta>();

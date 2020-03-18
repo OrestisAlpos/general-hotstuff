@@ -1,17 +1,17 @@
 #!/bin/bash
 
 proj_server_bin="hotstuff-app"
-proj_server_path="/home/ted/hot-stuff/$proj_server_bin"
+proj_server_path="/root/git/libhotstuff/$proj_server_bin"
 proj_conf_name="hotstuff.conf"
 
 peer_list="./nodes.txt"     # the list of nodes
 conf_src="./hotstuff.gen.conf"
+quorums_conf="./quorums.json"
 server_map="./server_map.txt"         # optional mapping from node ip to server ip
 template_dir="template"     # the dir that keeps the content shared among all nodes
-remote_base="/home/ted/testbed"  # remote dir used to keep files for the experiment
-#remote_base="/tmp/"  # remote dir used to keep files for the experiment
+remote_base="/root/git/libhotstuff"  # remote dir used to keep files for the experiment
 remote_log="log"   # log filename
-remote_user="ted"
+remote_user="root"
 copy_to_remote_pat="rsync -avz <local_path> <remote_user>@<remote_ip>:<remote_path>"
 copy_from_remote_pat="rsync -avz <remote_user>@<remote_ip>:<remote_path> <local_path>"
 exe_remote_pat="ssh <remote_user>@<remote_ip> bash"
@@ -214,6 +214,7 @@ function start_all {
     get_server_map "$workdir/server_map.txt"
     echo "copying configuration file"
     rsync -avP "$conf_src" "$tmpldir/$proj_conf_name"
+    rsync -avP "$quorums_conf" "$tmpldir/$quorums_conf"
     echo "${node_list[@]}"
     cnt="${#nodes[@]}"
     #for rid in "${!nodes[@]}"; do
@@ -236,6 +237,7 @@ function start_all {
             extra_conf+=($(basename "$conf"))
             copy_file "$copy_to_remote_pat" "$tmpldir/$conf" "$node_ip" "$rworkdir"
         done
+        copy_file "$copy_to_remote_pat" "$tmpldir/$quorums_conf" "$node_ip" "$rworkdir"
         echo "Starting $rid @ $ip, $pport and $cport"
         _remote_load "$workdir" "$rworkdir" "$ip" "$rid" "${extra_conf[@]}"
         echo "$rid loaded"

@@ -100,6 +100,7 @@ option(HOTSTUFF_MSG_STAT "eanble message statistics" ON)
 option(HOTSTUFF_BLK_PROFILE "enable block profiling" OFF)
 option(HOTSTUFF_TWO_STEP "use two-step HotStuff (instead of three-step HS)" OFF)
 option(BUILD_EXAMPLES "build examples" OFF)
+option(HOTSTUFF_ENABLE_BENCHMARK "enable banchamrk output" OFF)
 
 configure_file(src/config.h.in include/hotstuff/config.h @ONLY)
 
@@ -117,6 +118,10 @@ target_link_libraries(hotstuff-client hotstuff_static)
 add_executable(hotstuff-keygen
     src/hotstuff_keygen.cpp)
 target_link_libraries(hotstuff-keygen hotstuff_static)
+
+add_executable(hotstuff-tls-keygen
+    src/hotstuff_tls_keygen.cpp)
+target_link_libraries(hotstuff-tls-keygen hotstuff_static)
 
 find_package(Doxygen)
 if (DOXYGEN_FOUND)

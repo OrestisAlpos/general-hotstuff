@@ -7,5 +7,6 @@
 #cmakedefine HOTSTUFF_MSG_STAT
 #cmakedefine HOTSTUFF_BLK_PROFILE
 #cmakedefine HOTSTUFF_TWO_STEP
+#cmakedefine HOTSTUFF_ENABLE_BENCHMARK
 
 #endif

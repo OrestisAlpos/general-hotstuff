@@ -98,15 +98,15 @@ void client_resp_cmd_handler(MsgRespCmd &&msg, const Net::conn_t &) {
     if (it == waiting.end()) return;
     et.stop();
     if (++it->second.confirmed <= nfaulty) return; // wait for f + 1 ack
-#ifndef HOTSTUFF_ENABLE_BENCHMARK
+
     HOTSTUFF_LOG_INFO("got %s, wall: %.3f, cpu: %.3f",
                         std::string(fin).c_str(),
                         et.elapsed_sec, et.cpu_elapsed_sec);
-#else
+
     struct timeval tv;
     gettimeofday(&tv, nullptr);
     elapsed.push_back(std::make_pair(tv, et.elapsed_sec));
-#endif
+
     waiting.erase(it);
     while (try_send());
 }
@@ -165,6 +165,7 @@ int main(int argc, char **argv) {
     nfaulty = (replicas.size() - 1) / 3;
     HOTSTUFF_LOG_INFO("nfaulty = %zu", nfaulty);
     connect_all();
+    HOTSTUFF_LOG_INFO("Starting sending requests. max_iter_num = %d, max_async_num = %d", max_iter_num, max_async_num);
     while (try_send());
     ec.dispatch();
 
@@ -174,7 +175,7 @@ int main(int argc, char **argv) {
         char fmt[64];
         struct tm *tmp = localtime(&e.first.tv_sec);
         strftime(fmt, sizeof fmt, "%Y-%m-%d %H:%M:%S.%%06u [hotstuff info] %%.6f\n", tmp);
-        fprintf(stderr, fmt, e.first.tv_usec, e.second);
+        fprintf(stderr, fmt,  e.first.tv_usec, e.second);
     }
 #endif
     return 0;
