@@ -93,12 +93,12 @@ class ReplicaConfig {
 
     void initializeAccessStructure() {
         accessStructure.initialize();
-        HOTSTUFF_LOG_INFO("** Access Structure Initialization finished. The parsed MSP is: *");
+        HOTSTUFF_LOG_INFO("** Access Structure Initialization finished. The parsed MSP is: **");
         HOTSTUFF_LOG_INFO(std::string(accessStructure).c_str());
     }
 
     bool isAuthorizedGroup(std::unordered_set<ReplicaID> reps) const{
-        return accessStructure.isAuthorisedGroup(reps);
+        return accessStructure.isAuthorizedGroup(reps);
     }
 };
 

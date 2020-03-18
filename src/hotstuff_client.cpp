@@ -28,6 +28,7 @@
 #include "hotstuff/util.h"
 #include "hotstuff/type.h"
 #include "hotstuff/client.h"
+#include "hotstuff/quorums.h"
 
 using salticidae::Config;
 
@@ -49,10 +50,14 @@ int max_iter_num;
 uint32_t cid;
 uint32_t cnt = 0;
 uint32_t nfaulty;
+hotstuff::quorums::AccessStructure accessStructure;
 
 struct Request {
     command_t cmd;
     size_t confirmed;
+#ifdef HOTSTUFF_USE_QUORUMS    
+    std::unordered_set<hotstuff::ReplicaID> confirmedReplicas;
+#endif
     salticidae::ElapsedTime et;
     Request(const command_t &cmd): cmd(cmd), confirmed(0) { et.start(); }
 };
@@ -71,7 +76,7 @@ void connect_all() {
 }
 
 bool try_send(bool check = true) {
-    if ((!check || waiting.size() < max_async_num) && max_iter_num)
+    if ((!check || max_async_num == -1 || waiting.size() < max_async_num) && max_iter_num)
     {
         auto cmd = new CommandDummy(cid, cnt++);
         MsgReqCmd msg(*cmd);
@@ -91,15 +96,19 @@ bool try_send(bool check = true) {
 
 void client_resp_cmd_handler(MsgRespCmd &&msg, const Net::conn_t &) {
     auto &fin = msg.fin;
-    HOTSTUFF_LOG_DEBUG("got %s", std::string(msg.fin).c_str());
+    //HOTSTUFF_LOG_INFO("got confirmation from %d: %s", fin.rid ,std::string(msg.fin).c_str());
     const uint256_t &cmd_hash = fin.cmd_hash;
     auto it = waiting.find(cmd_hash);
     auto &et = it->second.et;
     if (it == waiting.end()) return;
     et.stop();
+#ifdef HOTSTUFF_USE_QUORUMS
+    it->second.confirmedReplicas.insert(fin.rid);
+    if (!accessStructure.isAuthorizedGroup(it->second.confirmedReplicas)) return;
+#else
     if (++it->second.confirmed <= nfaulty) return; // wait for f + 1 ack
-
-    HOTSTUFF_LOG_INFO("got %s, wall: %.3f, cpu: %.3f",
+#endif
+    HOTSTUFF_LOG_INFO("got quorum of confirmations %s, wall: %.3f, cpu: %.3f",
                         std::string(fin).c_str(),
                         et.elapsed_sec, et.cpu_elapsed_sec);
 
@@ -161,9 +170,14 @@ int main(int argc, char **argv) {
         size_t _;
         replicas.push_back(NetAddr(NetAddr(_p.first).ip, htons(stoi(_p.second, &_))));
     }
-
+#ifdef HOTSTUFF_USE_QUORUMS
+    accessStructure.initialize();
+    HOTSTUFF_LOG_INFO("** Access Structure Initialization finished. The parsed MSP is: **");
+    HOTSTUFF_LOG_INFO(std::string(accessStructure).c_str());
+#else
     nfaulty = (replicas.size() - 1) / 3;
     HOTSTUFF_LOG_INFO("nfaulty = %zu", nfaulty);
+#endif
     connect_all();
     HOTSTUFF_LOG_INFO("Starting sending requests. max_iter_num = %d, max_async_num = %d", max_iter_num, max_async_num);
     while (try_send());

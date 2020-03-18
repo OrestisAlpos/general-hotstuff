@@ -70,11 +70,11 @@ class Msp{
     NTL::vec_ZZ_p y; //The solution of L y = P e1. 
     //Use this in equation Ua x = y. See method isAuthorizedGroupWithPLU
 
-    bool isAuthorisedGroupWithoutPLU(std::unordered_set<ReplicaID> reps) const;
-    bool isAuthorisedGroupWithPLU(std::unordered_set<ReplicaID> reps) const;
+    bool isAuthorizedGroupWithoutPLU(std::unordered_set<ReplicaID> reps) const;
+    bool isAuthorizedGroupWithPLU(std::unordered_set<ReplicaID> reps) const;
     
-    bool isAuthorisedGroup(std::unordered_set<ReplicaID> reps) const{
-        return isAuthorisedGroupWithPLU(reps);
+    bool isAuthorizedGroup(std::unordered_set<ReplicaID> reps) const{
+        return isAuthorizedGroupWithPLU(reps);
     }
 
     NTL::mat_ZZ_p getRowsOfMOwnedByReps(std::unordered_set<ReplicaID> reps) const;
@@ -139,8 +139,8 @@ class AccessStructure{
         
     }
 
-    bool isAuthorisedGroup(std::unordered_set<ReplicaID> reps) const{
-        return msp.isAuthorisedGroup(reps);
+    bool isAuthorizedGroup(std::unordered_set<ReplicaID> reps) const{
+        return msp.isAuthorizedGroup(reps);
     };
 
     operator std::string() const { return std::string(msp);}

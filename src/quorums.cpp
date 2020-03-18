@@ -160,7 +160,7 @@ void hotstuff::quorums::MspCreator::performPLU(hotstuff::quorums::Msp& msp){
 
 
 //Msp class implementation
-bool hotstuff::quorums::Msp::isAuthorisedGroupWithoutPLU(std::unordered_set<ReplicaID> reps) const{
+bool hotstuff::quorums::Msp::isAuthorizedGroupWithoutPLU(std::unordered_set<ReplicaID> reps) const{
     mat_ZZ_p Ma = getRowsOfMOwnedByReps(reps);
     mat_ZZ_p Ma_T;
     NTL::transpose(Ma_T, Ma);
@@ -172,7 +172,7 @@ bool hotstuff::quorums::Msp::isAuthorisedGroupWithoutPLU(std::unordered_set<Repl
     return rank_Ma_T == rank_Ma_T_augm;
 }
 
-bool hotstuff::quorums::Msp::isAuthorisedGroupWithPLU(std::unordered_set<ReplicaID> reps) const{
+bool hotstuff::quorums::Msp::isAuthorizedGroupWithPLU(std::unordered_set<ReplicaID> reps) const{
     mat_ZZ_p Ua = getColsOfUOwnedByReps(reps);
     mat_ZZ_p Ua_augm;
     getAugmentedMatrix(Ua_augm, Ua, y);

@@ -315,7 +315,8 @@ HotStuffApp::HotStuffApp(uint32_t blk_size,
         while (q.try_dequeue(p))
         {
             try {
-                cn.send_msg(MsgRespCmd(std::move(p.first)), p.second);
+                MsgRespCmd resp(std::move(p.first));
+                cn.send_msg(resp, p.second);
             } catch (std::exception &err) {
                 HOTSTUFF_LOG_WARN("unable to send to the client: %s", err.what());
             }
@@ -333,7 +334,7 @@ void HotStuffApp::client_request_cmd_handler(MsgReqCmd &&msg, const conn_t &conn
     const NetAddr addr = conn->get_addr();
     auto cmd = parse_cmd(msg.serialized);
     const auto &cmd_hash = cmd->get_hash();
-    HOTSTUFF_LOG_DEBUG("processing %s", std::string(*cmd).c_str());
+    HOTSTUFF_LOG_INFO("processing %s", std::string(*cmd).c_str());
     exec_command(cmd_hash, [this, addr](Finality fin) {
         resp_queue.enqueue(std::make_pair(fin, addr));
     });

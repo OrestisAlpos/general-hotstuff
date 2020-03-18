@@ -27,3 +27,5 @@ log*
 *.bak
 *OLD
 a_*
+hotstuff-app
+hotstuff-client

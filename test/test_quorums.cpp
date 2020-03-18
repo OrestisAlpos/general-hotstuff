@@ -345,8 +345,8 @@ TEST_CASE("Quorums") {
         REQUIRE(deg_Ma_T == 0);
         REQUIRE(deg_Ma_T_augm == 1);
 
-        REQUIRE(msp.isAuthorisedGroupWithoutPLU(reps) == false);
-        REQUIRE(msp.isAuthorisedGroupWithPLU(reps) == false);
+        REQUIRE(msp.isAuthorizedGroupWithoutPLU(reps) == false);
+        REQUIRE(msp.isAuthorizedGroupWithPLU(reps) == false);
         
 
         //set {1}, unauthorized
@@ -378,8 +378,8 @@ TEST_CASE("Quorums") {
         REQUIRE(deg_Ma_T == 1);
         REQUIRE(deg_Ma_T_augm == 2);
 
-        REQUIRE(msp.isAuthorisedGroupWithoutPLU(reps) == false);
-        REQUIRE(msp.isAuthorisedGroupWithPLU(reps) == false);
+        REQUIRE(msp.isAuthorizedGroupWithoutPLU(reps) == false);
+        REQUIRE(msp.isAuthorizedGroupWithPLU(reps) == false);
 
         
         //set {1, 3, 4}, authorized
@@ -413,34 +413,34 @@ TEST_CASE("Quorums") {
         REQUIRE(deg_Ma_T == 2);
         REQUIRE(deg_Ma_T_augm == 2);
 
-        REQUIRE(msp.isAuthorisedGroupWithoutPLU(reps) == true);
-        REQUIRE(msp.isAuthorisedGroupWithPLU(reps) == true);
+        REQUIRE(msp.isAuthorizedGroupWithoutPLU(reps) == true);
+        REQUIRE(msp.isAuthorizedGroupWithPLU(reps) == true);
 
 
         msp = mspCreator.create(LcwExample1());   
-        REQUIRE(msp.isAuthorisedGroupWithoutPLU({}) == false);
-        REQUIRE(msp.isAuthorisedGroupWithoutPLU({1,2,3}) == false);
-        REQUIRE(msp.isAuthorisedGroupWithoutPLU({1,2,3,4}) == false);
-        REQUIRE(msp.isAuthorisedGroupWithoutPLU({1,2,4,5}) == true);
-        REQUIRE(msp.isAuthorisedGroupWithoutPLU({1,2,4,5,6}) == true);
-        REQUIRE(msp.isAuthorisedGroupWithoutPLU({1,2,7,8}) == true);
-        REQUIRE(msp.isAuthorisedGroupWithoutPLU({1,2,7,9}) == false);
-        REQUIRE(msp.isAuthorisedGroupWithoutPLU({1,2,7,9, 10}) == false);
-        REQUIRE(msp.isAuthorisedGroupWithoutPLU({4,9,10,11}) == false);
-        REQUIRE(msp.isAuthorisedGroupWithoutPLU({4,6,9,10,11}) == false);
-        REQUIRE(msp.isAuthorisedGroupWithoutPLU({4,6,8,9,10,11}) == true);
+        REQUIRE(msp.isAuthorizedGroupWithoutPLU({}) == false);
+        REQUIRE(msp.isAuthorizedGroupWithoutPLU({1,2,3}) == false);
+        REQUIRE(msp.isAuthorizedGroupWithoutPLU({1,2,3,4}) == false);
+        REQUIRE(msp.isAuthorizedGroupWithoutPLU({1,2,4,5}) == true);
+        REQUIRE(msp.isAuthorizedGroupWithoutPLU({1,2,4,5,6}) == true);
+        REQUIRE(msp.isAuthorizedGroupWithoutPLU({1,2,7,8}) == true);
+        REQUIRE(msp.isAuthorizedGroupWithoutPLU({1,2,7,9}) == false);
+        REQUIRE(msp.isAuthorizedGroupWithoutPLU({1,2,7,9, 10}) == false);
+        REQUIRE(msp.isAuthorizedGroupWithoutPLU({4,9,10,11}) == false);
+        REQUIRE(msp.isAuthorizedGroupWithoutPLU({4,6,9,10,11}) == false);
+        REQUIRE(msp.isAuthorizedGroupWithoutPLU({4,6,8,9,10,11}) == true);
 
-        REQUIRE(msp.isAuthorisedGroupWithPLU({}) == false);
-        REQUIRE(msp.isAuthorisedGroupWithPLU({1,2,3}) == false);
-        REQUIRE(msp.isAuthorisedGroupWithPLU({1,2,3,4}) == false);
-        REQUIRE(msp.isAuthorisedGroupWithPLU({1,2,4,5}) == true);
-        REQUIRE(msp.isAuthorisedGroupWithPLU({1,2,4,5,6}) == true);
-        REQUIRE(msp.isAuthorisedGroupWithPLU({1,2,7,8}) == true);
-        REQUIRE(msp.isAuthorisedGroupWithPLU({1,2,7,9}) == false);
-        REQUIRE(msp.isAuthorisedGroupWithPLU({1,2,7,9, 10}) == false);
-        REQUIRE(msp.isAuthorisedGroupWithPLU({4,9,10,11}) == false);
-        REQUIRE(msp.isAuthorisedGroupWithPLU({4,6,9,10,11}) == false);
-        REQUIRE(msp.isAuthorisedGroupWithPLU({4,6,8,9,10,11}) == true);
+        REQUIRE(msp.isAuthorizedGroupWithPLU({}) == false);
+        REQUIRE(msp.isAuthorizedGroupWithPLU({1,2,3}) == false);
+        REQUIRE(msp.isAuthorizedGroupWithPLU({1,2,3,4}) == false);
+        REQUIRE(msp.isAuthorizedGroupWithPLU({1,2,4,5}) == true);
+        REQUIRE(msp.isAuthorizedGroupWithPLU({1,2,4,5,6}) == true);
+        REQUIRE(msp.isAuthorizedGroupWithPLU({1,2,7,8}) == true);
+        REQUIRE(msp.isAuthorizedGroupWithPLU({1,2,7,9}) == false);
+        REQUIRE(msp.isAuthorizedGroupWithPLU({1,2,7,9, 10}) == false);
+        REQUIRE(msp.isAuthorizedGroupWithPLU({4,9,10,11}) == false);
+        REQUIRE(msp.isAuthorizedGroupWithPLU({4,6,9,10,11}) == false);
+        REQUIRE(msp.isAuthorizedGroupWithPLU({4,6,8,9,10,11}) == true);
 
     }
 }
