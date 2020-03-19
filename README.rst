@@ -54,7 +54,7 @@ section may be incomplete and subject to changes.
 ::
 
     # install from the repo
-    git clone https://github.com/hot-stuff/libhotstuff.git
+    git clone https://gitlab.inf.unibe.ch/oa19s685/libhotstuff
     cd libhotstuff/
     git submodule update --init --recursive
 
@@ -68,7 +68,7 @@ section may be incomplete and subject to changes.
     #
     # on Ubuntu: sudo apt-get install libssl-dev libuv1-dev cmake make
 
-    # ensure GMP and NTL are installed on your machine. 
+    # ensure GMP (6.1.2) and NTL (11.4.3) are installed on your machine.
     https://shoup.net/ntl/doc/tour-gmp.html 
     https://shoup.net/ntl/doc/tour-unix.html
 
