@@ -63,10 +63,10 @@ class ReplicaConfig {
 
     public:
     size_t nreplicas;
-    //size_t nmajority;
+    size_t nmajority;
     
 
-    ReplicaConfig(): nreplicas(0){}; //, nmajority(0) {}
+    ReplicaConfig(): nreplicas(0), nmajority(0) {}
 
     void add_replica(ReplicaID rid, const ReplicaInfo &info) {
         replica_map.insert(std::make_pair(rid, info));

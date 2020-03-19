@@ -15,7 +15,7 @@ remote_user="root"
 copy_to_remote_pat="rsync -avz <local_path> <remote_user>@<remote_ip>:<remote_path>"
 copy_from_remote_pat="rsync -avz <remote_user>@<remote_ip>:<remote_path> <local_path>"
 exe_remote_pat="ssh <remote_user>@<remote_ip> bash"
-run_remote_pat="cd \"<rworkdir>\"; gdb -ex r -ex bt -ex generate-core-file -ex q --args '$proj_server_path' --idx <node_id> --conf \"hotstuff.gen-sec<node_id>.conf\" "
+run_remote_pat="cd \"<rworkdir>\"; gdb -ex r -ex bt -ex generate-core-file -ex q --args '$proj_server_path' --idx <node_id> --conf \"hotstuff.gen-sec<node_id>.conf\""
 reset_remote_pat="pgrep -f '$proj_server_bin' | xargs kill -9"
 
 fin_keyword="error:"  # the keyword indicating completion of execution

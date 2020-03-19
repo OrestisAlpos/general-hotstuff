@@ -409,10 +409,15 @@ void HotStuffBase::start(
     }
 
     /* ((n - 1) + 1 - 1) / 3 */
-    // uint32_t nfaulty = peers.size() / 3;
-    // if (nfaulty == 0)
-    //     LOG_WARN("too few replicas in the system to tolerate any failure");
-    on_init();
+#ifdef HOTSTUFF_USE_QUORUMS
+    on_init(0);
+#else
+    uint32_t nfaulty = peers.size() / 3;
+    if (nfaulty == 0)
+        LOG_WARN("too few replicas in the system to tolerate any failure");
+    on_init(nfaulty);
+#endif  
+    
     pmaker->init(this);
     if (ec_loop)
         ec.dispatch();

@@ -226,9 +226,13 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
     LOG_PROTO("now state: %s", std::string(*this).c_str());
     block_t blk = get_delivered_blk(vote.blk_hash);
     assert(vote.cert);
-    //size_t qsize = blk->voted.size();
-    //if (qsize >= config.nmajority) return;
+#ifdef HOTSTUFF_USE_QUORUMS
     if (config.isAuthorizedGroup(blk->voted)) return;
+#else
+    size_t qsize = blk->voted.size();
+    if (qsize >= config.nmajority) return;
+#endif
+    
     if (!blk->voted.insert(vote.voter).second)
     {
         LOG_WARN("duplicate vote for %s from %d", get_hex10(vote.blk_hash).c_str(), vote.voter);
@@ -241,8 +245,11 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
         qc = create_quorum_cert(blk->get_hash());
     }
     qc->add_part(vote.voter, *vote.cert);
-    //if (qsize + 1 == config.nmajority)
+#ifdef HOTSTUFF_USE_QUORUMS
     if (config.isAuthorizedGroup(blk->voted))
+#else
+    if (qsize + 1 == config.nmajority)
+#endif
     {
         qc->compute();
         update_hqc(blk, qc);
@@ -250,9 +257,12 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
     }
 }
 /*** end HotStuff protocol logic ***/
-void HotStuffCore::on_init() {
-    // config.nmajority = config.nreplicas - nfaulty;
+void HotStuffCore::on_init(uint32_t nfaulty) {
+#ifdef HOTSTUFF_USE_QUORUMS
     config.initializeAccessStructure();
+#else
+    config.nmajority = config.nreplicas - nfaulty;
+#endif
     b0->qc = create_quorum_cert(b0->get_hash());
     b0->qc->compute();
     b0->self_qc = b0->qc->clone();
@@ -291,10 +301,17 @@ void HotStuffCore::add_replica(ReplicaID rid, const NetAddr &addr,
 }
 
 promise_t HotStuffCore::async_qc_finish(const block_t &blk) {
+#ifdef HOTSTUFF_USE_QUORUMS
     if (config.isAuthorizedGroup(blk->voted))
         return promise_t([](promise_t &pm) {
             pm.resolve();
         });
+#else
+    if (blk->voted.size() >= config.nmajority)
+        return promise_t([](promise_t &pm) {
+            pm.resolve();
+        });
+#endif
     auto it = qc_waiting.find(blk);
     if (it == qc_waiting.end())
         it = qc_waiting.insert(std::make_pair(blk, promise_t())).first;

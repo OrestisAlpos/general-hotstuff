@@ -29,11 +29,14 @@ QuorumCertSecp256k1::QuorumCertSecp256k1(
 }
    
 bool QuorumCertSecp256k1::verify(const ReplicaConfig &config) {
-    //if (sigs.size() < config.nmajority) return false;
+#ifdef HOTSTUFF_USE_QUORUMS
     std::unordered_set<hotstuff::ReplicaID> reps;
     for(auto k : sigs)
         reps.insert(k.first);
     if (!config.isAuthorizedGroup(reps)) return false;
+#else
+    if (sigs.size() < config.nmajority) return false;
+#endif
     for (size_t i = 0; i < rids.size(); i++)
         if (rids.get(i))
         {
@@ -48,12 +51,17 @@ bool QuorumCertSecp256k1::verify(const ReplicaConfig &config) {
 }
 
 promise_t QuorumCertSecp256k1::verify(const ReplicaConfig &config, VeriPool &vpool) {
+#ifdef HOTSTUFF_USE_QUORUMS
     std::unordered_set<hotstuff::ReplicaID> reps;
     for(auto k : sigs)
         reps.insert(k.first);
-    // if (sigs.size() < config.nmajority)
     if (!config.isAuthorizedGroup(reps))
         return promise_t([](promise_t &pm) { pm.resolve(false); });
+#else
+    if (sigs.size() < config.nmajority)
+        return promise_t([](promise_t &pm) { pm.resolve(false); });
+#endif
+
     std::vector<promise_t> vpm;
     for (size_t i = 0; i < rids.size(); i++)
         if (rids.get(i))
