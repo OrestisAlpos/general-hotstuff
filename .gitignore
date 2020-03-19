@@ -21,11 +21,12 @@ include/hotstuff/config.h
 /test/Makefile
 /test/test_secp256k1
 /test/test_concurrent_queue
+/test/test_quorums
 core
 .vscode/
 log*
 *.bak
 *OLD
 a_*
-/hotstuff-app
-/hotstuff-client
+hotstuff-app
+hotstuff-client
