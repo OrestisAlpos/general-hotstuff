@@ -67,6 +67,7 @@ section may be incomplete and subject to changes.
     # openssl >= 1.1.0 (libssl-dev)
     #
     # on Ubuntu: sudo apt-get install libssl-dev libuv1-dev cmake make
+    # You might also need: sudo apt-get install autoconf libtool gdb python3 python3-pip
 
     # ensure GMP (6.1.2) and NTL (11.4.3) are installed on your machine.
     https://shoup.net/ntl/doc/tour-gmp.html 
