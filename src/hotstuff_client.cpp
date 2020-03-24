@@ -108,7 +108,7 @@ void client_resp_cmd_handler(MsgRespCmd &&msg, const Net::conn_t &) {
 #else
     if (++it->second.confirmed <= nfaulty) return; // wait for f + 1 ack
 #endif
-    HOTSTUFF_LOG_INFO("got quorum of confirmations %s, wall: %.3f, cpu: %.3f",
+    HOTSTUFF_LOG_DEBUG("got quorum of confirmations %s, wall: %.3f, cpu: %.3f",
                         std::string(fin).c_str(),
                         et.elapsed_sec, et.cpu_elapsed_sec);
 
