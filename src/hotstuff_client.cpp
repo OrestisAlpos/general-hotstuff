@@ -43,6 +43,7 @@ using hotstuff::uint256_t;
 using hotstuff::opcode_t;
 using hotstuff::command_t;
 
+
 EventContext ec;
 ReplicaID proposer;
 size_t max_async_num;
@@ -55,7 +56,7 @@ hotstuff::quorums::AccessStructure accessStructure;
 struct Request {
     command_t cmd;
     size_t confirmed;
-#ifdef HOTSTUFF_USE_QUORUMS    
+#ifdef USE_GENERALIZED_QUORUMS    
     std::unordered_set<hotstuff::ReplicaID> confirmedReplicas;
 #endif
     salticidae::ElapsedTime et;
@@ -101,8 +102,8 @@ void client_resp_cmd_handler(MsgRespCmd &&msg, const Net::conn_t &) {
     auto it = waiting.find(cmd_hash);
     auto &et = it->second.et;
     if (it == waiting.end()) return;
-    et.stop();
-#ifdef HOTSTUFF_USE_QUORUMS
+    et.stop(); 
+    #ifdef USE_GENERALIZED_QUORUMS
     it->second.confirmedReplicas.insert(fin.rid);
     if (!accessStructure.isAuthorizedGroup(it->second.confirmedReplicas)) return;
 #else
@@ -170,7 +171,7 @@ int main(int argc, char **argv) {
         size_t _;
         replicas.push_back(NetAddr(NetAddr(_p.first).ip, htons(stoi(_p.second, &_))));
     }
-#ifdef HOTSTUFF_USE_QUORUMS
+#ifdef USE_GENERALIZED_QUORUMS
     accessStructure.initialize();
     HOTSTUFF_LOG_INFO("** Access Structure Initialization finished. The parsed MSP is: **");
     HOTSTUFF_LOG_INFO(std::string(accessStructure).c_str());

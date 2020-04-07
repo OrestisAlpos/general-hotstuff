@@ -409,7 +409,7 @@ void HotStuffBase::start(
     }
 
     /* ((n - 1) + 1 - 1) / 3 */
-#ifdef HOTSTUFF_USE_QUORUMS
+#ifdef USE_GENERALIZED_QUORUMS
     on_init(0);
 #else
     uint32_t nfaulty = peers.size() / 3;

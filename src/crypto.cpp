@@ -29,7 +29,7 @@ QuorumCertSecp256k1::QuorumCertSecp256k1(
 }
    
 bool QuorumCertSecp256k1::verify(const ReplicaConfig &config) {
-#ifdef HOTSTUFF_USE_QUORUMS
+#ifdef USE_GENERALIZED_QUORUMS
     std::unordered_set<hotstuff::ReplicaID> reps;
     for(auto k : sigs)
         reps.insert(k.first);
@@ -51,7 +51,7 @@ bool QuorumCertSecp256k1::verify(const ReplicaConfig &config) {
 }
 
 promise_t QuorumCertSecp256k1::verify(const ReplicaConfig &config, VeriPool &vpool) {
-#ifdef HOTSTUFF_USE_QUORUMS
+#ifdef USE_GENERALIZED_QUORUMS
     std::unordered_set<hotstuff::ReplicaID> reps;
     for(auto k : sigs)
         reps.insert(k.first);

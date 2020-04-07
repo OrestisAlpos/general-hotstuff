@@ -31,8 +31,7 @@ if __name__ == "__main__":
 
     main_conf = open("{}.conf".format(prefix), 'w')
     nodes = open(args.nodes, 'w')
-    replicas = ["{}:{};{}".format(ip, base_pport + i, base_cport + i)
-                for ip in ips
+    replicas = ["{}:{};{}".format(ips[i], base_pport + i, base_cport + i)
                 for i in range(iter)]
     p = subprocess.Popen([keygen_bin, '--num', str(len(replicas))],
                         stdout=subprocess.PIPE, stderr=open(os.devnull, 'w'))

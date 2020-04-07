@@ -8,6 +8,6 @@
 #cmakedefine HOTSTUFF_BLK_PROFILE
 #cmakedefine HOTSTUFF_TWO_STEP
 #cmakedefine HOTSTUFF_ENABLE_BENCHMARK
-#cmakedefine HOTSTUFF_USE_QUORUMS
+#cmakedefine USE_GENERALIZED_QUORUMS
 
 #endif

@@ -73,7 +73,7 @@ section may be incomplete and subject to changes.
     https://shoup.net/ntl/doc/tour-gmp.html 
     https://shoup.net/ntl/doc/tour-unix.html
 
-    cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED=OFF -DHOTSTUFF_PROTO_LOG=ON -DHOTSTUFF_USE_QUORUMS=ON -DHOTSTUFF_ENABLE_BENCHMARK=ON
+    cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED=OFF -DHOTSTUFF_PROTO_LOG=ON -DUSE_GENERALIZED_QUORUMS=ON -DHOTSTUFF_ENABLE_BENCHMARK=ON
     make
 
     # start 4 demo replicas with scripts/run_demo.sh

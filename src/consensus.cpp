@@ -177,8 +177,8 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds,
         throw std::runtime_error("new block should be higher than vheight");
     vheight = bnew->height;
     on_receive_vote(
-        Vote(id, bnew_hash,         //I (the creator of the block) vote for it - implicitly by calling on_receive_vote.
-            create_part_cert(*priv_key, bnew_hash), this)); // Don't know why required, since I will eventually receive this block, so I will vote then.
+        Vote(id, bnew_hash,
+            create_part_cert(*priv_key, bnew_hash), this));
     on_propose_(prop);
     /* boradcast to other replicas */
     do_broadcast_proposal(prop);
@@ -226,7 +226,7 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
     LOG_PROTO("now state: %s", std::string(*this).c_str());
     block_t blk = get_delivered_blk(vote.blk_hash);
     assert(vote.cert);
-#ifdef HOTSTUFF_USE_QUORUMS
+#ifdef USE_GENERALIZED_QUORUMS
     if (config.isAuthorizedGroup(blk->voted)) return;
 #else
     size_t qsize = blk->voted.size();
@@ -245,7 +245,7 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
         qc = create_quorum_cert(blk->get_hash());
     }
     qc->add_part(vote.voter, *vote.cert);
-#ifdef HOTSTUFF_USE_QUORUMS
+#ifdef USE_GENERALIZED_QUORUMS
     if (config.isAuthorizedGroup(blk->voted))
 #else
     if (qsize + 1 == config.nmajority)
@@ -258,7 +258,7 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
 }
 /*** end HotStuff protocol logic ***/
 void HotStuffCore::on_init(uint32_t nfaulty) {
-#ifdef HOTSTUFF_USE_QUORUMS
+#ifdef USE_GENERALIZED_QUORUMS
     config.initializeAccessStructure();
 #else
     config.nmajority = config.nreplicas - nfaulty;
@@ -301,7 +301,7 @@ void HotStuffCore::add_replica(ReplicaID rid, const NetAddr &addr,
 }
 
 promise_t HotStuffCore::async_qc_finish(const block_t &blk) {
-#ifdef HOTSTUFF_USE_QUORUMS
+#ifdef USE_GENERALIZED_QUORUMS
     if (config.isAuthorizedGroup(blk->voted))
         return promise_t([](promise_t &pm) {
             pm.resolve();
