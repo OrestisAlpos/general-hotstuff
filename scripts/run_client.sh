@@ -12,10 +12,11 @@ template_dir="template"     # the dir that keeps the content shared among all no
 remote_base="/root/git/libhotstuff"  # remote dir used to keep files for the experiment
 remote_log="log"   # log filename
 remote_user="root"
+max_async=1
 copy_to_remote_pat="rsync -avz <local_path> <remote_user>@<remote_ip>:<remote_path>"
 copy_from_remote_pat="rsync -avz <remote_user>@<remote_ip>:<remote_path> <local_path>"
 exe_remote_pat="ssh <remote_user>@<remote_ip> bash"
-run_remote_pat="cd \"<rworkdir>\"; '$proj_client_path' --idx \"<node_id>\" --iter -1 --max-async 1600"
+run_remote_pat="cd \"<rworkdir>\"; '$proj_client_path' --idx \"<node_id>\" --iter -1 --max-async <max_async>"
 reset_remote_pat="pgrep -f '$proj_client_bin' | xargs kill -9"
 node_id_step=1
  
@@ -147,6 +148,7 @@ function _remote_start {
     cmd="${cmd//<node_id_step>/$node_id_step}"
     cmd="${cmd//<node_id>/$((node_id * node_id_step))}"
     cmd="${cmd//<server>/$node_ip:$client_port}"
+    cmd="${cmd//<max_async>/$max_async}"
     execute_remote_cmd_pid "$client_ip" "$cmd" \
         "\"$rworkdir/$remote_log\"" > "$workdir/${node_id}.pid"
 }
@@ -291,7 +293,8 @@ echo "Usage: $0 [--bin] [--path] [--conf] [--conf-src] [--peer-list] [--client-l
     --client-list FILE          read client list from FILE (default: $client_list)
     --user      USER            the username to login the remote machines
     --force-peer-list           force the use of FILE specified by --peer-list
-                                instead of the peer list in WORKDIR"
+                                instead of the peer list in WORKDIR
+    --max-async INT             the client send up to INT pending requestis (default: $max_async)"
     exit 0
 }
 
@@ -317,6 +320,7 @@ run-remote-pat:,\
 reset-remote-pat:,\
 force-peer-list,\
 node-id-step:,\
+max-async:,\
 help'
 
 PARSED=$(getopt --options "$SHORT" --longoptions "$LONG" --name "$0" -- "$@")
@@ -339,6 +343,7 @@ while true; do
         --run-remote-pat) run_remote_pat="$2"; shift 2;;
         --reset-remote-pat) reset_remote_pat="$2"; shift 2;;
         --node-id-step) node_id_step="$2"; shift 2;;
+        --max-async) max_async="$2"; shift 2;;
         --help) print_help; shift 1;;
         --) shift; break;;
         *) die "internal error";;
