@@ -65,6 +65,10 @@ class Msp{
         return e1;
     }
     
+    Msp(){}
+    
+    Msp(NTL::mat_ZZ_p M, std::vector<hotstuff::ReplicaID> L): M(M), L(L){}
+
     NTL::mat_ZZ_p U; //The U matrix from PLU factorization, such that P M^T = L U
     
     NTL::vec_ZZ_p y; //The solution of L y = P e1. 
@@ -100,14 +104,14 @@ class Msp{
 
 class MspCreator{
     public:
-    std::vector< std::vector<int> > getVandermonde(const Theta &t);
+    NTL::mat_ZZ_p getVandermonde(const Theta &t);
 
-    std::vector< std::vector<int> > getVandermonde(int threshold, int numPoints);
+    NTL::mat_ZZ_p getVandermonde(long threshold, long numPoints);
 
-    void performInsertion(std::vector< std::vector<int> > &M1, std::vector< std::vector<int> > M2, const int r);
+    NTL::mat_ZZ_p  performInsertion(const NTL::mat_ZZ_p &M1, const NTL::mat_ZZ_p &M2, const long &r);
     //insertion of matrix M2 (2D, described by t) in the row of matrix M (2D) specified by the index r, with r in [0, m1-1]
 
-    void insertNextTheta(std::vector<std::vector<int> > &M, std::vector<hotstuff::ReplicaID> &L, int &insertionIndex, const Theta &t);
+    void insertNextTheta(NTL::mat_ZZ_p &M, std::vector<hotstuff::ReplicaID> &L, int &insertionIndex, const Theta &t);
     //insertion of access structure t in the row of matrix M (2D) specified by the index r, with r in [0, m1-1]
 
     hotstuff::quorums::Msp createMspWithLcwAlgorithm(const hotstuff::quorums::Theta& t);

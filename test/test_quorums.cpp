@@ -255,7 +255,8 @@ TEST_CASE("Linalg util") {
 TEST_CASE("Quorums") {
     hotstuff::quorums::JsonParser jsonParser;
     hotstuff::quorums::MspCreator mspCreator;
-
+    NTL::ZZ_p::init(NTL::ZZ(QUORUMS_PRIME_P));
+    
      SECTION("JsonParser", "Test the methods for parsing a Json string to a Theta-based structure" ) {    
         Theta theta_parsed = jsonParser.parse_IdBased(
             " { \"select\": 2, "

@@ -69,66 +69,62 @@ hotstuff::quorums::Theta hotstuff::quorums::JsonParser::parse_IdBased(const std:
 
 
 //MspCreator class implementation
-std::vector< std::vector<int> > hotstuff::quorums::MspCreator::getVandermonde(const Theta &t){
+NTL::mat_ZZ_p hotstuff::quorums::MspCreator::getVandermonde(const Theta &t){
     return getVandermonde(t.threshold, t.elements.size() + t.nestedElements.size());
 }
 
-std::vector< std::vector<int> > hotstuff::quorums::MspCreator::getVandermonde(int threshold, int numPoints){
-    std::vector< std::vector<int> > v;
-    for (int i = 1; i <= numPoints; i++) {
-        std::vector<int> row;
-        for (int power = 0; power < threshold; power++)
-            row.push_back(pow(i, power));
-        v.push_back(row);  
+NTL::mat_ZZ_p hotstuff::quorums::MspCreator::getVandermonde(long threshold, long numPoints){
+    mat_ZZ_p v;
+    ZZ_p p;
+    v.SetDims(numPoints, threshold);
+    for (long i = 1; i <= numPoints; i++) {
+        for (long j = 0; j < threshold; j++){
+            NTL::power(p, ZZ_p(i), ZZ(j));
+            conv(v[i-1][j], p);
+        }
     }
     return v; 
 }
 
-void hotstuff::quorums::MspCreator::performInsertion(
-        std::vector< std::vector<int> > &M1, // m1 x d1
-        std::vector< std::vector<int> > M2,  // m2 x d2
-        const int r){
-    int m1 = M1.size();
-    int d1 = M1[0].size();
-    int m2 = M2.size();
-    int d2 = M2[0].size();
-    for (int i = 0; i < r ; i++)
-    {
-        for (int j = 1; j < d2; j++)
-        {
-            M1[i].push_back(0);
-        }
+NTL::mat_ZZ_p hotstuff::quorums::MspCreator::performInsertion(
+                                            const NTL::mat_ZZ_p &M1, // m1 x d1
+                                            const NTL::mat_ZZ_p &M2,  // m2 x d2
+                                            const long &r){ // M1(r -> M2)
+    long m1 = M1.NumRows();
+    long d1 = M1.NumCols();
+    long m2 = M2.NumRows();
+    long d2 = M2.NumCols();
+    NTL::mat_ZZ_p M;
+    M.SetDims(m1 + m2 - 1, d1 + d2 - 1);
+    //rows 0 to r-1
+    for (long i = 0; i <= r - 1 ; i++)
+        //copy values from corresponding M1 cols
+        for (long j = 0; j <= d1 - 1; j++)
+            M[i][j] = M1[i][j];
+    //rows r to r+m2-1
+    for (long i = r; i <= r + m2 - 1 ; i++){
+        //copy values from r-1 row of M1
+        for (long j = 0; j <= d1 - 1; j++)
+            M[i][j] = M1[r][j];
+        //copy the rest cols from M2
+        for (long j = d1; j <= d1 + d2 - 2; j++)
+            M[i][j] = M2[i - r][j - d1 + 1];
     }
-    for (int i = r + 1; i < m1; i++)    
-    {
-        for (int j = 1; j < d2; j++)
-        {
-            M1[i].push_back(0);
-        }
-    }
-    std::vector rowToRepeat = M1[r];
-    for (int j2 = 1; j2 < d2; j2++)
-        {
-            M1[r].push_back(M2[0][j2]);
-        }
-    for (int i2 = 1; i2 < m2; i2++)
-    {
-        std::vector<int> newRow = rowToRepeat;
-        for (int j2 = 1; j2 < d2; j2++)
-        {
-            newRow.push_back(M2[i2][j2]);
-        }
-        M1.insert(M1.begin() + r + i2, newRow);
-    }
-    
+    //rows r+m2 to m1+m2-2
+    for (int i = r + m2; i <= m1 + m2 - 2; i++)
+        //copy values from corresponding M1 cols
+        for (int j = 0; j <= d1 - 1; j++)
+            M[i][j] = M1[i - m2 + 1][j];
+    return M;
 }
 
-void hotstuff::quorums::MspCreator::insertNextTheta(std::vector<std::vector<int> > &M, 
-                                                               std::vector<hotstuff::ReplicaID> &L,
-                                                               int &insertionIndex, 
-                                                               const Theta &t){
-    std::vector< std::vector<int> > M2 = getVandermonde(t);
-    performInsertion(M, M2, insertionIndex);
+void hotstuff::quorums::MspCreator::insertNextTheta( 
+                                    NTL::mat_ZZ_p &M, 
+                                    std::vector<hotstuff::ReplicaID> &L,
+                                    int &insertionIndex, 
+                                    const Theta &t){
+    NTL::mat_ZZ_p M2 = getVandermonde(t);
+    M = performInsertion(M, M2, insertionIndex);
     for (auto it = t.elements.begin(); it != t.elements.end(); ++it){
         L.push_back(*it);
     }
@@ -139,17 +135,13 @@ void hotstuff::quorums::MspCreator::insertNextTheta(std::vector<std::vector<int>
 }
 
 Msp hotstuff::quorums::MspCreator::createMspWithLcwAlgorithm(const Theta &t){
-    std::vector<std::vector<int> > M = {{1}};
+    NTL::mat_ZZ_p M;
+    M.SetDims(1,1);
+    M[0][0] = ZZ_p(1);
     std::vector<hotstuff::ReplicaID> L;
     int insertionIndex = 0;
     insertNextTheta(M, L, insertionIndex, t);
-    Msp msp;
-    msp.M.SetDims(M.size(), M[0].size());
-    for (auto i = 0; i < M.size(); i++)
-        for (auto j = 0; j < M[0].size(); j++)
-            msp.M[i][j] = ZZ_p(M[i][j]);
-    msp.L = L;
-    return msp;
+    return Msp(M, L);
 }
 
 void hotstuff::quorums::MspCreator::performPLU(hotstuff::quorums::Msp& msp){
