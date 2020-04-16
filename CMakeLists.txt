@@ -101,7 +101,7 @@ option(HOTSTUFF_BLK_PROFILE "enable block profiling" OFF)
 option(HOTSTUFF_TWO_STEP "use two-step HotStuff (instead of three-step HS)" OFF)
 option(BUILD_EXAMPLES "build examples" OFF)
 option(HOTSTUFF_ENABLE_BENCHMARK "enable banchamrk output" OFF)
-option(HOTSTUFF_USE_QUORUMS "use generalized quorums instead of thresholds" ON)
+option(USE_GENERALIZED_QUORUMS "use generalized quorums instead of thresholds" ON)
 
 configure_file(src/config.h.in include/hotstuff/config.h @ONLY)
 
