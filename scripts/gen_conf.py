@@ -5,14 +5,14 @@ import argparse
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Generate configuration file for a batch of replicas')
-    parser.add_argument('--prefix', type=str, default='hotstuff.gen')
+    parser.add_argument('--prefix', type=str, default='conf/hotstuff.gen')
     parser.add_argument('--ips', type=str, default=None)
     parser.add_argument('--iter', type=int, default=10)
     parser.add_argument('--pport', type=int, default=10000)
     parser.add_argument('--cport', type=int, default=20000)
     parser.add_argument('--keygen', type=str, default='./hotstuff-keygen')
     parser.add_argument('--tls-keygen', type=str, default='./hotstuff-tls-keygen')
-    parser.add_argument('--nodes', type=str, default='nodes.txt')
+    parser.add_argument('--nodes', type=str, default='conf/nodes.txt')
     parser.add_argument('--block-size', type=int, default=1)
     parser.add_argument('--pace-maker', type=str, default='dummy')
     args = parser.parse_args()

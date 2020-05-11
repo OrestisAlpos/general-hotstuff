@@ -9,5 +9,6 @@
 #cmakedefine HOTSTUFF_TWO_STEP
 #cmakedefine HOTSTUFF_ENABLE_BENCHMARK
 #cmakedefine USE_GENERALIZED_QUORUMS
+#cmakedefine GENERALIZED_QUORUMS_WITH_MSP
 
 #endif

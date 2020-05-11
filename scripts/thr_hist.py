@@ -66,12 +66,16 @@ if __name__ == '__main__':
             cnt = 1
     values.append(cnt)
     print("thr_values = ", values)
-    print("thr = {:.2f}Kops/sec".format(sum(values) / len(values) / 1e3 ))
+    print("thr = {:.3f}Kops/sec".format(sum(values) / len(values) / 1e3 ))
     values_norm, _ = remove_outliers(values)
-    print("thr_wout_outliers = {:.2f}Kops/sec".format(sum(values_norm) / len(values_norm) / 1e3))
+    print("thr_wout_outliers = {:.3f}Kops/sec".format(sum(values_norm) / len(values_norm) / 1e3))
 
-    print("lat = {:.2f}ms".format(sum(lats) / len(lats) * 1e3))
-    lats, _ = remove_outliers(lats)
-    print("lat_wout_outliers = {:.2f}ms".format(sum(lats) / len(lats) * 1e3))
+    if len(lats) == 0:
+        print("lat = {:.3f}".format(0))
+        print("lat_wout_outliers = {:.3f}".format(0))
+    else:
+        print("lat = {:.3f}ms".format(sum(lats) / len(lats) * 1e3))
+        lats, _ = remove_outliers(lats)
+        print("lat_wout_outliers = {:.3f}ms".format(sum(lats) / len(lats) * 1e3))
     if args.plot:
         plot_thr(args.output)

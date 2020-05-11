@@ -103,7 +103,7 @@ void client_resp_cmd_handler(MsgRespCmd &&msg, const Net::conn_t &) {
     auto &et = it->second.et;
     if (it == waiting.end()) return;
     et.stop(); 
-    #ifdef USE_GENERALIZED_QUORUMS
+#ifdef USE_GENERALIZED_QUORUMS
     it->second.confirmedReplicas.insert(fin.rid);
     if (!accessStructure.isAuthorizedGroup(it->second.confirmedReplicas)) return;
 #else
@@ -173,7 +173,7 @@ int main(int argc, char **argv) {
     }
 #ifdef USE_GENERALIZED_QUORUMS
     accessStructure.initialize();
-    HOTSTUFF_LOG_INFO("** Access Structure Initialization finished. The parsed MSP is: **");
+    HOTSTUFF_LOG_INFO("** Access Structure Initialization finished. **");
     HOTSTUFF_LOG_INFO(std::string(accessStructure).c_str());
 #else
     nfaulty = (replicas.size() - 1) / 3;

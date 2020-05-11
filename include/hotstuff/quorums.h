@@ -35,16 +35,20 @@ struct Theta {
 std::ostream& operator<<(std::ostream& os, const Theta& t);
 bool operator==(const Theta& lhs, const Theta& rhs);
 
-
 class JsonParser{
     public:
-    hotstuff::quorums::Theta parse_IdBased();
+    virtual hotstuff::quorums::Theta parse(const std::string& conf = "") = 0;
+};
 
-    hotstuff::quorums::Theta parse_IdBased(const std::string& conf);
-
-    hotstuff::quorums::Theta parse(){ return parse_IdBased();   }
+class DefaultConfigJsonParser: public JsonParser{
+    public:
+    hotstuff::quorums::Theta parse(const std::string& conf = "");
 };   
 
+class StringJsonParser: public JsonParser{
+    public:
+    hotstuff::quorums::Theta parse(const std::string& conf = "");
+};
 
 class Msp{
     public: 
@@ -104,6 +108,11 @@ class Msp{
 
 class MspCreator{
     public:
+    virtual hotstuff::quorums::Msp create(const hotstuff::quorums::Theta& t) = 0;
+};
+
+class InsertionMspCreator: public MspCreator{
+    public:
     NTL::mat_ZZ_p getVandermonde(const Theta &t);
 
     NTL::mat_ZZ_p getVandermonde(long threshold, long numPoints);
@@ -114,13 +123,13 @@ class MspCreator{
     void insertNextTheta(NTL::mat_ZZ_p &M, std::vector<hotstuff::ReplicaID> &L, int &insertionIndex, const Theta &t);
     //insertion of access structure t in the row of matrix M (2D) specified by the index r, with r in [0, m1-1]
 
-    hotstuff::quorums::Msp createMspWithLcwAlgorithm(const hotstuff::quorums::Theta& t);
+    hotstuff::quorums::Msp createMspWithInsertionAlgorithm(const hotstuff::quorums::Theta& t);
 
     void performPLU(hotstuff::quorums::Msp& msp);
     //Updates msp.U and msp.y with the results of PLU (P M^T = L U) and of the equation L y = msp.e1
 
     hotstuff::quorums::Msp create(const hotstuff::quorums::Theta& t){
-        Msp msp = createMspWithLcwAlgorithm(t);
+        Msp msp = createMspWithInsertionAlgorithm(t);
         performPLU(msp);
         return msp;
     }
@@ -128,26 +137,47 @@ class MspCreator{
 
 
 class AccessStructure{
-    hotstuff::quorums::JsonParser jsonParser; 
-    hotstuff::quorums::MspCreator mspCreator; 
+    hotstuff::quorums::JsonParser *jsonParser = new DefaultConfigJsonParser(); 
+    hotstuff::quorums::MspCreator *mspCreator = new InsertionMspCreator(); 
+    hotstuff::quorums::Theta thetaOperatorFormula;
     hotstuff::quorums::Msp msp;
 
     public:
     AccessStructure(){
         NTL::ZZ_p::init(NTL::ZZ(QUORUMS_PRIME_P));
     };
+    AccessStructure(hotstuff::quorums::JsonParser *jsonParser_): AccessStructure() {jsonParser = jsonParser_;}
 
-    void initialize(){
-        Theta t = jsonParser.parse();
-        msp = mspCreator.create(t); 
-        
+    void initialize(const std::string& conf = ""){
+        thetaOperatorFormula = jsonParser->parse(conf);    
+        msp = mspCreator->create(thetaOperatorFormula);      
     }
 
     bool isAuthorizedGroup(std::unordered_set<ReplicaID> reps) const{
-        return msp.isAuthorizedGroup(reps);
+#ifdef GENERALIZED_QUORUMS_WITH_MSP
+    return msp.isAuthorizedGroup(reps);
+#else
+    return evalFomula(reps);
+#endif  
     };
 
-    operator std::string() const { return std::string(msp);}
+    bool evalFomula(const std::unordered_set<ReplicaID> reps) const{
+        return evalFomula(thetaOperatorFormula, reps);
+    }
+    bool evalFomula(const hotstuff::quorums::Theta formula, const std::unordered_set<ReplicaID> reps) const;
+
+    operator std::string() const {
+#ifdef GENERALIZED_QUORUMS_WITH_MSP
+         return std::string(msp);
+#else
+        std::stringstream buffer;
+        buffer << thetaOperatorFormula;
+        return buffer.str();
+#endif
+    }
+
+
+    
 };
 
 

@@ -69,11 +69,12 @@ class CommandDummy: public Command {
 #endif
 
     public:
+    uint32_t command_seq;
     CommandDummy() {}
     ~CommandDummy() override {}
 
     CommandDummy(uint32_t cid, uint32_t n):
-        cid(cid), n(n), hash(salticidae::get_hash(*this)) {}
+        cid(cid), n(n), command_seq(n), hash(salticidae::get_hash(*this)) {}
 
     void serialize(DataStream &s) const override {
         s << cid << n;

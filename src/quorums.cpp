@@ -53,8 +53,8 @@ void from_json(const json& j, Theta& t){
 }
 
 
-//JsonParser class implemementation
-hotstuff::quorums::Theta hotstuff::quorums::JsonParser::parse_IdBased(){
+//JsonParser subclasses implemementation
+hotstuff::quorums::Theta hotstuff::quorums::DefaultConfigJsonParser::parse(const std::string& conf){
     std::ifstream infile("quorums.json");
     json j;
     infile >> j;
@@ -62,18 +62,18 @@ hotstuff::quorums::Theta hotstuff::quorums::JsonParser::parse_IdBased(){
 
 }
 
-hotstuff::quorums::Theta hotstuff::quorums::JsonParser::parse_IdBased(const std::string& conf){
+hotstuff::quorums::Theta hotstuff::quorums::StringJsonParser::parse(const std::string& conf /* = "" */){
     json j = json::parse(conf);
     return j.get<Theta>();
 }
 
 
-//MspCreator class implementation
-NTL::mat_ZZ_p hotstuff::quorums::MspCreator::getVandermonde(const Theta &t){
+//MspCreator subclasses implementation
+NTL::mat_ZZ_p hotstuff::quorums::InsertionMspCreator::getVandermonde(const Theta &t){
     return getVandermonde(t.threshold, t.elements.size() + t.nestedElements.size());
 }
 
-NTL::mat_ZZ_p hotstuff::quorums::MspCreator::getVandermonde(long threshold, long numPoints){
+NTL::mat_ZZ_p hotstuff::quorums::InsertionMspCreator::getVandermonde(long threshold, long numPoints){
     mat_ZZ_p v;
     ZZ_p p;
     v.SetDims(numPoints, threshold);
@@ -83,10 +83,10 @@ NTL::mat_ZZ_p hotstuff::quorums::MspCreator::getVandermonde(long threshold, long
             conv(v[i-1][j], p);
         }
     }
-    return v; 
+    return v;
 }
 
-NTL::mat_ZZ_p hotstuff::quorums::MspCreator::performInsertion(
+NTL::mat_ZZ_p hotstuff::quorums::InsertionMspCreator::performInsertion(
                                             const NTL::mat_ZZ_p &M1, // m1 x d1
                                             const NTL::mat_ZZ_p &M2,  // m2 x d2
                                             const long &r){ // M1(r -> M2)
@@ -118,7 +118,7 @@ NTL::mat_ZZ_p hotstuff::quorums::MspCreator::performInsertion(
     return M;
 }
 
-void hotstuff::quorums::MspCreator::insertNextTheta( 
+void hotstuff::quorums::InsertionMspCreator::insertNextTheta( 
                                     NTL::mat_ZZ_p &M, 
                                     std::vector<hotstuff::ReplicaID> &L,
                                     int &insertionIndex, 
@@ -134,7 +134,7 @@ void hotstuff::quorums::MspCreator::insertNextTheta(
     }
 }
 
-Msp hotstuff::quorums::MspCreator::createMspWithLcwAlgorithm(const Theta &t){
+Msp hotstuff::quorums::InsertionMspCreator::createMspWithInsertionAlgorithm(const Theta &t){
     NTL::mat_ZZ_p M;
     M.SetDims(1,1);
     M[0][0] = ZZ_p(1);
@@ -144,7 +144,7 @@ Msp hotstuff::quorums::MspCreator::createMspWithLcwAlgorithm(const Theta &t){
     return Msp(M, L);
 }
 
-void hotstuff::quorums::MspCreator::performPLU(hotstuff::quorums::Msp& msp){
+void hotstuff::quorums::InsertionMspCreator::performPLU(hotstuff::quorums::Msp& msp){
     NTL::mat_ZZ_p P, L;
     linalg::PLU(NTL::transpose(msp.M), P, L, msp.U);
     linalg::solveByForwardSubstitution(L, msp.y, P * msp.e1());
@@ -225,4 +225,16 @@ NTL::mat_ZZ_p hotstuff::quorums::Msp::getColsOfUOwnedByReps(std::unordered_set<R
     return Ua;
 }
 
+
+//AccessStructure class implementation
+bool hotstuff::quorums::AccessStructure::evalFomula(const hotstuff::quorums::Theta formula, const std::unordered_set<ReplicaID> reps) const{
+    int true_vals = 0;
+    for (auto const& elem: formula.elements){
+        if (reps.count(elem) > 0) true_vals++;
+    }
+    for (auto const& nested_theta: formula.nestedElements){
+        if (evalFomula(nested_theta, reps)) true_vals++;
+    }
+    return true_vals >= formula.threshold;
+}
 }

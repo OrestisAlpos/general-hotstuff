@@ -1,22 +1,25 @@
 #!/bin/bash
 
 proj_client_bin="hotstuff-client"
-proj_client_path="/root/git/libhotstuff/$proj_client_bin"
+proj_client_path="/root/libhotstuff/$proj_client_bin"
 proj_conf_name="hotstuff.conf"
 
-peer_list="./nodes.txt"     # the list of nodes
-client_list="./clients.txt"  # the list of clients
-conf_src="./hotstuff.gen.conf"
-quorums_conf="./quorums.json"
+peer_list="./conf/nodes.txt"     # the list of nodes
+client_list="./conf/clients.txt"  # the list of clients
+conf_src="./conf/hotstuff.gen.conf"
+quorums_conf_src="./conf/quorums.json"
+quorums_conf_name="quorums.json"
 template_dir="template"     # the dir that keeps the content shared among all nodes
-remote_base="/root/git/libhotstuff"  # remote dir used to keep files for the experiment
+remote_base="/root/libhotstuff"  # remote dir used to keep files for the experiment
 remote_log="log"   # log filename
 remote_user="root"
 max_async=1
+iter=-1
+max_commands=-1
 copy_to_remote_pat="rsync -avz <local_path> <remote_user>@<remote_ip>:<remote_path>"
 copy_from_remote_pat="rsync -avz <remote_user>@<remote_ip>:<remote_path> <local_path>"
 exe_remote_pat="ssh <remote_user>@<remote_ip> bash"
-run_remote_pat="cd \"<rworkdir>\"; '$proj_client_path' --idx \"<node_id>\" --iter -1 --max-async <max_async>"
+run_remote_pat="cd \"<rworkdir>\"; '<proj_client_path>' --cid \"<node_id>\" --iter <iter> --max-async <max_async>"
 reset_remote_pat="pgrep -f '$proj_client_bin' | xargs kill -9"
 node_id_step=1
  
@@ -145,10 +148,13 @@ function _remote_start {
     local client_port="$5"
     local client_ip="$6"
     local cmd="${run_remote_pat//<rworkdir>/$rworkdir}"
+    cmd="${cmd//<proj_client_path>/$proj_client_path}"
     cmd="${cmd//<node_id_step>/$node_id_step}"
     cmd="${cmd//<node_id>/$((node_id * node_id_step))}"
     cmd="${cmd//<server>/$node_ip:$client_port}"
     cmd="${cmd//<max_async>/$max_async}"
+    cmd="${cmd//<iter>/$iter}"
+    cmd="${cmd//<max_commands>/$max_commands}"
     execute_remote_cmd_pid "$client_ip" "$cmd" \
         "\"$rworkdir/$remote_log\"" > "$workdir/${node_id}.pid"
 }
@@ -189,9 +195,9 @@ function start_all {
     cp "$client_list" "$workdir/client_list.txt"
     get_node_info "$workdir/peer_list.txt"
     get_client_info "$workdir/client_list.txt"
-    echo "coyping configuration file"
+    echo "copying configuration file"
     rsync -avP "$conf_src" "$tmpldir/$proj_conf_name"
-    rsync -avP "$quorums_conf" "$tmpldir/$quorums_conf"
+    rsync -avP "$quorums_conf_src" "$tmpldir/$quorums_conf_name"
     local i=0
     local j=0
     for cip in "${cip_list[@]}"; do
@@ -321,6 +327,8 @@ reset-remote-pat:,\
 force-peer-list,\
 node-id-step:,\
 max-async:,\
+iter:,\
+max-commands:,\
 help'
 
 PARSED=$(getopt --options "$SHORT" --longoptions "$LONG" --name "$0" -- "$@")
@@ -344,6 +352,8 @@ while true; do
         --reset-remote-pat) reset_remote_pat="$2"; shift 2;;
         --node-id-step) node_id_step="$2"; shift 2;;
         --max-async) max_async="$2"; shift 2;;
+        --iter) iter="$2"; shift 2;;
+        --max-commands) max_commands="$2"; shift 2;;
         --help) print_help; shift 1;;
         --) shift; break;;
         *) die "internal error";;

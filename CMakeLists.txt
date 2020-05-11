@@ -102,6 +102,7 @@ option(HOTSTUFF_TWO_STEP "use two-step HotStuff (instead of three-step HS)" OFF)
 option(BUILD_EXAMPLES "build examples" OFF)
 option(HOTSTUFF_ENABLE_BENCHMARK "enable banchamrk output" OFF)
 option(USE_GENERALIZED_QUORUMS "use generalized quorums instead of thresholds" ON)
+option(GENERALIZED_QUORUMS_WITH_MSP "if ON, generalized quorums will be encoded as an MSP, otherwise as a boolean formula" OFF)
 
 configure_file(src/config.h.in include/hotstuff/config.h @ONLY)
 

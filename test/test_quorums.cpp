@@ -11,7 +11,7 @@ using namespace std;
 using namespace hotstuff::quorums;
 using namespace NTL;
 
-Theta LcwExample1(){
+Theta InsertionExample1(){
     Theta theta1 = {2, {1, 2, 3}, {}};
     Theta theta2 = {2, {4, 5, 6}, {}};
     Theta theta3 = {3, {9, 10, 11, 12}, {}};
@@ -19,9 +19,24 @@ Theta LcwExample1(){
     return {2, {}, {theta1, theta2, theta4}};
 }
 
+std::string InsertionExample1StringConf = " { \"select\": 2, "
+            " \"out-of\": [ {\"select\": 2, \"out-of\":[1, 2, 3]} , "
+            "{\"select\": 2, \"out-of\":[4, 5, 6]} , "
+            "{\"select\": 2, \"out-of\":[7, 8, {\"select\": 3, \"out-of\":[9, 10, 11, 12] } ]} "
+           "] }";
+
 Theta SimpleThreshold1(){
     return {2, {1, 2, 3, 4}, {}};
 }
+
+std::string one_common_k5_StringConf =
+       "{\"select\": 4, \"out-of\": [ "
+       "     {\"select\": 2, \"out-of\": [0, {\"select\": 2, \"out-of\": [5,6,7,8]} ]}, "
+       "     {\"select\": 2, \"out-of\": [1, {\"select\": 2, \"out-of\": [8,9,10,11]} ]}, "
+       "     {\"select\": 2, \"out-of\": [2, {\"select\": 2, \"out-of\": [11,12,13,14]} ]}, "
+       "     {\"select\": 2, \"out-of\": [3, {\"select\": 2, \"out-of\": [14,15,16,17]} ]}, "
+       "     {\"select\": 2, \"out-of\": [4, {\"select\": 2, \"out-of\": [17,18,19,5]} ]} "
+       " ]} ";
 
 
 TEST_CASE("Linalg util") {
@@ -253,26 +268,18 @@ TEST_CASE("Linalg util") {
 
 
 TEST_CASE("Quorums") {
-    hotstuff::quorums::JsonParser jsonParser;
-    hotstuff::quorums::MspCreator mspCreator;
+    hotstuff::quorums::StringJsonParser jp;
+    hotstuff::quorums::InsertionMspCreator mspCreator;
     NTL::ZZ_p::init(NTL::ZZ(QUORUMS_PRIME_P));
     
      SECTION("JsonParser", "Test the methods for parsing a Json string to a Theta-based structure" ) {    
-        Theta theta_parsed = jsonParser.parse_IdBased(
-            " { \"select\": 2, "
-            "   \"out-of\": [ {\"select\": 2, \"out-of\":[1, 2, 3]} , "
-                             "{\"select\": 2, \"out-of\":[4, 5, 6]} , "
-                             "{\"select\": 2, \"out-of\":[7, 8, {\"select\": 3, \"out-of\":[9, 10, 11, 12] } ]} "
-                           "] }"
-        );
-    
-        Theta theta_cor = LcwExample1();
-
+        Theta theta_parsed = jp.parse(InsertionExample1StringConf);
+        Theta theta_cor = InsertionExample1();
         REQUIRE(theta_parsed == theta_cor);
     }
 
     SECTION("MspCreator", "Test the methods for creating an Msp from a Theta-based structure") {
-        Msp msp1 = mspCreator.create(LcwExample1());
+        Msp msp1 = mspCreator.create(InsertionExample1());
 
         Mat<ZZ_p> M_correct;
         M_correct.SetDims(12,7);
@@ -310,6 +317,15 @@ TEST_CASE("Quorums") {
         REQUIRE(msp1.m() == 12);
         REQUIRE(msp1.d() == 7);
         REQUIRE(msp1.e1() == e1_correct);
+
+        Mat<ZZ_p> V1 = mspCreator.getVandermonde(2,2);
+        Mat<ZZ_p> V_correct;
+        V_correct.SetDims(2, 2);
+        row.kill(); row.append(ZZ_p(1)); row.append(ZZ_p(1)); 
+        V_correct[0] = row;
+        row.kill(); row.append(ZZ_p(1)); row.append(ZZ_p(2)); 
+        V_correct[1] = row;
+        REQUIRE(V1 == V_correct);
     }  
 
     SECTION("isAuthorized", "Test the methods for creating an Msp from a Theta-based structure") {
@@ -418,7 +434,7 @@ TEST_CASE("Quorums") {
         REQUIRE(msp.isAuthorizedGroupWithPLU(reps) == true);
 
 
-        msp = mspCreator.create(LcwExample1());   
+        msp = mspCreator.create(InsertionExample1());   
         REQUIRE(msp.isAuthorizedGroupWithoutPLU({}) == false);
         REQUIRE(msp.isAuthorizedGroupWithoutPLU({1,2,3}) == false);
         REQUIRE(msp.isAuthorizedGroupWithoutPLU({1,2,3,4}) == false);
@@ -443,6 +459,53 @@ TEST_CASE("Quorums") {
         REQUIRE(msp.isAuthorizedGroupWithPLU({4,6,9,10,11}) == false);
         REQUIRE(msp.isAuthorizedGroupWithPLU({4,6,8,9,10,11}) == true);
 
+        hotstuff::quorums::StringJsonParser jp;
+        msp = mspCreator.create(jp.parse(one_common_k5_StringConf));
+       
+        REQUIRE(msp.isAuthorizedGroup({0,1,2,3,7,8,9,13,14,15}) == true);
+        REQUIRE(msp.isAuthorizedGroup({0,1,2,3,6, 7, 9, 10, 12, 13, 15, 16}) == true);
+        REQUIRE(msp.isAuthorizedGroup({0,1,2,3, 5, 8, 11, 14, 17}) == true);
+
+    }
+    
+    SECTION("evalFomula", "Evaluate a threshold operator-based formula based on a give (possibly a quorum) set.") {
+        //Simple threshold access structure
+        hotstuff::quorums::AccessStructure as;
+        hotstuff::quorums::Theta formula = SimpleThreshold1();
+        //empty set
+        unordered_set<hotstuff::ReplicaID> reps{};
+        REQUIRE(as.evalFomula(formula, reps) == false);
+        //set {1}, unauthorized
+        reps = {1};
+        REQUIRE(as.evalFomula(formula, reps) == false);
+        //set {1, 3, 4}, authorized
+        reps = std::unordered_set<hotstuff::ReplicaID>{1,3,4};
+        REQUIRE(as.evalFomula(formula, reps) == true);
+        //set {1, 2, 3, 4}, authorized
+        reps = std::unordered_set<hotstuff::ReplicaID>{1,2,3,4};
+        REQUIRE(as.evalFomula(formula, reps) == true);
+
+        //Nested threshold operators
+        hotstuff::quorums::JsonParser *jp = new hotstuff::quorums::StringJsonParser();
+        as = hotstuff::quorums::AccessStructure(jp);
+        as.initialize(InsertionExample1StringConf);
+        REQUIRE(as.evalFomula({}) == false);
+        REQUIRE(as.evalFomula({1,2,3}) == false);
+        REQUIRE(as.evalFomula({1,2,3,4}) == false);
+        REQUIRE(as.evalFomula({1,2,4,5}) == true);
+        REQUIRE(as.evalFomula({1,2,4,5,6}) == true);
+        REQUIRE(as.evalFomula({1,2,7,8}) == true);
+        REQUIRE(as.evalFomula({1,2,7,9}) == false);
+        REQUIRE(as.evalFomula({1,2,7,9, 10}) == false);
+        REQUIRE(as.evalFomula({4,9,10,11}) == false);
+        REQUIRE(as.evalFomula({4,6,9,10,11}) == false);
+        REQUIRE(as.evalFomula({4,6,8,9,10,11}) == true);
+
+        //1Common example
+        as.initialize(one_common_k5_StringConf);
+        REQUIRE(as.evalFomula(formula, {0,1,2,3,7,8,9,13,14,15}) == true);
+        REQUIRE(as.evalFomula(formula, {0,1,2,3,6, 7, 9, 10, 12, 13, 15, 16}) == true);
+        REQUIRE(as.evalFomula(formula, {0,1,2,3, 5, 8, 11, 14, 17}) == true);
     }
 }
 
