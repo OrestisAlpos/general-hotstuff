@@ -30,3 +30,4 @@ log*
 a_*
 hotstuff-app
 hotstuff-client
+plots/
