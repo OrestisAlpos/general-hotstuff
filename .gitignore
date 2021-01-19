@@ -32,6 +32,7 @@ hotstuff-app
 hotstuff-client
 plots/
 res/
+*/__pycache__/*
 #Frequently changing
 *.conf
 conf/clients.txt
