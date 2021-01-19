@@ -1,0 +1,11 @@
+{"select": 7, "out-of": [
+    {"select": 2, "out-of": [0, {"select": 2, "out-of": [9,10,11,12]} ]},
+    {"select": 2, "out-of": [1, {"select": 2, "out-of": [12,13,14,15]} ]},
+    {"select": 2, "out-of": [2, {"select": 2, "out-of": [15,16,17,18]} ]},
+    {"select": 2, "out-of": [3, {"select": 2, "out-of": [18,19,20,21]} ]},
+    {"select": 2, "out-of": [4, {"select": 2, "out-of": [21,22,23,24]} ]},
+    {"select": 2, "out-of": [5, {"select": 2, "out-of": [24,25,26,27]} ]},
+    {"select": 2, "out-of": [6, {"select": 2, "out-of": [27,28,29,30]} ]},
+    {"select": 2, "out-of": [7, {"select": 2, "out-of": [30,31,32,33]} ]},
+    {"select": 2, "out-of": [8, {"select": 2, "out-of": [33,34,35,9]} ]}
+]}
