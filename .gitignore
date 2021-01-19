@@ -32,8 +32,10 @@ hotstuff-app
 hotstuff-client
 plots/
 res/
+#Frequently changing
 *.conf
 conf/clients.txt
 conf/nodeips.txt
 conf/nodeips2.txt
 conf/nodes.txt
+quorums.json
