@@ -31,7 +31,18 @@ struct Theta {
         threshold(threshold), elements(elements), nestedElements(nestedElements){}
     
     Theta(): threshold(0){}
+
+    // Returns (an approximation of) the size of an instance of type Theta.
+    std::size_t size(){
+        size_t size = sizeof(Theta);
+        size += elements.size() * sizeof(hotstuff::ReplicaID);
+        for (auto nestedElem : nestedElements){
+            size += nestedElem.size();
+        }
+        return size;
+    }
 };
+
 std::ostream& operator<<(std::ostream& os, const Theta& t);
 bool operator==(const Theta& lhs, const Theta& rhs);
 
@@ -43,6 +54,11 @@ class JsonParser{
 class DefaultConfigJsonParser: public JsonParser{
     public:
     hotstuff::quorums::Theta parse(const std::string& conf = "");
+};   
+
+class ConfigJsonParser: public JsonParser{
+    public:
+    hotstuff::quorums::Theta parse(const std::string& conf);
 };   
 
 class StringJsonParser: public JsonParser{
@@ -103,6 +119,16 @@ class Msp{
         s.append("\n");
         return s;
     }
+
+    //Returns (an approximation of) the size of an instance of type Msp`.
+    std::size_t size(){
+        size_t size = sizeof(Msp);
+        size += M.NumCols() * M.NumRows() * sizeof(NTL::ZZ_p);
+        size += L.size() * sizeof(hotstuff::ReplicaID);
+        size += U.NumCols() * U.NumRows() * sizeof(NTL::ZZ_p);
+        size += y.length() * sizeof(NTL::ZZ_p);
+        return size;
+    }
 };
 
 
@@ -139,10 +165,11 @@ class InsertionMspCreator: public MspCreator{
 class AccessStructure{
     hotstuff::quorums::JsonParser *jsonParser = new DefaultConfigJsonParser(); 
     hotstuff::quorums::MspCreator *mspCreator = new InsertionMspCreator(); 
+    
+    public:
     hotstuff::quorums::Theta thetaOperatorFormula;
     hotstuff::quorums::Msp msp;
 
-    public:
     AccessStructure(){
         NTL::ZZ_p::init(NTL::ZZ(QUORUMS_PRIME_P));
     };
@@ -175,11 +202,7 @@ class AccessStructure{
         return buffer.str();
 #endif
     }
-
-
-    
 };
-
 
 }
 #endif

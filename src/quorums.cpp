@@ -59,7 +59,13 @@ hotstuff::quorums::Theta hotstuff::quorums::DefaultConfigJsonParser::parse(const
     json j;
     infile >> j;
     return j.get<Theta>();
+}
 
+hotstuff::quorums::Theta hotstuff::quorums::ConfigJsonParser::parse(const std::string& conf){
+    std::ifstream infile(conf);
+    json j;
+    infile >> j;
+    return j.get<Theta>();
 }
 
 hotstuff::quorums::Theta hotstuff::quorums::StringJsonParser::parse(const std::string& conf /* = "" */){

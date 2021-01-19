@@ -468,7 +468,7 @@ TEST_CASE("Quorums") {
 
     }
     
-    SECTION("evalFomula", "Evaluate a threshold operator-based formula based on a give (possibly a quorum) set.") {
+    SECTION("evalFomula", "Evaluate a threshold operator-based formula based on a given (possibly a quorum) set.") {
         //Simple threshold access structure
         hotstuff::quorums::AccessStructure as;
         hotstuff::quorums::Theta formula = SimpleThreshold1();
@@ -507,5 +507,6 @@ TEST_CASE("Quorums") {
         REQUIRE(as.evalFomula(formula, {0,1,2,3,6, 7, 9, 10, 12, 13, 15, 16}) == true);
         REQUIRE(as.evalFomula(formula, {0,1,2,3, 5, 8, 11, 14, 17}) == true);
     }
+    
 }
 
