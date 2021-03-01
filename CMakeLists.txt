@@ -76,6 +76,11 @@ include_directories(json/single_include)
 #catch2
 include_directories(Catch2/single_include)
 
+#herumi bls library
+add_subdirectory(bls)
+include_directories(bls/include)
+include_directories(bls/external/mcl/include)
+
 option(BUILD_SHARED "build shared library." OFF)
 if(BUILD_SHARED)
     set_property(TARGET hotstuff PROPERTY POSITION_INDEPENDENT_CODE 1)
@@ -124,6 +129,9 @@ target_link_libraries(hotstuff-keygen hotstuff_static)
 add_executable(hotstuff-tls-keygen
     src/hotstuff_tls_keygen.cpp)
 target_link_libraries(hotstuff-tls-keygen hotstuff_static)
+
+add_executable(bls_sample sample/bls_sample.cpp)
+target_link_libraries(bls_sample bls384_256)
 
 find_package(Doxygen)
 if (DOXYGEN_FOUND)
