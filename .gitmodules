@@ -10,3 +10,6 @@
 [submodule "Catch2"]
 	path = Catch2
 	url = https://github.com/catchorg/Catch2.git
+[submodule "scripts/deploy/minirun"]
+	path = scripts/deploy/minirun
+	url = https://github.com/Determinant/minirun.git

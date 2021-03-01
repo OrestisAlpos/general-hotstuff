@@ -97,7 +97,7 @@ void HotStuffBase::on_fetch_blk(const block_t &blk) {
     }
 }
 
-void HotStuffBase::on_deliver_blk(const block_t &blk) {
+bool HotStuffBase::on_deliver_blk(const block_t &blk) {
     const uint256_t &blk_hash = blk->get_hash();
     bool valid;
     /* sanity check: all parents must be delivered */
@@ -116,6 +116,7 @@ void HotStuffBase::on_deliver_blk(const block_t &blk) {
         LOG_WARN("dropping invalid block");
     }
 
+    bool res = true;
     auto it = blk_delivery_waiting.find(blk_hash);
     if (it != blk_delivery_waiting.end())
     {
@@ -133,14 +134,16 @@ void HotStuffBase::on_deliver_blk(const block_t &blk) {
         else
         {
             pm.reject(blk);
+            res = false;
             // TODO: do we need to also free it from storage?
         }
         blk_delivery_waiting.erase(it);
     }
+    return res;
 }
 
 promise_t HotStuffBase::async_fetch_blk(const uint256_t &blk_hash,
-                                        const NetAddr *replica_id,
+                                        const PeerId *replica,
                                         bool fetch_now) {
     if (storage->is_blk_fetched(blk_hash))
         return promise_t([this, &blk_hash](promise_t pm){
@@ -157,13 +160,13 @@ promise_t HotStuffBase::async_fetch_blk(const uint256_t &blk_hash,
                 blk_hash,
                 BlockFetchContext(blk_hash, this))).first;
     }
-    if (replica_id != nullptr)
-        it->second.add_replica(*replica_id, fetch_now);
+    if (replica != nullptr)
+        it->second.add_replica(*replica, fetch_now);
     return static_cast<promise_t &>(it->second);
 }
 
 promise_t HotStuffBase::async_deliver_blk(const uint256_t &blk_hash,
-                                        const NetAddr &replica_id) {
+                                        const PeerId &replica) {
     if (storage->is_blk_delivered(blk_hash))
         return promise_t([this, &blk_hash](promise_t pm) {
             pm.resolve(storage->find_blk(blk_hash));
@@ -174,31 +177,40 @@ promise_t HotStuffBase::async_deliver_blk(const uint256_t &blk_hash,
     BlockDeliveryContext pm{[](promise_t){}};
     it = blk_delivery_waiting.insert(std::make_pair(blk_hash, pm)).first;
     /* otherwise the on_deliver_batch will resolve */
-    async_fetch_blk(blk_hash, &replica_id).then([this, replica_id](block_t blk) {
+    async_fetch_blk(blk_hash, &replica).then([this, replica](block_t blk) {
         /* qc_ref should be fetched */
         std::vector<promise_t> pms;
         const auto &qc = blk->get_qc();
-        if (qc)
-            pms.push_back(async_fetch_blk(qc->get_obj_hash(), &replica_id));
+        assert(qc);
+        if (blk == get_genesis())
+            pms.push_back(promise_t([](promise_t &pm){ pm.resolve(true); }));
+        else
+            pms.push_back(blk->verify(this, vpool));
+        pms.push_back(async_fetch_blk(qc->get_obj_hash(), &replica));
         /* the parents should be delivered */
         for (const auto &phash: blk->get_parent_hashes())
-            pms.push_back(async_deliver_blk(phash, replica_id));
-        if (blk != get_genesis())
-            pms.push_back(blk->verify(this, vpool));
-        promise::all(pms).then([this, blk]() {
-            on_deliver_blk(blk);
+            pms.push_back(async_deliver_blk(phash, replica));
+        promise::all(pms).then([this, blk](const promise::values_t values) {
+            auto ret = promise::any_cast<bool>(values[0]) && this->on_deliver_blk(blk);
+            if (!ret)
+                HOTSTUFF_LOG_WARN("verification failed during async delivery");
         });
     });
     return static_cast<promise_t &>(pm);
 }
 
 void HotStuffBase::propose_handler(MsgPropose &&msg, const Net::conn_t &conn) {
-    const NetAddr &peer = conn->get_peer_addr();
+    const PeerId &peer = conn->get_peer_id();
     if (peer.is_null()) return;
     msg.postponed_parse(this);
     auto &prop = msg.proposal;
     block_t blk = prop.blk;
     if (!blk) return;
+    if (peer != get_config().get_peer_id(prop.proposer))
+    {
+        LOG_WARN("invalid proposal from %d", prop.proposer);
+        return;
+    }
     promise::all(std::vector<promise_t>{
         async_deliver_blk(blk->get_hash(), peer)
     }).then([this, prop = std::move(prop)]() {
@@ -207,7 +219,7 @@ void HotStuffBase::propose_handler(MsgPropose &&msg, const Net::conn_t &conn) {
 }
 
 void HotStuffBase::vote_handler(MsgVote &&msg, const Net::conn_t &conn) {
-    const NetAddr &peer = conn->get_peer_addr();
+    const auto &peer = conn->get_peer_id();
     if (peer.is_null()) return;
     msg.postponed_parse(this);
     //auto &vote = msg.vote;
@@ -224,7 +236,7 @@ void HotStuffBase::vote_handler(MsgVote &&msg, const Net::conn_t &conn) {
 }
 
 void HotStuffBase::req_blk_handler(MsgReqBlock &&msg, const Net::conn_t &conn) {
-    const NetAddr replica = conn->get_peer_addr();
+    const PeerId replica = conn->get_peer_id();
     if (replica.is_null()) return;
     auto &blk_hashes = msg.blk_hashes;
     std::vector<promise_t> pms;
@@ -250,9 +262,10 @@ void HotStuffBase::resp_blk_handler(MsgRespBlock &&msg, const Net::conn_t &) {
 bool HotStuffBase::conn_handler(const salticidae::ConnPool::conn_t &conn, bool connected) {
     if (connected)
     {
+        if (!pn.enable_tls) return true;
         auto cert = conn->get_peer_cert();
         //SALTICIDAE_LOG_INFO("%s", salticidae::get_hash(cert->get_der()).to_hex().c_str());
-        return (!cert) || valid_tls_certs.count(salticidae::get_hash(cert->get_der()));
+        return valid_tls_certs.count(salticidae::get_hash(cert->get_der()));
     }
     return true;
 }
@@ -302,7 +315,7 @@ void HotStuffBase::print_stat() const {
         size_t nrb = conn->get_nrecvb();
         conn->clear_msgstat();
         LOG_INFO("%s: %u(%u), %u(%u), %u",
-            std::string(replica).c_str(), ns, nsb, nr, nrb, part_fetched_replica[replica]);
+            get_hex10(replica).c_str(), ns, nsb, nr, nrb, part_fetched_replica[replica]);
         _nsent += ns;
         _nrecv += nr;
         part_fetched_replica[replica] = 0;
@@ -352,6 +365,13 @@ HotStuffBase::HotStuffBase(uint32_t blk_size,
     pn.reg_handler(salticidae::generic_bind(&HotStuffBase::req_blk_handler, this, _1, _2));
     pn.reg_handler(salticidae::generic_bind(&HotStuffBase::resp_blk_handler, this, _1, _2));
     pn.reg_conn_handler(salticidae::generic_bind(&HotStuffBase::conn_handler, this, _1, _2));
+    pn.reg_error_handler([](const std::exception_ptr _err, bool fatal, int32_t async_id) {
+        try {
+            std::rethrow_exception(_err);
+        } catch (const std::exception &err) {
+            HOTSTUFF_LOG_WARN("network async error: %s\n", err.what());
+        }
+    });
     pn.start();
     pn.listen(listen_addr);
 }
@@ -368,11 +388,11 @@ void HotStuffBase::do_vote(ReplicaID last_proposer, const Vote &vote) {
             .then([this, vote](ReplicaID proposer) {
         if (proposer == get_id())
         {
-            throw HotStuffError("unreachable line");
-            //on_receive_vote(vote);
+            //throw HotStuffError("unreachable line");
+            on_receive_vote(vote);
         }
         else
-            pn.send_msg(MsgVote(vote), get_config().get_addr(proposer));
+            pn.send_msg(MsgVote(vote), get_config().get_peer_id(proposer));
     });
 }
 
@@ -399,12 +419,16 @@ void HotStuffBase::start(
     for (size_t i = 0; i < replicas.size(); i++)
     {
         auto &addr = std::get<0>(replicas[i]);
-        HotStuffCore::add_replica(i, addr, std::move(std::get<1>(replicas[i])));
-        valid_tls_certs.insert(std::move(std::get<2>(replicas[i])));
+        auto cert_hash = std::move(std::get<2>(replicas[i]));
+        valid_tls_certs.insert(cert_hash);
+        auto peer = pn.enable_tls ? salticidae::PeerId(cert_hash) : salticidae::PeerId(addr);
+        HotStuffCore::add_replica(i, peer, std::move(std::get<1>(replicas[i])));
         if (addr != listen_addr)
         {
-            peers.push_back(addr);
-            pn.add_peer(addr);
+            peers.push_back(peer);
+            pn.add_peer(peer);
+            pn.set_peer_addr(peer, addr);
+            pn.conn_peer(peer);
         }
     }
 

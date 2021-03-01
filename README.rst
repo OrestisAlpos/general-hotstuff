@@ -69,7 +69,7 @@ section may be incomplete and subject to changes.
     # on Ubuntu: sudo apt-get install libssl-dev libuv1-dev cmake make
     # You might also need: sudo apt-get install autoconf libtool gdb python3 python3-pip
 
-    # ensure GMP (6.1.2) and NTL (11.4.3) are installed on your machine.
+    # Ensure GMP (6.1.2) and NTL (11.4.3) are installed on your machine.
     https://shoup.net/ntl/doc/tour-gmp.html 
     https://shoup.net/ntl/doc/tour-unix.html
 
@@ -84,7 +84,6 @@ section may be incomplete and subject to changes.
     # start 4 demo replicas with scripts/run_demo.sh
     # then, start the demo client with scripts/run_demo_client.sh
 
-
     # Fault tolerance:
     # Try to run the replicas as in run_demo.sh first and then run_demo_client.sh.
     # Use Ctrl-C to terminate the proposing replica (e.g. replica 0). Leader
@@ -93,10 +92,26 @@ section may be incomplete and subject to changes.
     # stable. Or try the following script:
     # scripts/faulty_leader_demo.sh
 
-TODO
-====
+Try to Reproduce Our Basic Results
+==================================
 
-- Add a PoW-based Pacemaker
+See here_.
+
+TODO (When I get some free time...)
+===================================
+
+- Rewrite this minimal code base in Rust: this time, with all the experience,
+  without C++ template kung-fu, I plan to have a ready-to-use, blackbox-like
+  libhotstuff implementation as a full library with better encapsulation and
+  interface. The new goal would be *any* engineer without knowledge of BFT
+  should be able to use it for his/her own application, without changing the
+  library code.  Ping me if you like this re-writing idea or you'd like to
+  be part of it.
+
+- Limit the async event callback depth (otherwise in the demo a fresh replica
+  could overflow its callback stack when trying to catch up)
+- Add a PoW-based Pacemaker example
 - Branch pruning & swapping (the current implementation stores the entire chain in memory)
-- Limit the async events (improve robustness)
 - Persistent protocol state (recovery?)
+
+.. _here: https://github.com/hot-stuff/libhotstuff/tree/master/scripts/deploy

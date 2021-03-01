@@ -40,20 +40,20 @@ enum EntityType {
 
 struct ReplicaInfo {
     ReplicaID id;
-    salticidae::NetAddr addr;
+    salticidae::PeerId peer_id;
     pubkey_bt pubkey;
 
     ReplicaInfo(ReplicaID id,
-                const salticidae::NetAddr &addr,
+                const salticidae::PeerId &peer_id,
                 pubkey_bt &&pubkey):
-        id(id), addr(addr), pubkey(std::move(pubkey)) {}
+        id(id), peer_id(peer_id), pubkey(std::move(pubkey)) {}
 
     ReplicaInfo(const ReplicaInfo &other):
-        id(other.id), addr(other.addr),
+        id(other.id), peer_id(other.peer_id),
         pubkey(other.pubkey->clone()) {}
 
     ReplicaInfo(ReplicaInfo &&other):
-        id(other.id), addr(other.addr),
+        id(other.id), peer_id(other.peer_id),
         pubkey(std::move(other.pubkey)) {}
 };
 
@@ -87,8 +87,8 @@ class ReplicaConfig {
         return *(get_info(rid).pubkey);
     }
 
-    const salticidae::NetAddr &get_addr(ReplicaID rid) const {
-        return get_info(rid).addr;
+    const salticidae::PeerId &get_peer_id(ReplicaID rid) const {
+        return get_info(rid).peer_id;
     }
 
     void initializeAccessStructure() {
@@ -116,7 +116,7 @@ class Command: public Serializable {
     virtual operator std::string () const {
         DataStream s;
         s << "<cmd id=" << get_hex10(get_hash()) << ">";
-        return std::move(s);
+        return s;
     }
 };
 
@@ -128,7 +128,7 @@ get_hashes(const std::vector<Hashable> &plist) {
     std::vector<uint256_t> hashes;
     for (const auto &p: plist)
         hashes.push_back(p->get_hash());
-    return std::move(hashes);
+    return hashes;
 }
 
 class Block {
@@ -157,7 +157,7 @@ class Block {
         delivered(false), decision(0) {}
 
     Block(bool delivered, int8_t decision):
-        qc(nullptr),
+        qc(new QuorumCertDummy()),
         hash(salticidae::get_hash(*this)),
         qc_ref(nullptr),
         self_qc(nullptr), height(0),
@@ -224,7 +224,7 @@ class Block {
           << "height=" << std::to_string(height) << " "
           << "parent=" << get_hex10(parent_hashes[0]) << " "
           << "qc_ref=" << (qc_ref ? get_hex10(qc_ref->get_hash()) : "null") << ">";
-        return std::move(s);
+        return s;
     }
 };
 

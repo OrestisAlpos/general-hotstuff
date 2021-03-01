@@ -56,14 +56,15 @@ if __name__ == '__main__':
             lats.append(float(m.group(2)))
     timestamps.sort()
     for timestamp in timestamps:
-        if begin_time and timestamp < next_begin_time:
-            cnt += 1
-        else:
-            if begin_time:
-                values.append(cnt)
+        if begin_time is None:
             begin_time = timestamp
-            next_begin_time = begin_time + timedelta(seconds=interval)
-            cnt = 1
+            next_begin_time = timestamp + timedelta(seconds=interval)
+        while timestamp >= next_begin_time:
+            begin_time = next_begin_time
+            next_begin_time += timedelta(seconds=interval)
+            values.append(cnt)
+            cnt = 0
+        cnt += 1
     values.append(cnt)
     print("thr_values = ", values)
     print("thr = {:.3f}Kops/sec".format(sum(values) / len(values) / 1e3 ))

@@ -54,7 +54,7 @@ block_t HotStuffCore::get_delivered_blk(const uint256_t &blk_hash) {
     block_t blk = storage->find_blk(blk_hash);
     if (blk == nullptr || !blk->delivered)
         throw std::runtime_error("block not delivered");
-    return std::move(blk);
+    return blk;
 }
 
 bool HotStuffCore::on_deliver_blk(const block_t &blk) {
@@ -172,13 +172,10 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds,
     update(bnew);
     Proposal prop(id, bnew, nullptr);
     LOG_PROTO("propose %s", std::string(*bnew).c_str());
-    /* self-vote */
     if (bnew->height <= vheight)
         throw std::runtime_error("new block should be higher than vheight");
-    vheight = bnew->height;
-    on_receive_vote(
-        Vote(id, bnew_hash,
-            create_part_cert(*priv_key, bnew_hash), this));
+    /* self-receive the proposal (no need to send it through the network) */
+    on_receive_proposal(prop);
     on_propose_(prop);
     /* boradcast to other replicas */
     do_broadcast_proposal(prop);
@@ -187,9 +184,13 @@ block_t HotStuffCore::on_propose(const std::vector<uint256_t> &cmds,
 
 void HotStuffCore::on_receive_proposal(const Proposal &prop) {
     LOG_PROTO("got %s", std::string(prop).c_str());
+    bool self_prop = prop.proposer == get_id();
     block_t bnew = prop.blk;
-    sanity_check_delivered(bnew);
-    update(bnew);
+    if (!self_prop)
+    {
+        sanity_check_delivered(bnew);
+        update(bnew);
+    }
     bool opinion = false;
     if (bnew->height > vheight)
     {
@@ -212,7 +213,7 @@ void HotStuffCore::on_receive_proposal(const Proposal &prop) {
         }
     }
     LOG_PROTO("now state: %s", std::string(*this).c_str());
-    if (bnew->qc_ref)
+    if (!self_prop && bnew->qc_ref)
         on_qc_finish(bnew->qc_ref);
     on_receive_proposal_(prop);
     if (opinion && !vote_disabled)
@@ -293,10 +294,10 @@ void HotStuffCore::prune(uint32_t staleness) {
     }
 }
 
-void HotStuffCore::add_replica(ReplicaID rid, const NetAddr &addr,
+void HotStuffCore::add_replica(ReplicaID rid, const PeerId &peer_id,
                                 pubkey_bt &&pub_key) {
-    config.add_replica(rid, 
-            ReplicaInfo(rid, addr, std::move(pub_key)));
+    config.add_replica(rid,
+            ReplicaInfo(rid, peer_id, std::move(pub_key)));
     b0->voted.insert(rid);
 }
 
@@ -372,6 +373,6 @@ HotStuffCore::operator std::string () const {
       << "b_exec=" << get_hex10(b_exec->get_hash()) << " "
       << "vheight=" << std::to_string(vheight) << " "
       << "tails=" << std::to_string(tails.size()) << ">";
-    return std::move(s);
+    return s;
 }
 }
