@@ -20,6 +20,7 @@
 namespace hotstuff {
 
 void Block::serialize(DataStream &s) const {
+    HOTSTUFF_LOG_DEBUG("Serializing Block with hash= %.10s", get_hex(hash).c_str());
     s << htole((uint32_t)parent_hashes.size());
     for (const auto &hash: parent_hashes)
         s << hash;
@@ -30,6 +31,7 @@ void Block::serialize(DataStream &s) const {
 }
 
 void Block::unserialize(DataStream &s, HotStuffCore *hsc) {
+    HOTSTUFF_LOG_DEBUG("Unserializing a block");
     uint32_t n;
     s >> n;
     n = letoh(n);

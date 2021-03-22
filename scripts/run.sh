@@ -1,7 +1,8 @@
 #!/bin/bash
 
 proj_server_bin="hotstuff-app"
-proj_server_path="/root/libhotstuff/$proj_server_bin"
+proj_server_path="/root/git/libhotstuff/$proj_server_bin"
+#proj_server_path="/root/libhotstuff/$proj_server_bin"
 proj_conf_name="hotstuff.conf"
 
 peer_list="./conf/nodes.txt"     # the list of nodes
@@ -10,7 +11,8 @@ quorums_conf_src="./conf/quorums.json"
 quorums_conf_name="quorums.json"
 server_map="./conf/server_map.txt"         # optional mapping from node ip to server ip
 template_dir="template"     # the dir that keeps the content shared among all nodes
-remote_base="/root/libhotstuff"  # remote dir used to keep files for the experiment
+remote_base="/root/git/libhotstuff"  # remote dir used to keep files for the experiment
+#remote_base="/root/libhotstuff"
 remote_log="log"   # log filename
 remote_user="root"
 copy_to_remote_pat="rsync -avz <local_path> <remote_user>@<remote_ip>:<remote_path>"

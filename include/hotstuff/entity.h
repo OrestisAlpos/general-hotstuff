@@ -57,6 +57,7 @@ struct ReplicaInfo {
         pubkey(std::move(other.pubkey)) {}
 };
 
+
 class ReplicaConfig {
     std::unordered_map<ReplicaID, ReplicaInfo> replica_map;
     hotstuff::quorums::AccessStructure accessStructure;
@@ -64,14 +65,15 @@ class ReplicaConfig {
     public:
     size_t nreplicas;
     size_t nmajority;
-    
+    pubkey_bt globalPubKey;
 
     ReplicaConfig(): nreplicas(0), nmajority(0) {}
 
     void add_replica(ReplicaID rid, const ReplicaInfo &info) {
         replica_map.insert(std::make_pair(rid, info));
-        PubKeySecp256k1 pubKey = static_cast<const PubKeySecp256k1 &>(*(info.pubkey));
-        HOTSTUFF_LOG_INFO(">> Added Replica with ID: %d and Pub Key: %s", rid, std::string(pubKey).c_str());
+        // PubKeySecp256k1 pubKey = static_cast<const PubKeySecp256k1 &>(*(info.pubkey));
+        // HOTSTUFF_LOG_INFO(">> Added Replica with ID: %d and Pub Key: %s", rid, std::string(pubKey).c_str());
+        HOTSTUFF_LOG_INFO(">> Added Replica with ID: %d and Pub Key: %s", rid, std::string(static_cast<const PubKey &>(*(info.pubkey))).c_str());
         nreplicas++;
     }
 
@@ -85,6 +87,11 @@ class ReplicaConfig {
 
     const PubKey &get_pubkey(ReplicaID rid) const {
         return *(get_info(rid).pubkey);
+    }
+
+    //Used only by HotStuffBls to get the unique public key of the system.
+    const PubKey &get_globalPubKey() const {
+        return *globalPubKey;
     }
 
     const salticidae::PeerId &get_peer_id(ReplicaID rid) const {
@@ -157,7 +164,7 @@ class Block {
         delivered(false), decision(0) {}
 
     Block(bool delivered, int8_t decision):
-        qc(new QuorumCertDummy()),
+        qc(new QuorumCertDummy()), //OA Check why this
         hash(salticidae::get_hash(*this)),
         qc_ref(nullptr),
         self_qc(nullptr), height(0),

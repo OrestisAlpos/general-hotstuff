@@ -32,7 +32,8 @@ namespace hotstuff {
 /* The core logic of HotStuff, is fairly simple :). */
 /*** begin HotStuff protocol logic ***/
 HotStuffCore::HotStuffCore(ReplicaID id,
-                            privkey_bt &&priv_key):
+                           privkey_bt &&priv_key,
+                           const bytearray_t &raw_global_pubkey):
         b0(new Block(true, 1)),
         b_lock(b0),
         b_exec(b0),
@@ -43,6 +44,10 @@ HotStuffCore::HotStuffCore(ReplicaID id,
         id(id),
         storage(new EntityStorage()) {
     storage->add_blk(b0);
+#ifdef USE_BLS
+    config.globalPubKey = new PubKeyBls(raw_global_pubkey);
+    LOG_INFO("Using threshold BLS Signatures with global public key = %s", get_hex(config.get_globalPubKey()).c_str());
+#endif
 }
 
 void HotStuffCore::sanity_check_delivered(const block_t &blk) {
@@ -233,7 +238,6 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
     size_t qsize = blk->voted.size();
     if (qsize >= config.nmajority) return;
 #endif
-    
     if (!blk->voted.insert(vote.voter).second)
     {
         LOG_WARN("duplicate vote for %s from %d", get_hex10(vote.blk_hash).c_str(), vote.voter);
@@ -245,13 +249,16 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
         LOG_WARN("vote for block not proposed by itself");
         qc = create_quorum_cert(blk->get_hash());
     }
+    
     qc->add_part(vote.voter, *vote.cert);
 #ifdef USE_GENERALIZED_QUORUMS
-    if (config.isAuthorizedGroup(blk->voted))
+    if (config.isAuthorizedGroup(blk->voted)) //!!!
 #else
     if (qsize + 1 == config.nmajority)
 #endif
     {
+        //At this point we have a quorum of votes (already verified in HotStuffBase::vote_handler),
+        //so we can create a threshold signature with them.
         qc->compute();
         update_hqc(blk, qc);
         on_qc_finish(blk);
@@ -265,7 +272,7 @@ void HotStuffCore::on_init(uint32_t nfaulty) {
     config.nmajority = config.nreplicas - nfaulty;
 #endif
     b0->qc = create_quorum_cert(b0->get_hash());
-    b0->qc->compute();
+    //b0->qc->compute(); Not necessary, the qc for genesis is not checked.
     b0->self_qc = b0->qc->clone();
     b0->qc_ref = b0;
     hqc = std::make_pair(b0, b0->qc->clone());

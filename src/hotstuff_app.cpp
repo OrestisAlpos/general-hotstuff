@@ -63,7 +63,11 @@ using hotstuff::MsgRespCmd;
 using hotstuff::get_hash;
 using hotstuff::promise_t;
 
+#ifndef USE_BLS
 using HotStuff = hotstuff::HotStuffSecp256k1;
+#else
+using HotStuff = hotstuff::HotStuffBls;
+#endif
 
 class HotStuffApp: public HotStuff {
     double stat_period;
@@ -91,7 +95,7 @@ class HotStuffApp: public HotStuff {
     resp_queue_t resp_queue;
     salticidae::BoxObj<salticidae::ThreadCall> resp_tcall;
     salticidae::BoxObj<salticidae::ThreadCall> req_tcall;
-
+    
     void client_request_cmd_handler(MsgReqCmd &&, const conn_t &);
 
     static command_t parse_cmd(DataStream &s) {
@@ -129,7 +133,8 @@ class HotStuffApp: public HotStuff {
                 const EventContext &ec,
                 size_t nworker,
                 const Net::Config &repnet_config,
-                const ClientNetwork<opcode_t>::Config &clinet_config);
+                const ClientNetwork<opcode_t>::Config &clinet_config,
+                const bytearray_t &raw_global_pubkey);
 
     void start(const std::vector<std::tuple<NetAddr, bytearray_t, bytearray_t>> &reps);
     void stop();
@@ -145,6 +150,9 @@ std::pair<std::string, std::string> split_ip_port_cport(const std::string &s) {
 salticidae::BoxObj<HotStuffApp> papp = nullptr;
 
 int main(int argc, char **argv) {
+#ifdef USE_BLS
+    bls::init(MCL_BLS12_381, MCLBN_COMPILED_TIME_VAR);
+#endif
     Config config("hotstuff.conf");
 
     ElapsedTime elapsed;
@@ -173,6 +181,7 @@ int main(int argc, char **argv) {
     auto opt_notls = Config::OptValFlag::create(false);
     auto opt_max_rep_msg = Config::OptValInt::create(4 << 20); // 4M by default
     auto opt_max_cli_msg = Config::OptValInt::create(65536); // 64K by default
+    auto opt_global_pubkey = Config::OptValStr::create(""); // Global public key for threshold signatures. Used only by BLS-HotStuff.
 
     config.add_opt("block-size", opt_blk_size, Config::SET_VAL);
     config.add_opt("parent-limit", opt_parent_limit, Config::SET_VAL);
@@ -197,6 +206,7 @@ int main(int argc, char **argv) {
     config.add_opt("max-rep-msg", opt_max_rep_msg, Config::SET_VAL, 'S', "the maximum replica message size");
     config.add_opt("max-cli-msg", opt_max_cli_msg, Config::SET_VAL, 'S', "the maximum client message size");
     config.add_opt("help", opt_help, Config::SWITCH_ON, 'h', "show this help info");
+    config.add_opt("global-pubkey", opt_global_pubkey, Config::SET_VAL);
 
     EventContext ec;
     config.parse(argc, argv);
@@ -273,7 +283,8 @@ int main(int argc, char **argv) {
                         ec,
                         opt_nworker->get(),
                         repnet_config,
-                        clinet_config);
+                        clinet_config,
+                        hotstuff::from_hex(opt_global_pubkey->get()));
     std::vector<std::tuple<NetAddr, bytearray_t, bytearray_t>> reps;
     for (auto &r: replicas)
     {
@@ -305,14 +316,15 @@ HotStuffApp::HotStuffApp(uint32_t blk_size,
                         const EventContext &ec,
                         size_t nworker,
                         const Net::Config &repnet_config,
-                        const ClientNetwork<opcode_t>::Config &clinet_config):
-    HotStuff(blk_size, idx, raw_privkey,
+                        const ClientNetwork<opcode_t>::Config &clinet_config,
+                        const bytearray_t &raw_global_pubkey):
+    HotStuff(blk_size, idx, raw_privkey, raw_global_pubkey,
             plisten_addr, std::move(pmaker), ec, nworker, repnet_config),
     stat_period(stat_period),
     impeach_timeout(impeach_timeout),
     ec(ec),
     cn(req_ec, clinet_config),
-    clisten_addr(clisten_addr) {
+    clisten_addr(clisten_addr){
     /* prepare the thread used for sending back confirmations */
     resp_tcall = new salticidae::ThreadCall(resp_ec);
     req_tcall = new salticidae::ThreadCall(req_ec);

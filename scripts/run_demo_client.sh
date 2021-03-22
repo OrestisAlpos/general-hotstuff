@@ -5,4 +5,4 @@
 # commands should still get through (be replicated) once the new leader becomes
 # stable.
 
-./examples/hotstuff-client --idx 0 --iter -1 --max-async 3
+./hotstuff-client --idx 0 --iter -1 --max-async 3 > log_client 2>&1 

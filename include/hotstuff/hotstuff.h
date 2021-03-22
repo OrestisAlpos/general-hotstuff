@@ -212,7 +212,8 @@ class HotStuffBase: public HotStuffCore {
             pacemaker_bt pmaker,
             EventContext ec,
             size_t nworker,
-            const Net::Config &netconfig);
+            const Net::Config &netconfig,
+            const bytearray_t &raw_global_pubkey);
 
     ~HotStuffBase();
 
@@ -279,6 +280,7 @@ class HotStuff: public HotStuffBase {
     HotStuff(uint32_t blk_size,
             ReplicaID rid,
             const bytearray_t &raw_privkey,
+            const bytearray_t &raw_global_pubkey,
             NetAddr listen_addr,
             pacemaker_bt pmaker,
             EventContext ec = EventContext(),
@@ -291,7 +293,8 @@ class HotStuff: public HotStuffBase {
                     std::move(pmaker),
                     ec,
                     nworker,
-                    netconfig) {}
+                    netconfig,
+                    raw_global_pubkey) {}
 
     void start(const std::vector<std::tuple<NetAddr, bytearray_t, bytearray_t>> &replicas, bool ec_loop = false) {
         std::vector<std::tuple<NetAddr, pubkey_bt, uint256_t>> reps;
@@ -307,8 +310,8 @@ class HotStuff: public HotStuffBase {
 };
 
 using HotStuffNoSig = HotStuff<>;
-using HotStuffSecp256k1 = HotStuff<PrivKeySecp256k1, PubKeySecp256k1,
-                                    PartCertSecp256k1, QuorumCertSecp256k1>;
+using HotStuffSecp256k1 = HotStuff<PrivKeySecp256k1, PubKeySecp256k1, PartCertSecp256k1, QuorumCertSecp256k1>;
+using HotStuffBls = HotStuff<PrivKeyBls, PubKeyBls, PartCertBls, QuorumCertBls>;
 
 template<EntityType ent_type>
 FetchContext<ent_type>::FetchContext(FetchContext && other):

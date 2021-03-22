@@ -338,8 +338,9 @@ HotStuffBase::HotStuffBase(uint32_t blk_size,
                     pacemaker_bt pmaker,
                     EventContext ec,
                     size_t nworker,
-                    const Net::Config &netconfig):
-        HotStuffCore(rid, std::move(priv_key)),
+                    const Net::Config &netconfig,
+                    const bytearray_t &raw_global_pubkey):
+        HotStuffCore(rid, std::move(priv_key),raw_global_pubkey),
         listen_addr(listen_addr),
         blk_size(blk_size),
         ec(ec),

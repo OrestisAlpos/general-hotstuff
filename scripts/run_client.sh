@@ -1,7 +1,8 @@
 #!/bin/bash
 
 proj_client_bin="hotstuff-client"
-proj_client_path="/root/libhotstuff/$proj_client_bin"
+proj_client_path="/root/git/libhotstuff/$proj_client_bin"
+#proj_client_path="/root/libhotstuff/$proj_client_bin"
 proj_conf_name="hotstuff.conf"
 
 peer_list="./conf/nodes.txt"     # the list of nodes
@@ -10,7 +11,8 @@ conf_src="./conf/hotstuff.gen.conf"
 quorums_conf_src="./conf/quorums.json"
 quorums_conf_name="quorums.json"
 template_dir="template"     # the dir that keeps the content shared among all nodes
-remote_base="/root/libhotstuff"  # remote dir used to keep files for the experiment
+remote_base="/root/git/libhotstuff"  # remote dir used to keep files for the experiment
+#remote_base="/root/libhotstuff" 
 remote_log="log"   # log filename
 remote_user="root"
 max_async=1
@@ -19,7 +21,8 @@ max_commands=-1
 copy_to_remote_pat="rsync -avz <local_path> <remote_user>@<remote_ip>:<remote_path>"
 copy_from_remote_pat="rsync -avz <remote_user>@<remote_ip>:<remote_path> <local_path>"
 exe_remote_pat="ssh <remote_user>@<remote_ip> bash"
-run_remote_pat="cd \"<rworkdir>\"; '<proj_client_path>' --cid \"<node_id>\" --iter <iter> --max-async <max_async> --max-commands <max_commands>"
+#run_remote_pat="cd \"<rworkdir>\"; '<proj_client_path>' --cid \"<node_id>\" --iter <iter> --max-async <max_async> --max-commands <max_commands>"
+run_remote_pat="cd \"<rworkdir>\"; '<proj_client_path>' --cid \"<node_id>\" --iter <iter> --max-async <max_async>"
 reset_remote_pat="pgrep -f '$proj_client_bin' | xargs kill -9"
 node_id_step=1
  

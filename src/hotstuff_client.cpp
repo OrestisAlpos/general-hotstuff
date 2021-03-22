@@ -99,7 +99,7 @@ bool try_send(bool check = true) {
 
 void client_resp_cmd_handler(MsgRespCmd &&msg, const Net::conn_t &) {
     auto &fin = msg.fin;
-    //HOTSTUFF_LOG_INFO("got confirmation from %d: %s", fin.rid ,std::string(msg.fin).c_str());
+    HOTSTUFF_LOG_DEBUG("got confirmation from %d: %s", fin.rid ,std::string(msg.fin).c_str());
     const uint256_t &cmd_hash = fin.cmd_hash;
     auto it = waiting.find(cmd_hash);
     auto &et = it->second.et;

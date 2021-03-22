@@ -70,7 +70,7 @@ class HotStuffCore {
     public:
     BoxObj<EntityStorage> storage;
 
-    HotStuffCore(ReplicaID id, privkey_bt &&priv_key);
+    HotStuffCore(ReplicaID id, privkey_bt &&priv_key, const bytearray_t &raw_global_pubkey);
     virtual ~HotStuffCore() {
         b0->qc_ref = nullptr;
     }

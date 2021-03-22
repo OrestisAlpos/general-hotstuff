@@ -74,12 +74,15 @@ section may be incomplete and subject to changes.
     https://shoup.net/ntl/doc/tour-unix.html
 
     #For the original (threshold) HotStuff, run the following
-    cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED=ON -DHOTSTUFF_PROTO_LOG=ON
+    cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED=ON -DHOTSTUFF_PROTO_LOG=ON -DUSE_GENERALIZED_QUORUMS=OFF
     make
 
     #For the generalized, MSP-based or MBF-based HotStuff, run the following
     cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED=OFF -DHOTSTUFF_PROTO_LOG=ON -DUSE_GENERALIZED_QUORUMS=ON -DHOTSTUFF_ENABLE_BENCHMARK=ON -DGENERALIZED_QUORUMS_WITH_MSP=OFF
     make
+
+    #To use BLS
+    cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED=OFF -DHOTSTUFF_PROTO_LOG=ON -DUSE_GENERALIZED_QUORUMS=OFF -DHOTSTUFF_ENABLE_BENCHMARK=ON -DGENERALIZED_QUORUMS_WITH_MSP=OFF -DUSE_BLS=ON
 
     # start 4 demo replicas with scripts/run_demo.sh
     # then, start the demo client with scripts/run_demo_client.sh

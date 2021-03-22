@@ -19,10 +19,16 @@
 
 #include <openssl/rand.h>
 
+#include <bls/bls384_256.h>
+#include <bls/bls.hpp>
+
 #include "secp256k1.h"
 #include "salticidae/crypto.h"
 #include "hotstuff/type.h"
 #include "hotstuff/task.h"
+#include "hotstuff/util.h"
+
+#include <sstream>
 
 namespace hotstuff {
 
@@ -32,6 +38,11 @@ class PubKey: public Serializable, Cloneable {
     public:
     virtual ~PubKey() = default;
     virtual PubKey *clone() override = 0;
+    
+    operator std::string () const {
+        std::string s = to_hex();
+        return s;
+    }
 };
 
 using pubkey_bt = BoxObj<PubKey>;
@@ -214,10 +225,42 @@ class PubKeySecp256k1: public PubKey {
         return new PubKeySecp256k1(*this);
     }
 
-     operator std::string () const {
-        std::string s = to_hex();
-        return s;
+};
+
+class PrivKeyBls;
+ 
+class PubKeyBls: public PubKey {
+    friend class SigBls;
+    bls::PublicKey pk;
+    static const size_t blsPubKeySize = 96;
+
+    public:
+    PubKeyBls(): PubKey(){}
+    
+    PubKeyBls(const bytearray_t &raw_bytes):
+        PubKeyBls() { from_bytes(raw_bytes); }
+
+    inline PubKeyBls(const PrivKeyBls &priv_key);
+
+    void serialize(DataStream &s) const override {
+        // s.load_hex(pk.serializeToHexStr());
+        DataStream ds;
+        ds.load_hex(pk.serializeToHexStr()); //Expected to write blsPubKeySize bytes to ds.
+        s.put_data(ds.data(), ds.data() + blsPubKeySize);
     }
+
+    void unserialize(DataStream &s) override {
+        //pk.deserializeHexStr(s.get_hex());
+        uint8_t data[blsPubKeySize];
+        memmove(data, s.get_data_inplace(blsPubKeySize), blsPubKeySize);
+        auto pkHexStr = DataStream(data, data + blsPubKeySize).get_hex();
+        pk.deserializeHexStr(pkHexStr);
+    }
+
+    PubKeyBls *clone() override {
+        return new PubKeyBls(*this);
+    }
+
 };
 
 class PrivKeySecp256k1: public PrivKey {
@@ -269,6 +312,54 @@ PubKeySecp256k1::PubKeySecp256k1(
         throw std::invalid_argument("invalid secp256k1 private key");
 }
 
+
+class PrivKeyBls: public PrivKey {
+    friend class PubKeyBls;
+    friend class SigBls;
+    bls::SecretKey sk;
+    static const size_t blsPrivKeySize = 32;
+
+    public:
+    PrivKeyBls(): PrivKey(){}
+
+    PrivKeyBls(const bytearray_t &raw_bytes):
+        PrivKeyBls() { from_bytes(raw_bytes); }
+
+    PrivKeyBls(const bls::SecretKey sk): 
+        PrivKey(),
+        sk(sk) {}
+
+    void serialize(DataStream &s) const override {
+        // s.load_hex(sk.serializeToHexStr());
+        DataStream ds;
+        ds.load_hex(sk.serializeToHexStr()); //Expected to write blsPrivKeySize bytes to ds.
+        s.put_data(ds.data(), ds.data() + blsPrivKeySize);
+    }
+
+    void unserialize(DataStream &s) override {
+        // sk.deserializeHexStr(s.get_hex());
+        uint8_t data[blsPrivKeySize];
+        memmove(data, s.get_data_inplace(blsPrivKeySize), blsPrivKeySize);
+        auto skHexStr = DataStream(data, data + blsPrivKeySize).get_hex();
+        sk.deserializeHexStr(skHexStr);
+    }
+
+    void from_rand() override {
+        sk.init();
+    }
+
+    inline pubkey_bt get_pubkey() const override;
+};
+
+pubkey_bt PrivKeyBls::get_pubkey() const {
+    return new PubKeyBls(*this);
+}
+
+PubKeyBls::PubKeyBls(const PrivKeyBls &priv_key): PubKey(){
+    priv_key.sk.getPublicKey(pk);
+}
+
+
 class SigSecp256k1: public Serializable {
     secp256k1_ecdsa_signature data;
     secp256k1_context_t ctx;
@@ -279,13 +370,11 @@ class SigSecp256k1: public Serializable {
     }
 
     public:
-    SigSecp256k1(const secp256k1_context_t &ctx =
-                        secp256k1_default_sign_ctx):
+    SigSecp256k1(const secp256k1_context_t &ctx = secp256k1_default_sign_ctx):
         Serializable(), ctx(ctx) {}
     SigSecp256k1(const uint256_t &digest,
-                const PrivKeySecp256k1 &priv_key,
-                secp256k1_context_t &ctx =
-                        secp256k1_default_sign_ctx):
+                 const PrivKeySecp256k1 &priv_key,
+                 secp256k1_context_t &ctx = secp256k1_default_sign_ctx):
         Serializable(), ctx(ctx) {
         sign(digest, priv_key);
     }
@@ -307,7 +396,7 @@ class SigSecp256k1: public Serializable {
         } catch (std::ios_base::failure &) {
             throw _exc;
         }
-    }
+    } 
 
     void sign(const bytearray_t &msg, const PrivKeySecp256k1 &priv_key) {
         check_msg_length(msg);
@@ -350,6 +439,68 @@ class Secp256k1VeriTask: public VeriTask {
     }
 };
 
+class SigBls: public Serializable {
+    friend class QuorumCertBls;
+
+    bls::Signature sig;
+    static const size_t blsSigSize = 48;
+
+    public:
+    SigBls():
+        Serializable() {}
+    SigBls(const bytearray_t &msg, const PrivKeyBls &priv_key):
+        Serializable() {
+            sign(msg, priv_key);
+    }
+    SigBls(const bls::Signature sig):
+        Serializable(),
+        sig(sig) {}
+
+    void serialize(DataStream &s) const override {
+        DataStream ds;
+        ds.load_hex(sig.serializeToHexStr()); //Expected to write blsSigSize bytes to ds.
+        s.put_data(ds.data(), ds.data() + blsSigSize);
+    }
+
+    void unserialize(DataStream &s) override {
+        //sig.deserializeHexStr(s.get_hex());
+        uint8_t data[blsSigSize];
+        memmove(data, s.get_data_inplace(blsSigSize), blsSigSize);
+        auto sigHexStr = DataStream(data, data + blsSigSize).get_hex();
+        sig.deserializeHexStr(sigHexStr);
+    }
+
+    void sign(const bytearray_t &msg, const PrivKeyBls &priv_key) {
+        priv_key.sk.sign(sig, std::string(msg.begin(), msg.end()));
+    }
+
+    bool verify(const bytearray_t &msg, const PubKeyBls &pub_key) const {
+        if (sig.verify(pub_key.pk, std::string(msg.begin(), msg.end())))
+            return true;
+        else{
+            HOTSTUFF_LOG_DEBUG("Non-verified signature for msg=%s", std::string(msg.begin(), msg.end()).c_str());
+            return false;
+        };
+    }
+
+};
+
+class BlsVeriTask: public VeriTask {
+    uint256_t msg;
+    PubKeyBls pubkey;
+    SigBls sig;
+    public:
+    BlsVeriTask(const uint256_t &msg,
+                const PubKeyBls &pubkey,
+                const SigBls &sig):
+        msg(msg), pubkey(pubkey), sig(sig) {}
+    virtual ~BlsVeriTask() = default;
+
+    bool verify() override {
+        return sig.verify(msg, pubkey);
+    }
+};
+
 class PartCertSecp256k1: public SigSecp256k1, public PartCert {
     uint256_t obj_hash;
 
@@ -386,6 +537,45 @@ class PartCertSecp256k1: public SigSecp256k1, public PartCert {
     void unserialize(DataStream &s) override {
         s >> obj_hash;
         this->SigSecp256k1::unserialize(s);
+    }
+};
+
+class PartCertBls: public SigBls, public PartCert {
+    uint256_t obj_hash;
+
+    public:
+    PartCertBls() = default;
+    PartCertBls(const PrivKeyBls &priv_key, const uint256_t &obj_hash):
+        SigBls(obj_hash, priv_key),
+        PartCert(),
+        obj_hash(obj_hash) {}
+
+    bool verify(const PubKey &pub_key) override {
+        return SigBls::verify(obj_hash, static_cast<const PubKeyBls &>(pub_key));
+    }
+
+    promise_t verify(const PubKey &pub_key, VeriPool &vpool) override {
+        return vpool.verify(new BlsVeriTask(obj_hash,
+                static_cast<const PubKeyBls &>(pub_key),
+                static_cast<const SigBls &>(*this)));
+    }
+
+    const uint256_t &get_obj_hash() const override { return obj_hash; }
+
+    PartCertBls *clone() override {
+        return new PartCertBls(*this);
+    }
+
+    void serialize(DataStream &s) const override {
+        HOTSTUFF_LOG_DEBUG("Serializing PartCertBls with obj_hash= %.10s", get_hex(obj_hash).c_str());
+        s << obj_hash;
+        this->SigBls::serialize(s);
+    }
+
+    void unserialize(DataStream &s) override {
+        HOTSTUFF_LOG_DEBUG("Unserializing a PartCertBls");
+        s >> obj_hash;
+        this->SigBls::unserialize(s);
     }
 };
 
@@ -427,6 +617,49 @@ class QuorumCertSecp256k1: public QuorumCert {
         s >> obj_hash >> rids;
         for (size_t i = 0; i < rids.size(); i++)
             if (rids.get(i)) s >> sigs[i];
+    }
+};
+
+class QuorumCertBls: public QuorumCert {
+    uint256_t obj_hash;
+    salticidae::Bits rids;
+    bool threshSigExists = false;
+    std::unordered_map<ReplicaID, SigBls> sigs; //temporarily keep sigs here. Field is not serialized.
+    SigBls threshSig;
+
+    public:
+    QuorumCertBls() = default;
+    QuorumCertBls(const ReplicaConfig &config, const uint256_t &obj_hash);
+
+    void add_part(ReplicaID rid, const PartCert &pc) override {
+        if (pc.get_obj_hash() != obj_hash)
+            throw std::invalid_argument("PartCert does match the block hash");
+        sigs.insert(std::make_pair(rid, static_cast<const PartCertBls &>(pc)));
+        rids.set(rid);
+    }
+
+    bool verify(const ReplicaConfig &config) override;
+    promise_t verify(const ReplicaConfig &config, VeriPool &vpool) override;
+    void compute() override;
+
+    const uint256_t &get_obj_hash() const override { return obj_hash; }
+
+    QuorumCertBls *clone() override {
+        return new QuorumCertBls(*this);
+    }
+
+    void serialize(DataStream &s) const override {
+        HOTSTUFF_LOG_DEBUG("Serializing QuorumCertBls with obj_hash= %.10s and signature=", get_hex(threshSig).c_str(), get_hex(obj_hash).c_str());
+        s << obj_hash;
+        s << threshSigExists;
+        if (threshSigExists) threshSig.serialize(s);        
+    }
+
+    void unserialize(DataStream &s) override {
+        HOTSTUFF_LOG_DEBUG("Unserializing a QuorumCertBls");
+        s >> obj_hash;
+        s >> threshSigExists;
+        if (threshSigExists) threshSig.unserialize(s);
     }
 };
 

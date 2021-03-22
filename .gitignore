@@ -34,6 +34,7 @@ plots/
 res/
 */__pycache__/*
 lib/
+sample/
 #Frequently changing
 *.conf
 conf/clients.txt
