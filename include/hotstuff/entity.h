@@ -61,6 +61,7 @@ struct ReplicaInfo {
 class ReplicaConfig {
     std::unordered_map<ReplicaID, ReplicaInfo> replica_map;
     hotstuff::quorums::AccessStructure accessStructure;
+    std::unordered_map<ReplicaID, std::vector<int>> replica_indexesOwned_map;
 
     public:
     size_t nreplicas;
@@ -102,10 +103,28 @@ class ReplicaConfig {
         accessStructure.initialize();
         HOTSTUFF_LOG_INFO("** Access Structure Initialization finished. **");
         HOTSTUFF_LOG_INFO(std::string(accessStructure).c_str());
+        HOTSTUFF_LOG_DEBUG(std::string(accessStructure.msp).c_str());
+        for (int i = 0; i < nreplicas; i++)
+            replica_indexesOwned_map.insert(std::make_pair(i, std::vector<int>()));
+        for (int j = 0; j < accessStructure.msp.L.size(); j++){
+            replica_indexesOwned_map[accessStructure.msp.L[j]].push_back(j);
+        }
     }
 
     bool isAuthorizedGroup(std::unordered_set<ReplicaID> reps) const{
         return accessStructure.isAuthorizedGroup(reps);
+    }
+
+    const std::vector<int> getIndexesOwnedByReplica(ReplicaID repID) const{
+        return replica_indexesOwned_map.at(repID);
+    }
+
+    const int getTotalNumberOfShares() const{
+        return accessStructure.msp.m();
+    }
+
+    const NTL::vec_ZZ_p getRecombinationVector(std::unordered_set<ReplicaID> reps) const{
+        return accessStructure.msp.getRecombinationVector(reps);
     }
 };
 
@@ -164,7 +183,7 @@ class Block {
         delivered(false), decision(0) {}
 
     Block(bool delivered, int8_t decision):
-        qc(new QuorumCertDummy()), //OA Check why this
+        qc(new QuorumCertDummy()),
         hash(salticidae::get_hash(*this)),
         qc_ref(nullptr),
         self_qc(nullptr), height(0),

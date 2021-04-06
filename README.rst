@@ -82,7 +82,7 @@ section may be incomplete and subject to changes.
     make
 
     #To use BLS
-    cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED=OFF -DHOTSTUFF_PROTO_LOG=ON -DUSE_GENERALIZED_QUORUMS=OFF -DHOTSTUFF_ENABLE_BENCHMARK=ON -DGENERALIZED_QUORUMS_WITH_MSP=OFF -DUSE_BLS=ON
+    cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED=OFF -DHOTSTUFF_PROTO_LOG=ON -DUSE_GENERALIZED_QUORUMS=ON -DHOTSTUFF_ENABLE_BENCHMARK=ON -DUSE_BLS=ON
 
     # start 4 demo replicas with scripts/run_demo.sh
     # then, start the demo client with scripts/run_demo_client.sh

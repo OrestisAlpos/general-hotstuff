@@ -79,7 +79,7 @@ include_directories(Catch2/single_include)
 #herumi bls library
 add_subdirectory(bls)
 include_directories(bls/include)
-include_directories(bls/external/mcl/include)
+include_directories(bls/mcl/include)
 
 option(BUILD_SHARED "build shared library." OFF)
 if(BUILD_SHARED)

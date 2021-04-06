@@ -6,6 +6,8 @@
 #include <NTL/vec_ZZ_p.h>
 #include <NTL/matrix.h>
 
+#include <bls/bls384_256.h>
+#include <bls/bls.hpp>
 
 using namespace std;
 using namespace hotstuff::quorums;
@@ -38,9 +40,25 @@ std::string one_common_k5_StringConf =
        "     {\"select\": 2, \"out-of\": [4, {\"select\": 2, \"out-of\": [17,18,19,5]} ]} "
        " ]} ";
 
+void test_recomb(hotstuff::quorums::Msp msp, std::unordered_set<hotstuff::ReplicaID> A){
+    ZZ_p x; vec_ZZ_p s; std::vector<hotstuff::ReplicaID> L;
+    msp.shareRandSecret(x, s, L);
+    vec_ZZ_p s_A;
+    for (int i = 0; i < s.length(); i++){
+        if (A.count(L[i]) > 0){
+            s_A.append(s[i]);
+        }
+    }
+    vec_ZZ_p lambda_A = msp.getRecombinationVector(A);
+    REQUIRE(lambda_A * s_A == x);
+}
 
 TEST_CASE("Linalg util") {
-    NTL::ZZ_p::init(NTL::ZZ(QUORUMS_PRIME_P));
+    // NTL::ZZ_p::init(NTL::ZZ(QUORUMS_PRIME_P));
+    bls::init(MCL_BLS12_381, MCLBN_COMPILED_TIME_VAR);
+    std::string FrOrderStr;
+    bls::getCurveOrder(FrOrderStr);
+    NTL::ZZ_p::init(NTL::ZZ(NTL::INIT_VAL, FrOrderStr.c_str()));
 
     mat_ZZ_p M, P, L, U, PM, LU;
     Vec<ZZ_p> row, x, b, x_correct;
@@ -268,9 +286,13 @@ TEST_CASE("Linalg util") {
 
 
 TEST_CASE("Quorums") {
+    bls::init(MCL_BLS12_381, MCLBN_COMPILED_TIME_VAR);
+    std::string FrOrderStr;
+    bls::getCurveOrder(FrOrderStr);
+    NTL::ZZ_p::init(NTL::ZZ(NTL::INIT_VAL, FrOrderStr.c_str()));
+
     hotstuff::quorums::StringJsonParser jp;
     hotstuff::quorums::InsertionMspCreator mspCreator;
-    NTL::ZZ_p::init(NTL::ZZ(QUORUMS_PRIME_P));
     
      SECTION("JsonParser", "Test the methods for parsing a Json string to a Theta-based structure" ) {    
         Theta theta_parsed = jp.parse(InsertionExample1StringConf);
@@ -332,7 +354,7 @@ TEST_CASE("Quorums") {
         Msp msp = mspCreator.create(SimpleThreshold1());
         REQUIRE(msp.m() == 4);
         REQUIRE(msp.d() == 2);
-
+        mat_ZZ_p M_temp;
         //empty set
         unordered_set<hotstuff::ReplicaID> reps{};
         
@@ -352,11 +374,11 @@ TEST_CASE("Quorums") {
         row.kill(); row.append(ZZ_p(0)); augm_correct[1] = row; 
         REQUIRE(augm == augm_correct);
 
-        long deg_Ma_T = NTL::gauss(MaT);
-        long deg_Ma_T_alt = linalg::gauss(MaT);
+        M_temp = MaT; long deg_Ma_T = NTL::gauss(M_temp);
+        M_temp = MaT; long deg_Ma_T_alt = linalg::gauss(M_temp).size();
         REQUIRE(deg_Ma_T == deg_Ma_T_alt);
-        long deg_Ma_T_augm = NTL::gauss(augm);
-        long deg_Ma_T_augm_alt = linalg::gauss(augm);
+        M_temp = augm; long deg_Ma_T_augm = NTL::gauss(M_temp);
+        M_temp = augm; long deg_Ma_T_augm_alt = linalg::gauss(M_temp).size();
         REQUIRE(deg_Ma_T_augm == deg_Ma_T_augm_alt);
 
         REQUIRE(deg_Ma_T == 0);
@@ -385,11 +407,11 @@ TEST_CASE("Quorums") {
         row.kill(); row.append(ZZ_p(1)); row.append(ZZ_p(0)); augm_correct[1] = row; 
         REQUIRE(augm == augm_correct);
 
-        deg_Ma_T = NTL::gauss(MaT);
-        deg_Ma_T_alt = linalg::gauss(MaT);
+        M_temp = MaT; deg_Ma_T = NTL::gauss(M_temp);
+        M_temp = MaT; deg_Ma_T_alt = linalg::gauss(M_temp).size();
         REQUIRE(deg_Ma_T == deg_Ma_T_alt);
-        deg_Ma_T_augm = NTL::gauss(augm);
-        deg_Ma_T_augm_alt = linalg::gauss(augm);
+        M_temp = augm; deg_Ma_T_augm = NTL::gauss(M_temp);
+        M_temp = augm; deg_Ma_T_augm_alt = linalg::gauss(M_temp).size();
         REQUIRE(deg_Ma_T_augm == deg_Ma_T_augm_alt);
 
         REQUIRE(deg_Ma_T == 1);
@@ -420,11 +442,11 @@ TEST_CASE("Quorums") {
         row.kill(); row.append(ZZ_p(1)); row.append(ZZ_p(3)); row.append(ZZ_p(4)); row.append(ZZ_p(0)); augm_correct[1] = row; 
         REQUIRE(augm == augm_correct);
 
-        deg_Ma_T = NTL::gauss(MaT);
-        deg_Ma_T_alt = linalg::gauss(MaT);
+        M_temp = MaT; deg_Ma_T = NTL::gauss(M_temp);
+        M_temp = MaT; deg_Ma_T_alt = linalg::gauss(M_temp).size();
         REQUIRE(deg_Ma_T == deg_Ma_T_alt);
-        deg_Ma_T_augm = NTL::gauss(augm);
-        deg_Ma_T_augm_alt = linalg::gauss(augm);
+        M_temp = augm; deg_Ma_T_augm = NTL::gauss(M_temp);
+        M_temp = augm; deg_Ma_T_augm_alt = linalg::gauss(M_temp).size();
         REQUIRE(deg_Ma_T_augm == deg_Ma_T_augm_alt);
 
         REQUIRE(deg_Ma_T == 2);
@@ -457,7 +479,7 @@ TEST_CASE("Quorums") {
         REQUIRE(msp.isAuthorizedGroupWithPLU({1,2,7,9, 10}) == false);
         REQUIRE(msp.isAuthorizedGroupWithPLU({4,9,10,11}) == false);
         REQUIRE(msp.isAuthorizedGroupWithPLU({4,6,9,10,11}) == false);
-        REQUIRE(msp.isAuthorizedGroupWithPLU({4,6,8,9,10,11}) == true);
+        REQUIRE(msp.isAuthorizedGroupWithPLU({4,6,8,9,10,11}) == true);     
 
         hotstuff::quorums::StringJsonParser jp;
         msp = mspCreator.create(jp.parse(one_common_k5_StringConf));
@@ -466,6 +488,29 @@ TEST_CASE("Quorums") {
         REQUIRE(msp.isAuthorizedGroup({0,1,2,3,6, 7, 9, 10, 12, 13, 15, 16}) == true);
         REQUIRE(msp.isAuthorizedGroup({0,1,2,3, 5, 8, 11, 14, 17}) == true);
 
+    }
+
+    SECTION("getRecombinationVector") {
+        //FORMAT: SECTION("") test_recomb(msp, );
+
+        Msp msp = mspCreator.create(InsertionExample1());
+        SECTION("{1,2,4,5}") test_recomb(msp, {1,2,4,5});
+        SECTION("{1,2,4,5,6}") test_recomb(msp, {1,2,4,5,6});
+        SECTION("{1,2,4,5,6,7}") test_recomb(msp, {1,2,4,5,6,7});
+        SECTION("{1,2,4,5,6,7,8}") test_recomb(msp, {1,2,4,5,6,7,8});
+        SECTION("{1,2,4,5,6,7,8,9}") test_recomb(msp, {1,2,4,5,6,7,8,9});
+        SECTION("{1,2,4,5,6,8,9}") test_recomb(msp, {1,2,4,5,6,8,9});
+        SECTION("{4,6,8,9,10,11}") test_recomb(msp, {4,6,8,9,10,11});
+        SECTION("{1,2,3,4,6,8,9,10,11}") test_recomb(msp, {1,2,3,4,6,8,9,10,11});
+
+        msp = mspCreator.create(jp.parse(one_common_k5_StringConf));
+        SECTION("{0,1,2,3,7,8,9,13,14,15}") test_recomb(msp, {0,1,2,3,7,8,9,13,14,15});
+        SECTION("{0,1,2,3,6, 7, 9, 10, 12, 13, 15, 16}") test_recomb(msp, {0,1,2,3,6, 7, 9, 10, 12, 13, 15, 16});
+        SECTION("{0,1,2,3, 5, 8, 11, 14, 17}") test_recomb(msp, {0,1,2,3, 5, 8, 11, 14, 17});
+        SECTION("{0,1,2,3,4,5, 8,9,11,12,14,16,17}") test_recomb(msp, {0,1,2,3,4,5, 8,9,11,12,14,16,17});
+
+        msp = mspCreator.create(jp.parse(InsertionExample1StringConf));
+        SECTION("{1,2,3,4,5,6,7,8,9,10,11}") test_recomb(msp, {1,2,3,4,5,6,7,8,9,10,11});
     }
     
     SECTION("evalFomula", "Evaluate a threshold operator-based formula based on a given (possibly a quorum) set.") {
@@ -506,6 +551,7 @@ TEST_CASE("Quorums") {
         REQUIRE(as.evalFomula(formula, {0,1,2,3,7,8,9,13,14,15}) == true);
         REQUIRE(as.evalFomula(formula, {0,1,2,3,6, 7, 9, 10, 12, 13, 15, 16}) == true);
         REQUIRE(as.evalFomula(formula, {0,1,2,3, 5, 8, 11, 14, 17}) == true);
+        REQUIRE(as.evalFomula(formula, {5, 8, 11, 14, 17}) == false);
     }
     
 }

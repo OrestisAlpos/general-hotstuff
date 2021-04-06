@@ -1,9 +1,5 @@
 #ifndef _QUORUMS_H
-#define _QUORUMS_H
-
-#if !defined(QUORUMS_PRIME_P)
-#define QUORUMS_PRIME_P 101
-#endif
+#define _QUORUMS_H  
 
 #include <vector>
 #include <string>
@@ -120,7 +116,7 @@ class Msp{
         return s;
     }
 
-    //Returns (an approximation of) the size of an instance of type Msp`.
+    //Returns (an approximation of) the size  in Bytes of an instance of type Msp.
     std::size_t size(){
         size_t size = sizeof(Msp);
         size += M.NumCols() * M.NumRows() * sizeof(NTL::ZZ_p);
@@ -129,6 +125,12 @@ class Msp{
         size += y.length() * sizeof(NTL::ZZ_p);
         return size;
     }
+
+    // Used by the dealer in BLS-HotStuff with generalized trust.
+    // Returns the secret, the shares and the corresp. owners.
+    void shareRandSecret(NTL::ZZ_p &secret, NTL::vec_ZZ_p &shares, std::vector<hotstuff::ReplicaID> &owners);
+    vec_ZZ_p getRecombinationVector(std::unordered_set<ReplicaID> reps) const;
+
 };
 
 
@@ -170,9 +172,7 @@ class AccessStructure{
     hotstuff::quorums::Theta thetaOperatorFormula;
     hotstuff::quorums::Msp msp;
 
-    AccessStructure(){
-        NTL::ZZ_p::init(NTL::ZZ(QUORUMS_PRIME_P));
-    };
+    AccessStructure(){};
     AccessStructure(hotstuff::quorums::JsonParser *jsonParser_): AccessStructure() {jsonParser = jsonParser_;}
 
     void initialize(const std::string& conf = ""){

@@ -174,10 +174,21 @@ bool hotstuff::quorums::Msp::isAuthorizedGroupWithPLU(std::unordered_set<Replica
     mat_ZZ_p Ua = getColsOfUOwnedByReps(reps);
     mat_ZZ_p Ua_augm;
     getAugmentedMatrix(Ua_augm, Ua, y);
-    int rank_Ua = linalg::gauss(Ua); //Ua is almost-upper-triangular. linalg::gauss checks for a 0 below the pivot.
-    int rank_Ua_augm = linalg::gauss(Ua_augm);
+    int rank_Ua = linalg::gauss(Ua).size(); //Ua is almost-upper-triangular. linalg::gauss checks for a 0 below the pivot.
+    int rank_Ua_augm = linalg::gauss(Ua_augm).size();
     //system Ua x = y has solution iff rank of Ua is same as rank of Ua|y
     return rank_Ua == rank_Ua_augm;
+}
+
+// reps is an authorised set A.
+// The function solves Ma^T * x = e_1 (i.e., finds the recombination vector for group A) 
+// using PLU (actually solves Ua * x = y)
+vec_ZZ_p hotstuff::quorums::Msp::getRecombinationVector(std::unordered_set<ReplicaID> reps) const{
+    mat_ZZ_p Ua = getColsOfUOwnedByReps(reps);
+    mat_ZZ_p Ua_augm;
+    getAugmentedMatrix(Ua_augm, Ua, y);
+    std::vector<long> pivot_cols = linalg::gauss(Ua_augm);
+    return linalg::solveByBackwardSubstitution(Ua_augm, pivot_cols);
 }
 
 NTL::mat_ZZ_p hotstuff::quorums::Msp::getAugmentedMatrix(NTL::mat_ZZ_p& augmMatrix, 
@@ -229,6 +240,13 @@ NTL::mat_ZZ_p hotstuff::quorums::Msp::getColsOfUOwnedByReps(std::unordered_set<R
         }
     }
     return Ua;
+}
+
+void hotstuff::quorums::Msp::shareRandSecret(NTL::ZZ_p &secret, NTL::vec_ZZ_p &shares, std::vector<hotstuff::ReplicaID> &owners){
+    vec_ZZ_p r = random_vec_ZZ_p(M.NumCols());
+    shares = M * r;
+    owners = L;
+    secret = r[0];
 }
 
 

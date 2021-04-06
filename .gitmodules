@@ -15,4 +15,4 @@
 	url = https://github.com/Determinant/minirun.git
 [submodule "bls"]
 	path = bls
-	url = https://github.com/herumi/bls
+	url = git@github.com:OrestisAlpos/bls.git

@@ -259,7 +259,7 @@ void HotStuffCore::on_receive_vote(const Vote &vote) {
     {
         //At this point we have a quorum of votes (already verified in HotStuffBase::vote_handler),
         //so we can create a threshold signature with them.
-        qc->compute();
+        qc->compute(config);
         update_hqc(blk, qc);
         on_qc_finish(blk);
     }

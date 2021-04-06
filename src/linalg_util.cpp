@@ -2,7 +2,9 @@
 
 namespace hotstuff::quorums::linalg{
 
-long gauss(mat_ZZ_p& M_in) {
+//In comparison to the original mat_ZZ_p::gauss() in NTL, this function takes advantage of the fact that 
+//M_in is almost-upper-triangular (stops if 0 under pivot)
+ std::vector<long> gauss(mat_ZZ_p& M_in) {
    ZZ t1, t2;
    ZZ piv;
 
@@ -24,6 +26,7 @@ long gauss(mat_ZZ_p& M_in) {
    }
 
    long l = 0;
+   std::vector<long> pivot_cols;
    for (long k = 0; k < m && l < n; k++) {
 
       long pos = -1;
@@ -68,6 +71,7 @@ long gauss(mat_ZZ_p& M_in) {
          }
 
          l++;
+         pivot_cols.push_back(k);
       }
    }
    
@@ -75,7 +79,7 @@ long gauss(mat_ZZ_p& M_in) {
       for (long j = 0; j < m; j++)
          conv(M_in[i][j], M[i][j]);
 
-   return l;
+   return pivot_cols;
 }
 
 
@@ -167,7 +171,7 @@ void PLU(const mat_ZZ_p& M_in, mat_ZZ_p& P, mat_ZZ_p& L, mat_ZZ_p& U) {
 
 void solveByForwardSubstitution(const mat_ZZ_p& L, vec_ZZ_p& x, const vec_ZZ_p& b){
    //Solves Lx=b. L is assumed to be a lower triangular square matrix.
-   long n = L.NumRows();
+   long n = L.NumCols();
    ZZ_p sum, linv;
    
    x.kill(); x.SetLength(n);
@@ -178,7 +182,40 @@ void solveByForwardSubstitution(const mat_ZZ_p& L, vec_ZZ_p& x, const vec_ZZ_p& 
       inv(linv, L[i][i]);  
       x[i] = (b[i] - sum) * linv;
    }
-   
+}
+
+inline bool isPivot(const mat_ZZ_p& A, const long i, const long j){
+   if (A[i][j] == 0) return  false;
+   for (long jj = j-1; jj >= 0; jj--)
+      if (A[i][jj] != 0) return false;
+   return true;
+}
+
+vec_ZZ_p solveByBackwardSubstitution(const mat_ZZ_p& M, std::vector<long> pivot_cols){
+   // M is the augmented A|b in row echelon. Solves Ax=b by backward substitution. A has dimensions (n,m).
+   // Parameter rank is the rank of A|b (same as rank of A, because the system is assumed to have solutions). 
+   // (rank = #pivots = #non-zero rows).
+   // The algorithm assignes 0 to free variables.
+   long m = M.NumCols() - 1; // Last column is b
+   ZZ_p sum, linv;
+   vec_ZZ_p x;
+   x.SetLength(m);
+   long i = pivot_cols.size() - 1; //only the first (rank) rows are non-zero
+   // for (long j = m - 1; j >= 0 ; j--){
+      // if (isPivot(M, i, j)){
+   for (std::vector<long>::reverse_iterator it = pivot_cols.rbegin(); it != pivot_cols.rend(); it++ ){
+      long j = *it;
+      sum = 0;
+      for (long k = j + 1; k < m; k++)
+         sum += M[i][k] * x[k];
+      inv(linv, M[i][j]);  
+      x[j] = (M[i][m] - sum) * linv; //M[i][m] is b[i]
+      i--;
+      // } else {
+      //    x[j] = 0;
+      // }
+   }
+   return x;
 }
 
 }

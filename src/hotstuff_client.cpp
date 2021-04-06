@@ -129,6 +129,19 @@ std::pair<std::string, std::string> split_ip_port_cport(const std::string &s) {
 }
 
 int main(int argc, char **argv) {
+//!!!
+#ifdef USE_BLS
+    bls::init(MCL_BLS12_381, MCLBN_COMPILED_TIME_VAR);    
+    #ifdef USE_GENERALIZED_QUORUMS
+        std::string FrOrderStr;
+        bls::getCurveOrder(FrOrderStr);
+        HOTSTUFF_LOG_DEBUG("herumi/bls initialized with r = %s", FrOrderStr.c_str());
+        NTL::ZZ_p::init(NTL::ZZ(NTL::INIT_VAL, FrOrderStr.c_str()));
+    #endif
+#endif
+#ifdef USE_GENERALIZED_QUORUMS
+    NTL::ZZ_p::init(NTL::ZZ(101));
+#endif    
     Config config("hotstuff.conf");
 
     auto opt_idx = Config::OptValInt::create(0);

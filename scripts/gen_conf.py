@@ -21,6 +21,7 @@ if __name__ == "__main__":
     parser.add_argument('--repburst', type=int, default=1000)
     parser.add_argument('--cliburst', type=int, default=1000)
     parser.add_argument('--algo', type=str, default='secp256k1')
+    parser.add_argument('--quorums_file', type=str, default='')
     args = parser.parse_args()
 
 
@@ -43,12 +44,14 @@ if __name__ == "__main__":
         i = port_count.setdefault(ip, 0)
         port_count[ip] += 1
         replicas.append("{}:{};{}".format(ip, base_pport + i, base_cport + i))
-    p = subprocess.Popen([keygen_bin, '--num', str(len(replicas)), '--algo', args.algo],
+    p = subprocess.Popen([keygen_bin, '--num', str(len(replicas)), '--algo', args.algo, '--quorums_file', args.quorums_file],
                         stdout=subprocess.PIPE, stderr=open(os.devnull, 'w'))
     keygen_out = [[t[4:] for t in l.decode('ascii').split()] for l in p.stdout]
-    globalKey = keygen_out[0]
-    keys = keygen_out[1:]
-    #pub, priv
+    if args.algo == 'bls':
+        globalKey = keygen_out[0]
+        keys = keygen_out[1:]
+    else:
+        keys = keygen_out 
     tls_p = subprocess.Popen([tls_keygen_bin, '--num', str(len(replicas))],
                         stdout=subprocess.PIPE, stderr=open(os.devnull, 'w'))
     tls_keys = [[t[4:] for t in l.decode('ascii').split()] for l in tls_p.stdout]

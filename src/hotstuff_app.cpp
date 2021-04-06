@@ -23,6 +23,9 @@
 #include <unistd.h>
 #include <signal.h>
 
+#include <bls/bls384_256.h>
+#include <bls/bls.hpp>
+
 #include "salticidae/stream.h"
 #include "salticidae/util.h"
 #include "salticidae/network.h"
@@ -150,9 +153,21 @@ std::pair<std::string, std::string> split_ip_port_cport(const std::string &s) {
 salticidae::BoxObj<HotStuffApp> papp = nullptr;
 
 int main(int argc, char **argv) {
+//!!!
 #ifdef USE_BLS
-    bls::init(MCL_BLS12_381, MCLBN_COMPILED_TIME_VAR);
+    bls::init(MCL_BLS12_381, MCLBN_COMPILED_TIME_VAR);    
+    #ifdef USE_GENERALIZED_QUORUMS
+        std::string FrOrderStr;
+        bls::getCurveOrder(FrOrderStr);
+        HOTSTUFF_LOG_DEBUG("herumi/bls initialized with r = %s", FrOrderStr.c_str());
+        NTL::ZZ_p::init(NTL::ZZ(NTL::INIT_VAL, FrOrderStr.c_str()));
+    #endif
+#else
+    #ifdef USE_GENERALIZED_QUORUMS
+        NTL::ZZ_p::init(NTL::ZZ(101));
+    #endif
 #endif
+
     Config config("hotstuff.conf");
 
     ElapsedTime elapsed;
@@ -288,7 +303,7 @@ int main(int argc, char **argv) {
     std::vector<std::tuple<NetAddr, bytearray_t, bytearray_t>> reps;
     for (auto &r: replicas)
     {
-        auto p = split_ip_port_cport(std::get<0>(r));
+        auto p = split_ip_port_cport(std::get<0>(r));    
         reps.push_back(std::make_tuple(
             NetAddr(p.first),
             hotstuff::from_hex(std::get<1>(r)),
