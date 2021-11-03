@@ -22,6 +22,7 @@ include/hotstuff/config.h
 /test/test_secp256k1
 /test/test_concurrent_queue
 /test/test_quorums
+/test/microbench
 core
 .vscode/
 log*

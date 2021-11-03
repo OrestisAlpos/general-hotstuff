@@ -1,8 +1,8 @@
-for replicas in 4 7 10 13 16 19 22 25 28 31 16 20 24 28 32 36 40 44 48 52
+for replicas in $(seq 3 101)
 do
-    divide=$((2 * $replicas + 1)) #get ceiling of (2k+1)/3
+    divide=$((2 * $replicas + 1))
     by=3
-    result=$(( ($divide+$by-1) / $by ))
+    result=$(( ($divide+$by-1) / $by ))  #get ceiling of (2k+1)/3
     conf="{\"select\": $result, \"out-of\": ["
     for i in $(seq 0 $((replicas-1)))
     do
@@ -13,7 +13,25 @@ do
         fi
     done
     conf+="]}"
-    echo $conf > quorum_confs/quorums_thres_${replicas}.json
+    echo $conf > conf/quorum_confs/quorums_thres_${replicas}.json
+done
+
+for replicas in $(seq 3 101)
+do
+    divide=$(($replicas + 1)) 
+    by=2
+    result=$(( ($divide+$by-1) / $by )) #get ceiling of (k+1)/2
+    conf="{\"select\": $result, \"out-of\": ["
+    for i in $(seq 0 $((replicas-1)))
+    do
+        conf+="$i"
+        if [ $i -lt $((replicas-1)) ]
+        then
+            conf+=","
+        fi
+    done
+    conf+="]}"
+    echo $conf > conf/quorum_confs/quorums_maj_thres_${replicas}.json
 done
 
 for k in $(seq 4 13)
@@ -45,6 +63,6 @@ do
         conf="$conf"$'\n'"    $conf_2"
     done
     conf="$conf"$'\n'"]}"
-    echo "$conf" > quorum_confs/1common_k${k}.json
+    echo "$conf" > conf/quorum_confs/1common_k${k}.json
 done
 

@@ -1,0 +1,54 @@
+Testing/Timing ED25519 ECC
+Edwards parameterization
+Pseudo-Mersenne Modulus
+64-bit Build
+EC  mul -    49249 iterations       0.20 ms per iteration
+
+Testing/Timing NIST256 ECC
+Weierstrass parameterization
+Not special Modulus
+64-bit Build
+EC  mul -    25646 iterations       0.39 ms per iteration
+
+Testing/Timing GOLDILOCKS ECC
+Edwards parameterization
+Generalised-Mersenne Modulus
+64-bit Build
+EC  mul -    13594 iterations       0.74 ms per iteration
+
+Testing/Timing BN254 Pairings
+G1 mul              -    46267 iterations       0.22 ms per iteration
+G2 mul              -    21441 iterations       0.47 ms per iteration
+GT pow              -    13184 iterations       0.76 ms per iteration
+GT pow (compressed) -    22424 iterations       0.45 ms per iteration
+PAIRing ATE         -    12834 iterations       0.78 ms per iteration
+PAIRing FEXP        -    13182 iterations       0.76 ms per iteration
+
+Testing/Timing BLS12383 Pairings
+G1 mul              -    33618 iterations       0.30 ms per iteration
+G2 mul              -    15148 iterations       0.66 ms per iteration
+GT pow              -    10285 iterations       0.97 ms per iteration
+GT pow (compressed) -    10471 iterations       0.96 ms per iteration
+PAIRing ATE         -     8738 iterations       1.14 ms per iteration
+PAIRing FEXP        -     6021 iterations       1.66 ms per iteration
+
+Testing/Timing BLS24479 Pairings
+G1 mul              -    18234 iterations       0.55 ms per iteration
+G2 mul              -     2742 iterations       3.65 ms per iteration
+GT pow              -     1810 iterations       5.53 ms per iteration
+PAIRing ATE         -     2658 iterations       3.76 ms per iteration
+PAIRing FEXP        -     1159 iterations       8.63 ms per iteration
+
+Testing/Timing BLS48556 Pairings
+G1 mul              -    12739 iterations       0.79 ms per iteration
+G2 mul              -      599 iterations      16.72 ms per iteration
+GT pow              -      357 iterations      28.03 ms per iteration
+PAIRing ATE         -     1065 iterations       9.40 ms per iteration
+PAIRing FEXP        -      252 iterations      39.75 ms per iteration
+
+Testing/Timing 2048-bit RSA
+Generating 2048-bit RSA public/private key pair
+RSA gen -       17 iterations     609.84 ms per iteration
+RSA enc -    22781 iterations       0.44 ms per iteration
+RSA dec -     1534 iterations       6.52 ms per iteration
+All tests pass

@@ -1,8 +1,8 @@
 #!/bin/bash
 
 proj_client_bin="hotstuff-client"
-proj_client_path="/root/git/libhotstuff/$proj_client_bin"
-#proj_client_path="/root/libhotstuff/$proj_client_bin"
+# proj_client_path="/root/git/libhotstuff/<proj_client_bin>"
+proj_client_path="/root/libhotstuff/<proj_client_bin>"
 proj_conf_name="hotstuff.conf"
 
 peer_list="./conf/nodes.txt"     # the list of nodes
@@ -11,8 +11,8 @@ conf_src="./conf/hotstuff.gen.conf"
 quorums_conf_src="./conf/quorums.json"
 quorums_conf_name="quorums.json"
 template_dir="template"     # the dir that keeps the content shared among all nodes
-remote_base="/root/git/libhotstuff"  # remote dir used to keep files for the experiment
-#remote_base="/root/libhotstuff" 
+# remote_base="/root/git/libhotstuff"  # remote dir used to keep files for the experiment
+remote_base="/root/libhotstuff" 
 remote_log="log"   # log filename
 remote_user="root"
 max_async=1
@@ -21,9 +21,8 @@ max_commands=-1
 copy_to_remote_pat="rsync -avz <local_path> <remote_user>@<remote_ip>:<remote_path>"
 copy_from_remote_pat="rsync -avz <remote_user>@<remote_ip>:<remote_path> <local_path>"
 exe_remote_pat="ssh <remote_user>@<remote_ip> bash"
-#run_remote_pat="cd \"<rworkdir>\"; '<proj_client_path>' --cid \"<node_id>\" --iter <iter> --max-async <max_async> --max-commands <max_commands>"
-run_remote_pat="cd \"<rworkdir>\"; '<proj_client_path>' --cid \"<node_id>\" --iter <iter> --max-async <max_async>"
-reset_remote_pat="pgrep -f '$proj_client_bin' | xargs kill -9"
+run_remote_pat="cd \"<rworkdir>\"; '$proj_client_path' --cid \"<node_id>\" --iter <iter> --max-async <max_async>"
+reset_remote_pat="pgrep -f <proj_client_bin> | xargs kill -9"
 node_id_step=1
  
 function join { local IFS="$1"; shift; echo "$*"; }
@@ -114,7 +113,7 @@ function execute_remote_cmd_pid {
     local cmd="${exe_remote_pat//<remote_ip>/$node_ip}"
     cmd="${cmd//<remote_user>/$remote_user}"
     eval $cmd << EOF
-$c > $l 2>&1 & echo \$!
+$c >> $l 2>&1 & echo \$!
 EOF
 }
 
@@ -151,7 +150,7 @@ function _remote_start {
     local client_port="$5"
     local client_ip="$6"
     local cmd="${run_remote_pat//<rworkdir>/$rworkdir}"
-    cmd="${cmd//<proj_client_path>/$proj_client_path}"
+    cmd="${cmd//<proj_client_bin>/$proj_client_bin}"
     cmd="${cmd//<node_id_step>/$node_id_step}"
     cmd="${cmd//<node_id>/$((node_id * node_id_step))}"
     cmd="${cmd//<server>/$node_ip:$client_port}"
@@ -224,6 +223,42 @@ function start_all {
     wait
 }
 
+function restart_all {
+    local workdir="$1"
+    local tmpldir="$workdir/$template_dir/"
+    # mkdir "$workdir" > /dev/null 2>&1 || die "workdir already exists"
+    # rm -rf "$tmpldir"
+    # mkdir "$tmpldir"
+    # cp "$peer_list" "$workdir/peer_list.txt"
+    # cp "$client_list" "$workdir/client_list.txt"
+    get_node_info "$workdir/peer_list.txt"
+    get_client_info "$workdir/client_list.txt"
+    # echo "copying configuration file"
+    # rsync -avP "$conf_src" "$tmpldir/$proj_conf_name"
+    # rsync -avP "$quorums_conf_src" "$tmpldir/$quorums_conf_name"
+    local i=0
+    local j=0
+    for cip in "${cip_list[@]}"; do
+        local rid="${nodes[$i]}"
+        local ip="$(get_ip_by_id $rid)"
+        local pport="$(get_peer_port_by_id $rid)"
+        local cport="$(get_client_port_by_id $rid)"
+        local rworkdir="$remote_base/$workdir/${j}"
+        (
+        echo "Starting a client @ $cip, connecting to server #$rid @ $ip:$cport"
+        # _remote_load "$workdir" "$rworkdir" "$cip"
+        _remote_start "$workdir" "$rworkdir" "$j" "$ip" "$cport" "$cip"
+        echo "client #$j started"
+        ) &
+        let i++
+        let j++
+        if [[ "$i" -eq "${#nodes[@]}" ]]; then
+            i=0
+        fi
+    done
+    wait
+}
+
 function fetch_all {
     local workdir="$1"
     get_client_info "$workdir/client_list.txt"
@@ -253,7 +288,8 @@ function exec_all {
 }
 
 function reset_all {
-    exec_all "$1" "$reset_remote_pat"
+    local cmd="${reset_remote_pat//<proj_client_bin>/$proj_client_bin}"
+    exec_all "$1" "$cmd"
 }
 
 function stop_all {
@@ -366,6 +402,7 @@ cmd="$1"
 shift 1
 case "$cmd" in
     start) check_argnum 1 "$@" && start_all "$1" ;;
+    restart) check_argnum 1 "$@" && restart_all "$1" ;;
     stop) check_argnum 1 "$@" && stop_all "$1" ;;
     status) check_argnum 1 "$@" && status_all "$1" ;;
     check) check_argnum 1 "$@" && check_all "$1" ;;

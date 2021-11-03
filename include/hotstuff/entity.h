@@ -202,7 +202,7 @@ class Block {
             qc(std::move(qc)),
             extra(std::move(extra)),
             hash(salticidae::get_hash(*this)),
-            parents(parents),
+            parents(parents), 
             qc_ref(qc_ref),
             self_qc(std::move(self_qc)),
             height(height),
@@ -225,7 +225,7 @@ class Block {
         return parent_hashes;
     }
 
-    const uint256_t &get_hash() const { return hash; }
+const uint256_t &get_hash() const { return hash; }
 
     bool verify(const HotStuffCore *hsc) const;
 

@@ -281,6 +281,9 @@ int main(int argc, char **argv) {
             .tls_key(tls_priv_key)
             .tls_cert(tls_cert);
     }
+    else{
+        HOTSTUFF_LOG_WARN("TLS among replicas has been disabled");
+    }
     repnet_config
         .burst_size(opt_repburst->get())
         .nworker(opt_repnworker->get());

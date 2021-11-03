@@ -1,5 +1,5 @@
 CLIENTS=$(<conf/clients.txt)
-SERVERS=$(<conf/nodeips.txt)
+SERVERS=$(<conf/replicas_exter.txt)
 for CL in ${CLIENTS} ; do
     rsync -avz src/hotstuff_client.cpp root@${CL}:~/libhotstuff/src/ &
     rsync -avz src/hotstuff.cpp root@${CL}:~/libhotstuff/src/ &
@@ -7,6 +7,7 @@ for CL in ${CLIENTS} ; do
 done
 for SRV in ${SERVERS} ; do
     rsync -avz src/hotstuff.cpp root@${SRV}:~/libhotstuff/src/ &
+    rsync -avz src/hotstuff_app.cpp root@${SRV}:~/libhotstuff/src/ &
     rsync -avz include/hotstuff/hotstuff.h root@${SRV}:~/libhotstuff/include/hotstuff/ &
 done
 wait

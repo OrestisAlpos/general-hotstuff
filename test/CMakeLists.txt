@@ -10,3 +10,12 @@ target_link_libraries(test_quorums hotstuff_static)
 
 add_executable(microbench microbench.cpp)
 target_link_libraries(microbench hotstuff_static)
+
+add_executable(microbench_bls microbench_bls.cpp)
+target_link_libraries(microbench_bls hotstuff_static)
+
+add_executable(microbench_pairings microbench_pairings.cpp)
+target_link_libraries(microbench_pairings hotstuff_static)
+
+add_executable(microbench_vss microbench_vss.cpp)
+target_link_libraries(microbench_vss hotstuff_static)

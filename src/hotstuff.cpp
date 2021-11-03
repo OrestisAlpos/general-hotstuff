@@ -165,7 +165,7 @@ promise_t HotStuffBase::async_fetch_blk(const uint256_t &blk_hash,
     return static_cast<promise_t &>(it->second);
 }
 
-promise_t HotStuffBase::async_deliver_blk(const uint256_t &blk_hash,
+promise_t HotStuffBase:: async_deliver_blk(const uint256_t &blk_hash,
                                         const PeerId &replica) {
     if (storage->is_blk_delivered(blk_hash))
         return promise_t([this, &blk_hash](promise_t pm) {

@@ -123,7 +123,7 @@ int main(int argc, char **argv) {
         priv_key = new hotstuff::PrivKeySecp256k1();
     else if (algo == "bls"){
             if (n == 1) error(1, 0, "n cannot be 1 in threshold BLS mode");
-            #ifdef USE_BLS
+            #ifdef USE_GENERALIZED_QUORUMS
             shareGeneralized(n, opt_quorums_file->get());
             #else
             share(n - n / 3, n);
