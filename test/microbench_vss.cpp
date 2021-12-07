@@ -7,71 +7,17 @@
 #include <NTL/vec_ZZ_p.h>
 #include <NTL/ZZ_pX.h>
 #include <NTL/matrix.h>
-
+#include "algebra_utils.h"
 
 using namespace NTL;
 using namespace std;
 
-//group G of prime order q, subgroup of Zp, with g, h generators
-struct VssGroup {
-    ZZ p;
-    ZZ q;
-    ZZ_p g;
-    ZZ_p h;
-};
-
-// Generate primes p,q, such that p-1 divides q, i.e., p - 1 = mq
-void generatePrimes(long p_size, long q_size, ZZ& p, ZZ& q){
-    while (true){
-        q = GenPrime_ZZ(q_size);
-        ZZ m1 = RandomLen_ZZ(p_size - q_size);
-        ZZ m2 = RandomLen_ZZ(p_size - q_size);
-        if (m1 > m2){
-            ZZ temp = m1;
-            m1 = m2;
-            m2 = temp;
-        }
-        // cout << "***" << m1 << endl;
-        // cout << "***" << m2 << endl;
-        for (ZZ m = m1; m < m2; m++){
-            p = q * m + 1;
-            if (ProbPrime(p)){
-                // cout << "***" << q << endl;
-                // cout << "***" << p << endl;
-                return ;
-            }    
-        }
-    }
-}
-
-
-// Generation of system parameters.
-// Returns (p, q, g, h), where g, h are generators of the subroup of order q of Zp
-const VssGroup getGroup(long p_size, long q_size){ 
-    ZZ p,q;
-    generatePrimes(p_size, q_size, p, q);
-    // cout << "Primes: " << p << " " << q << endl;
-    ZZ_p::init(p);
-    ZZ m = (p - 1) / q;
-    ZZ_p g;
-    ZZ_p h;
-    while (true) {
-        ZZ_p g1 = NTL::random_ZZ_p();
-        ZZ_p h1 = NTL::random_ZZ_p();
-        g = NTL::power(g1, m);
-        h = NTL::power(h1, m);
-        if (!NTL::IsOne(g) && !NTL::IsOne(h))
-            break;
-    }
-    return VssGroup{p,q,g,h};
-
-}
 
 namespace ThresholdVss{
     long t,n;
-    VssGroup G;
+    PrimeOrderModGroup G;
 
-    void init(const VssGroup& group, const long& threshold, const long& n_parties){
+    void init(const PrimeOrderModGroup& group, const long& threshold, const long& n_parties){
         G = group;
         t = threshold;
         n = n_parties;
@@ -144,9 +90,9 @@ namespace ThresholdVss{
 
 namespace GeneralizedVss{
     hotstuff::quorums::Msp msp;
-    VssGroup G;
+    PrimeOrderModGroup G;
 
-    void init(const VssGroup& group, const string& quorumsConfFile){
+    void init(const PrimeOrderModGroup& group, const string& quorumsConfFile){
         G = group;
         ZZ_p::init(G.q);
         hotstuff::quorums::JsonParser *jp = new hotstuff::quorums::ConfigJsonParser();
@@ -196,7 +142,7 @@ namespace GeneralizedVss{
 }
 
 
-int benchThreshold(VssGroup G, long t, long n, string marker, int repetitions = 1){
+int benchThreshold(PrimeOrderModGroup G, long t, long n, string marker, int repetitions = 1){
     std::chrono::steady_clock::time_point begin;
     std::chrono::steady_clock::time_point end;
     std::chrono::duration<double, std::milli> elapsedShare = std::chrono::milliseconds(0);
@@ -262,7 +208,7 @@ int benchThreshold(VssGroup G, long t, long n, string marker, int repetitions = 
 }
 
 
-int benchGeneralized(VssGroup G, const string& quorumsConfFile, long n, string marker, int repetitions = 1){    
+int benchGeneralized(PrimeOrderModGroup G, const string& quorumsConfFile, long n, string marker, int repetitions = 1){    
     std::chrono::steady_clock::time_point begin;
     std::chrono::steady_clock::time_point end;
     std::chrono::duration<double, std::milli> elapsedShare = std::chrono::milliseconds(0);
@@ -343,7 +289,7 @@ int main(){
     long p_size = 3072; //3072
     long q_size = 256;  //256
     // generatePrimes(p_size, q_size, p, q);
-    VssGroup G = getGroup(p_size,q_size);
+    PrimeOrderModGroup G = getGroup(p_size,q_size);
     
     // //GENERALIZED
     // GeneralizedVss::init(G, "conf/quorum_confs/quorums_thres_4.json");
@@ -407,19 +353,19 @@ int main(){
     int to = 101;
     int step = 8;
     int repetitions = 10;
-    // for (int n = from; n <= to; n+=step){
-    //     benchThreshold(G, n / 2 + 1, n, "THR", repetitions);
-    // }
-    // for (int n = from; n <= to; n+=step){
-    //     std::string quorumSpec = "conf/quorum_confs/quorums_maj_thres_" + std::to_string(n) + ".json";
-    //     benchGeneralized(G, quorumSpec, n, "GEN", repetitions);
-    // }
+    for (int n = from; n <= to; n+=step){
+        benchThreshold(G, n / 2 + 1, n, "THR", repetitions);
+    }
+    for (int n = from; n <= to; n+=step){
+        std::string quorumSpec = "conf/quorum_confs/quorums_maj_thres_" + std::to_string(n) + ".json";
+        benchGeneralized(G, quorumSpec, n, "GEN", repetitions);
+    }
     for (int n = from; n <= to; n+=step){
         benchThreshold(G, 2*n/3 + 1, n, "THRCOMPL", repetitions);
     }
-    // for (int n = from; n <= to; n+=step){
-    //     std::string quorumSpec = "conf/quorum_confs/quorums_thres_" + std::to_string(n) + ".json";
-    //     benchGeneralized(G, quorumSpec, n, "GENCOMPL", repetitions);
-    // }
+    for (int n = from; n <= to; n+=step){
+        std::string quorumSpec = "conf/quorum_confs/quorums_thres_" + std::to_string(n) + ".json";
+        benchGeneralized(G, quorumSpec, n, "GENCOMPL", repetitions);
+    }
    return 0;
 }

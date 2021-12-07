@@ -23,6 +23,8 @@ include/hotstuff/config.h
 /test/test_concurrent_queue
 /test/test_quorums
 /test/microbench
+/test/microbench_vss
+/test/microbench_coin
 core
 .vscode/
 log*

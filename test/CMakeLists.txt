@@ -19,3 +19,6 @@ target_link_libraries(microbench_pairings hotstuff_static)
 
 add_executable(microbench_vss microbench_vss.cpp)
 target_link_libraries(microbench_vss hotstuff_static)
+
+add_executable(microbench_coin microbench_coin.cpp)
+target_link_libraries(microbench_coin hotstuff_static)
