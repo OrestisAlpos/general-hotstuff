@@ -1,0 +1,3200 @@
+FORM.16.thr.0. 4.887
+FORM.16.lat.0. 25.049
+FORM.16.thr.1. 4.950
+FORM.16.lat.1. 24.696
+FORM.16.thr.2. 4.915
+FORM.16.lat.2. 24.897
+FORM.16.thr.3. 4.960
+FORM.16.lat.3. 24.674
+FORM.16.thr.4. 4.936
+FORM.16.lat.4. 24.788
+FORM.16.thr.5. 4.908
+FORM.16.lat.5. 24.926
+FORM.16.thr.6. 4.705
+FORM.16.lat.6. 25.101
+FORM.16.thr.7. 4.930
+FORM.16.lat.7. 24.827
+FORM.16.thr.8. 4.928
+FORM.16.lat.8. 24.853
+FORM.16.thr.9. 4.960
+FORM.16.lat.9. 24.678
+FORM.16.thr.10. 4.929
+FORM.16.lat.10. 24.864
+FORM.16.thr.11. 4.955
+FORM.16.lat.11. 24.699
+FORM.16.thr.12. 4.681
+FORM.16.lat.12. 26.979
+FORM.16.thr.13. 4.939
+FORM.16.lat.13. 24.804
+FORM.16.thr.14. 4.927
+FORM.16.lat.14. 24.823
+FORM.16.thr.15. 4.933
+FORM.16.lat.15. 24.840
+# FORM.16.thr.0. 4.697
+# FORM.16.lat.0. 25.348
+# FORM.16.thr.1. 4.620
+# FORM.16.lat.1. 25.553
+# FORM.16.thr.2. 4.671
+# FORM.16.lat.2. 25.157
+# FORM.16.thr.3. 4.689
+# FORM.16.lat.3. 25.568
+# FORM.16.thr.4. 4.687
+# FORM.16.lat.4. 25.402
+# FORM.16.thr.5. 4.658
+# FORM.16.lat.5. 25.363
+# FORM.16.thr.6. 4.647
+# FORM.16.lat.6. 25.736
+# FORM.16.thr.7. 4.672
+# FORM.16.lat.7. 25.256
+# FORM.16.thr.8. 4.754
+# FORM.16.lat.8. 24.786
+# FORM.16.thr.9. 4.711
+# FORM.16.lat.9. 25.045
+# FORM.16.thr.10. 4.702
+# FORM.16.lat.10. 25.036
+# FORM.16.thr.11. 4.664
+# FORM.16.lat.11. 25.510
+# FORM.16.thr.12. 4.705
+# FORM.16.lat.12. 25.372
+# FORM.16.thr.13. 4.749
+# FORM.16.lat.13. 25.114
+# FORM.16.thr.14. 4.629
+# FORM.16.lat.14. 25.880
+# FORM.16.thr.15. 4.728
+# FORM.16.lat.15. 25.195
+# FORM.16.thr.0. 4.594
+# FORM.16.lat.0. 28.203
+# FORM.16.thr.1. 4.384
+# FORM.16.lat.1. 29.619
+# FORM.16.thr.2. 4.398
+# FORM.16.lat.2. 29.591
+# FORM.16.thr.3. 4.540
+# FORM.16.lat.3. 28.315
+# FORM.16.thr.4. 4.531
+# FORM.16.lat.4. 28.696
+# FORM.16.thr.5. 4.497
+# FORM.16.lat.5. 28.452
+# FORM.16.thr.6. 4.296
+# FORM.16.lat.6. 30.283
+# FORM.16.thr.7. 4.511
+# FORM.16.lat.7. 28.885
+# FORM.16.thr.8. 4.564
+# FORM.16.lat.8. 28.340
+# FORM.16.thr.9. 4.572
+# FORM.16.lat.9. 28.217
+# FORM.16.thr.10. 4.559
+# FORM.16.lat.10. 28.125
+# FORM.16.thr.11. 4.470
+# FORM.16.lat.11. 29.059
+# FORM.16.thr.12. 4.521
+# FORM.16.lat.12. 28.338
+# FORM.16.thr.13. 4.540
+# FORM.16.lat.13. 28.846
+# FORM.16.thr.14. 4.347
+# FORM.16.lat.14. 29.784
+# FORM.16.thr.15. 4.484
+# FORM.16.lat.15. 28.820
+# FORM.16.thr.0. 4.420
+# FORM.16.lat.0. 31.022
+# FORM.16.thr.1. 4.442
+# FORM.16.lat.1. 31.715
+# FORM.16.thr.2. 4.545
+# FORM.16.lat.2. 30.654
+# FORM.16.thr.3. 4.564
+# FORM.16.lat.3. 30.753
+# FORM.16.thr.4. 4.542
+# FORM.16.lat.4. 30.673
+# FORM.16.thr.5. 4.594
+# FORM.16.lat.5. 30.280
+# FORM.16.thr.6. 4.360
+# FORM.16.lat.6. 31.920
+# FORM.16.thr.7. 4.481
+# FORM.16.lat.7. 31.039
+# FORM.16.thr.8. 4.598
+# FORM.16.lat.8. 30.196
+# FORM.16.thr.9. 4.591
+# FORM.16.lat.9. 30.285
+# FORM.16.thr.10. 4.598
+# FORM.16.lat.10. 30.163
+# FORM.16.thr.11. 4.476
+# FORM.16.lat.11. 31.069
+# FORM.16.thr.12. 4.415
+# FORM.16.lat.12. 31.404
+# FORM.16.thr.13. 4.520
+# FORM.16.lat.13. 30.803
+# FORM.16.thr.14. 4.350
+# FORM.16.lat.14. 31.957
+# FORM.16.thr.15. 4.497
+# FORM.16.lat.15. 30.890
+# FORM.16.thr.0. 4.606
+# FORM.16.lat.0. 34.594
+# FORM.16.thr.1. 4.405
+# FORM.16.lat.1. 36.365
+# FORM.16.thr.2. 4.490
+# FORM.16.lat.2. 35.619
+# FORM.16.thr.3. 4.615
+# FORM.16.lat.3. 34.675
+# FORM.16.thr.4. 4.516
+# FORM.16.lat.4. 35.391
+# FORM.16.thr.5. 4.615
+# FORM.16.lat.5. 34.625
+# FORM.16.thr.6. 4.353
+# FORM.16.lat.6. 36.844
+# FORM.16.thr.7. 4.610
+# FORM.16.lat.7. 34.676
+# FORM.16.thr.8. 4.595
+# FORM.16.lat.8. 34.694
+# FORM.16.thr.9. 4.615
+# FORM.16.lat.9. 34.573
+# FORM.16.thr.10. 4.632
+# FORM.16.lat.10. 34.353
+# FORM.16.thr.11. 4.421
+# FORM.16.lat.11. 36.079
+# FORM.16.thr.12. 4.632
+# FORM.16.lat.12. 34.542
+# FORM.16.thr.13. 4.604
+# FORM.16.lat.13. 34.711
+# FORM.16.thr.14. 4.340
+# FORM.16.lat.14. 36.776
+# FORM.16.thr.15. 4.531
+# FORM.16.lat.15. 35.322
+TFORM.16.thr.0. 5.445
+TFORM.16.lat.0. 22.839
+TFORM.16.thr.1. 5.521
+TFORM.16.lat.1. 22.635
+TFORM.16.thr.2. 5.434
+TFORM.16.lat.2. 22.595
+TFORM.16.thr.3. 5.480
+TFORM.16.lat.3. 22.844
+TFORM.16.thr.4. 5.292
+TFORM.16.lat.4. 22.847
+TFORM.16.thr.5. 5.463
+TFORM.16.lat.5. 22.867
+TFORM.16.thr.6. 4.615
+TFORM.16.lat.6. 26.872
+TFORM.16.thr.7. 4.874
+TFORM.16.lat.7. 24.930
+TFORM.16.thr.8. 5.509
+TFORM.16.lat.8. 22.703
+TFORM.16.thr.9. 5.126
+TFORM.16.lat.9. 22.996
+TFORM.16.thr.10. 5.451
+TFORM.16.lat.10. 22.956
+TFORM.16.thr.11. 5.490
+TFORM.16.lat.11. 22.838
+TFORM.16.thr.12. 4.920
+TFORM.16.lat.12. 24.409
+TFORM.16.thr.13. 5.265
+TFORM.16.lat.13. 22.976
+TFORM.16.thr.14. 5.219
+TFORM.16.lat.14. 23.896
+TFORM.16.thr.15. 5.476
+TFORM.16.lat.15. 22.898
+# TFORM.16.thr.0. 4.660
+# TFORM.16.lat.0. 25.686
+# TFORM.16.thr.1. 4.554
+# TFORM.16.lat.1. 26.253
+# TFORM.16.thr.2. 4.629
+# TFORM.16.lat.2. 25.806
+# TFORM.16.thr.3. 4.597
+# TFORM.16.lat.3. 25.957
+# TFORM.16.thr.4. 4.683
+# TFORM.16.lat.4. 25.543
+# TFORM.16.thr.5. 4.619
+# TFORM.16.lat.5. 25.865
+# TFORM.16.thr.6. 4.533
+# TFORM.16.lat.6. 26.306
+# TFORM.16.thr.7. 4.013
+# TFORM.16.lat.7. 30.051
+# TFORM.16.thr.8. 4.703
+# TFORM.16.lat.8. 25.464
+# TFORM.16.thr.9. 4.740
+# TFORM.16.lat.9. 25.290
+# TFORM.16.thr.10. 4.732
+# TFORM.16.lat.10. 25.288
+# TFORM.16.thr.11. 4.531
+# TFORM.16.lat.11. 26.327
+# TFORM.16.thr.12. 4.344
+# TFORM.16.lat.12. 26.772
+# TFORM.16.thr.13. 4.649
+# TFORM.16.lat.13. 25.585
+# TFORM.16.thr.14. 4.454
+# TFORM.16.lat.14. 26.807
+#TFORM.16.thr.15. 4.141
+#TFORM.16.lat.15. 28.341
+# TFORM.16.thr.0. 4.460
+# TFORM.16.lat.0. 27.763
+# TFORM.16.thr.1. 4.314
+# TFORM.16.lat.1. 29.007
+# TFORM.16.thr.2. 4.398
+# TFORM.16.lat.2. 28.160
+# TFORM.16.thr.3. 4.478
+# TFORM.16.lat.3. 27.614
+# TFORM.16.thr.4. 4.437
+# TFORM.16.lat.4. 27.921
+# TFORM.16.thr.5. 4.459
+# TFORM.16.lat.5. 27.756
+# TFORM.16.thr.6. 4.104
+# TFORM.16.lat.6. 31.365
+# TFORM.16.thr.7. 4.432
+# TFORM.16.lat.7. 28.036
+# TFORM.16.thr.8. 4.502
+# TFORM.16.lat.8. 27.326
+# TFORM.16.thr.9. 4.483
+# TFORM.16.lat.9. 27.591
+# TFORM.16.thr.10. 4.460
+# TFORM.16.lat.10. 27.586
+# TFORM.16.thr.11. 4.166
+# TFORM.16.lat.11. 29.951
+# TFORM.16.thr.12. 4.498
+# TFORM.16.lat.12. 27.419
+# TFORM.16.thr.13. 4.516
+# TFORM.16.lat.13. 27.275
+# TFORM.16.thr.14. 4.034
+# TFORM.16.lat.14. 28.928
+# TFORM.16.thr.15. 4.497
+# TFORM.16.lat.15. 27.345
+# TFORM.16.thr.0. 4.762
+# TFORM.16.lat.0. 29.376
+# TFORM.16.thr.1. 4.546
+# TFORM.16.lat.1. 30.444
+# TFORM.16.thr.2. 4.576
+# TFORM.16.lat.2. 30.597
+# TFORM.16.thr.3. 4.823
+# TFORM.16.lat.3. 29.470
+# TFORM.16.thr.4. 4.758
+# TFORM.16.lat.4. 29.461
+# TFORM.16.thr.5. 4.764
+# TFORM.16.lat.5. 29.428
+# TFORM.16.thr.6. 4.520
+# TFORM.16.lat.6. 30.414
+# TFORM.16.thr.7. 4.722
+# TFORM.16.lat.7. 29.706
+# TFORM.16.thr.8. 4.687
+# TFORM.16.lat.8. 29.754
+# TFORM.16.thr.9. 4.594
+# TFORM.16.lat.9. 31.148
+# TFORM.16.thr.10. 4.690
+# TFORM.16.lat.10. 29.817
+# TFORM.16.thr.11. 4.685
+# TFORM.16.lat.11. 29.890
+# TFORM.16.thr.12. 4.706
+# TFORM.16.lat.12. 29.768
+# TFORM.16.thr.13. 4.632
+# TFORM.16.lat.13. 29.867
+# TFORM.16.thr.14. 4.556
+# TFORM.16.lat.14. 30.671
+# TFORM.16.thr.15. 4.782
+# TFORM.16.lat.15. 29.298
+# TFORM.16.thr.0. 4.703
+# TFORM.16.lat.0. 33.899
+# TFORM.16.thr.1. 4.540
+# TFORM.16.lat.1. 35.003
+# TFORM.16.thr.2. 4.717
+# TFORM.16.lat.2. 33.712
+# TFORM.16.thr.3. 4.705
+# TFORM.16.lat.3. 33.946
+# TFORM.16.thr.4. 4.303
+# TFORM.16.lat.4. 37.082
+# TFORM.16.thr.5. 4.702
+# TFORM.16.lat.5. 33.893
+# TFORM.16.thr.6. 4.422
+# TFORM.16.lat.6. 35.421
+# TFORM.16.thr.7. 4.721
+# TFORM.16.lat.7. 33.658
+# TFORM.16.thr.8. 4.708
+# TFORM.16.lat.8. 33.900
+# TFORM.16.thr.9. 4.704
+# TFORM.16.lat.9. 33.768
+# TFORM.16.thr.10. 4.702
+# TFORM.16.lat.10. 33.723
+# TFORM.16.thr.11. 4.607
+# TFORM.16.lat.11. 34.620
+# TFORM.16.thr.12. 4.725
+# TFORM.16.lat.12. 33.657
+# TFORM.16.thr.13. 4.716
+# TFORM.16.lat.13. 33.766
+# TFORM.16.thr.14. 4.518
+# TFORM.16.lat.14. 35.196
+# TFORM.16.thr.15. 4.342
+# TFORM.16.lat.15. 37.368
+# MIX.16.thr.0. 3.180
+# MIX.16.lat.0. 38.040
+# MIX.16.thr.1. 3.155
+# MIX.16.lat.1. 38.216
+# MIX.16.thr.2. 3.116
+# MIX.16.lat.2. 38.239
+# MIX.16.thr.3. 3.288
+# MIX.16.lat.3. 36.605
+# MIX.16.thr.4. 3.262
+# MIX.16.lat.4. 36.857
+# MIX.16.thr.5. 3.232
+# MIX.16.lat.5. 37.149
+# MIX.16.thr.6. 3.246
+# MIX.16.lat.6. 36.971
+# MIX.16.thr.7. 3.230
+# MIX.16.lat.7. 37.164
+# MIX.16.thr.8. 3.242
+# MIX.16.lat.8. 36.896
+# MIX.16.thr.9. 3.201
+# MIX.16.lat.9. 37.702
+# MIX.16.thr.10. 3.430
+# MIX.16.lat.10. 34.949
+# MIX.16.thr.11. 3.092
+# MIX.16.lat.11. 38.831
+# MIX.16.thr.12. 3.245
+# MIX.16.lat.12. 37.014
+# MIX.16.thr.13. 3.356
+# MIX.16.lat.13. 35.667
+# MIX.16.thr.14. 3.213
+# MIX.16.lat.14. 37.479
+# MIX.16.thr.15. 3.387
+# MIX.16.lat.15. 35.882
+MIX.16.thr.0. 4.508
+MIX.16.lat.0. 28.682
+MIX.16.thr.1. 4.434
+MIX.16.lat.1. 29.113
+MIX.16.thr.2. 4.403
+MIX.16.lat.2. 29.328
+MIX.16.thr.3. 4.523
+MIX.16.lat.3. 28.537
+MIX.16.thr.4. 4.581
+MIX.16.lat.4. 28.189
+MIX.16.thr.5. 4.559
+MIX.16.lat.5. 28.322
+MIX.16.thr.6. 4.449
+MIX.16.lat.6. 29.053
+MIX.16.thr.7. 4.508
+MIX.16.lat.7. 28.654
+MIX.16.thr.8. 4.600
+MIX.16.lat.8. 27.959
+MIX.16.thr.9. 3.986
+MIX.16.lat.9. 32.736
+MIX.16.thr.10. 4.600
+MIX.16.lat.10. 27.986
+MIX.16.thr.11. 4.538
+MIX.16.lat.11. 28.500
+MIX.16.thr.12. 4.560
+MIX.16.lat.12. 28.230
+MIX.16.thr.13. 4.613
+MIX.16.lat.13. 27.919
+MIX.16.thr.14. 4.375
+MIX.16.lat.14. 29.549
+MIX.16.thr.15. 4.610
+MIX.16.lat.15. 27.919
+# MIX.16.thr.0. 3.820
+# MIX.16.lat.0. 36.881
+# MIX.16.thr.1. 3.473
+# MIX.16.lat.1. 40.523
+# MIX.16.thr.2. 3.902
+# MIX.16.lat.2. 36.129
+# MIX.16.thr.3. 3.876
+# MIX.16.lat.3. 36.443
+# MIX.16.thr.4. 3.941
+# MIX.16.lat.4. 35.591
+# MIX.16.thr.5. 4.005
+# MIX.16.lat.5. 35.110
+# MIX.16.thr.6. 3.784
+# MIX.16.lat.6. 37.147
+# MIX.16.thr.7. 3.800
+# MIX.16.lat.7. 37.184
+# MIX.16.thr.8. 3.996
+# MIX.16.lat.8. 35.203
+# MIX.16.thr.9. 3.948
+# MIX.16.lat.9. 35.963
+# MIX.16.thr.10. 4.019
+# MIX.16.lat.10. 34.717
+# MIX.16.thr.11. 3.945
+# MIX.16.lat.11. 35.592
+# MIX.16.thr.12. 3.910
+# MIX.16.lat.12. 36.146
+# MIX.16.thr.13. 3.956
+# MIX.16.lat.13. 35.639
+# MIX.16.thr.14. 3.772
+# MIX.16.lat.14. 37.496
+# MIX.16.thr.15. 4.019
+# MIX.16.lat.15. 34.885
+TMIX.16.thr.0. 4.669
+TMIX.16.lat.0. 25.838
+TMIX.16.thr.1. 4.669
+TMIX.16.lat.1. 25.905
+TMIX.16.thr.2. 4.707
+TMIX.16.lat.2. 25.932
+TMIX.16.thr.3. 4.667
+TMIX.16.lat.3. 25.769
+TMIX.16.thr.4. 4.636
+TMIX.16.lat.4. 26.243
+TMIX.16.thr.5. 4.750
+TMIX.16.lat.5. 25.136
+TMIX.16.thr.6. 4.676
+TMIX.16.lat.6. 25.830
+TMIX.16.thr.7. 4.695
+TMIX.16.lat.7. 25.529
+TMIX.16.thr.8. 4.756
+TMIX.16.lat.8. 25.099
+TMIX.16.thr.9. 4.741
+TMIX.16.lat.9. 25.172
+TMIX.16.thr.10. 4.812
+TMIX.16.lat.10. 25.067
+TMIX.16.thr.11. 4.691
+TMIX.16.lat.11. 25.827
+TMIX.16.thr.12. 4.735
+TMIX.16.lat.12. 25.202
+TMIX.16.thr.13. 4.476
+TMIX.16.lat.13. 26.614
+TMIX.16.thr.14. 4.599
+TMIX.16.lat.14. 26.252
+TMIX.16.thr.15. 4.779
+TMIX.16.lat.15. 25.236
+# TMIX.16.thr.0. 4.415
+# TMIX.16.lat.0. 28.502
+# TMIX.16.thr.1. 4.270
+# TMIX.16.lat.1. 29.452
+# TMIX.16.thr.2. 4.316
+# TMIX.16.lat.2. 29.198
+# TMIX.16.thr.3. 4.395
+# TMIX.16.lat.3. 28.630
+# TMIX.16.thr.4. 4.408
+# TMIX.16.lat.4. 28.525
+# TMIX.16.thr.5. 4.385
+# TMIX.16.lat.5. 28.763
+# TMIX.16.thr.6. 4.210
+# TMIX.16.lat.6. 29.265
+# TMIX.16.thr.7. 4.130
+# TMIX.16.lat.7. 30.945
+# TMIX.16.thr.8. 4.387
+# TMIX.16.lat.8. 28.642
+# TMIX.16.thr.9. 4.421
+# TMIX.16.lat.9. 28.405
+# TMIX.16.thr.10. 4.338
+# TMIX.16.lat.10. 28.689
+# TMIX.16.thr.11. 4.264
+# TMIX.16.lat.11. 29.541
+# TMIX.16.thr.12. 3.842
+# TMIX.16.lat.12. 33.238
+# TMIX.16.thr.13. 4.409
+# TMIX.16.lat.13. 28.517
+# TMIX.16.thr.14. 4.074
+# TMIX.16.lat.14. 29.653
+# TMIX.16.thr.15. 4.407
+# TMIX.16.lat.15. 28.446
+# TMIX.16.thr.0. 4.431
+# TMIX.16.lat.0. 31.131
+# TMIX.16.thr.1. 4.575
+# TMIX.16.lat.1. 30.419
+# TMIX.16.thr.2. 4.554
+# TMIX.16.lat.2. 30.710
+# TMIX.16.thr.3. 4.613
+# TMIX.16.lat.3. 30.114
+# TMIX.16.thr.4. 4.659
+# TMIX.16.lat.4. 30.050
+# TMIX.16.thr.5. 4.629
+# TMIX.16.lat.5. 30.259
+# TMIX.16.thr.6. 4.404
+# TMIX.16.lat.6. 31.209
+# TMIX.16.thr.7. 4.296
+# TMIX.16.lat.7. 31.710
+# TMIX.16.thr.8. 4.721
+# TMIX.16.lat.8. 29.670
+# TMIX.16.thr.9. 4.785
+# TMIX.16.lat.9. 29.237
+# TMIX.16.thr.10. 4.712
+# TMIX.16.lat.10. 29.606
+# TMIX.16.thr.11. 4.596
+# TMIX.16.lat.11. 30.391
+# TMIX.16.thr.12. 4.715
+# TMIX.16.lat.12. 29.622
+# TMIX.16.thr.13. 4.734
+# TMIX.16.lat.13. 29.551
+# TMIX.16.thr.14. 3.876
+# TMIX.16.lat.14. 33.630
+# TMIX.16.thr.15. 4.626
+# TMIX.16.lat.15. 29.976
+# FORM.24.thr.0. 2.884
+# FORM.24.lat.0. 40.364
+# FORM.24.thr.1. 2.819
+# FORM.24.lat.1. 41.129
+# FORM.24.thr.2. 2.631
+# FORM.24.lat.2. 43.721
+# FORM.24.thr.3. 2.795
+# FORM.24.lat.3. 41.543
+# FORM.24.thr.4. 2.848
+# FORM.24.lat.4. 40.868
+# FORM.24.thr.5. 2.850
+# FORM.24.lat.5. 40.989
+# FORM.24.thr.6. 2.879
+# FORM.24.lat.6. 40.285
+# FORM.24.thr.7. 2.853
+# FORM.24.lat.7. 40.677
+# FORM.24.thr.8. 2.866
+# FORM.24.lat.8. 40.403
+# FORM.24.thr.9. 2.873
+# FORM.24.lat.9. 40.541
+# FORM.24.thr.10. 2.875
+# FORM.24.lat.10. 40.532
+# FORM.24.thr.11. 2.852
+# FORM.24.lat.11. 40.201
+# FORM.24.thr.12. 2.908
+# FORM.24.lat.12. 39.851
+# FORM.24.thr.13. 2.871
+# FORM.24.lat.13. 40.372
+# FORM.24.thr.14. 2.777
+# FORM.24.lat.14. 43.199
+# FORM.24.thr.15. 2.849
+# FORM.24.lat.15. 40.983
+# FORM.24.thr.0. 3.094
+# FORM.24.lat.0. 39.656
+# FORM.24.thr.1. 3.105
+# FORM.24.lat.1. 39.624
+# FORM.24.thr.2. 2.934
+# FORM.24.lat.2. 42.668
+# FORM.24.thr.3. 3.209
+# FORM.24.lat.3. 39.183
+# FORM.24.thr.4. 3.134
+# FORM.24.lat.4. 39.056
+# FORM.24.thr.5. 3.115
+# FORM.24.lat.5. 39.342
+# FORM.24.thr.6. 3.241
+# FORM.24.lat.6. 38.788
+# FORM.24.thr.7. 3.150
+# FORM.24.lat.7. 39.098
+# FORM.24.thr.8. 3.230
+# FORM.24.lat.8. 39.044
+# FORM.24.thr.9. 3.173
+# FORM.24.lat.9. 38.687
+# FORM.24.thr.10. 3.123
+# FORM.24.lat.10. 39.295
+# FORM.24.thr.11. 3.275
+# FORM.24.lat.11. 38.411
+# FORM.24.thr.12. 3.124
+# FORM.24.lat.12. 39.289
+# FORM.24.thr.13. 3.176
+# FORM.24.lat.13. 38.647
+# FORM.24.thr.14. 2.869
+# FORM.24.lat.14. 43.593
+# FORM.24.thr.15. 3.163
+# FORM.24.lat.15. 38.812
+# FORM.24.thr.0. 3.089
+# FORM.24.lat.0. 41.638
+# FORM.24.thr.1. 3.068
+# FORM.24.lat.1. 40.568
+# FORM.24.thr.2. 2.843
+# FORM.24.lat.2. 44.292
+# FORM.24.thr.3. 3.199
+# FORM.24.lat.3. 40.042
+# FORM.24.thr.4. 3.125
+# FORM.24.lat.4. 39.690
+# FORM.24.thr.5. 3.178
+# FORM.24.lat.5. 40.411
+# FORM.24.thr.6. 3.239
+# FORM.24.lat.6. 39.604
+# FORM.24.thr.7. 3.067
+# FORM.24.lat.7. 40.521
+# FORM.24.thr.8. 3.241
+# FORM.24.lat.8. 39.449
+# FORM.24.thr.9. 3.167
+# FORM.24.lat.9. 40.605
+# FORM.24.thr.10. 3.180
+# FORM.24.lat.10. 40.335
+# FORM.24.thr.11. 3.258
+# FORM.24.lat.11. 39.378
+# FORM.24.thr.12. 3.108
+# FORM.24.lat.12. 39.991
+# FORM.24.thr.13. 3.269
+# FORM.24.lat.13. 39.306
+# FORM.24.thr.14. 2.884
+# FORM.24.lat.14. 44.940
+# FORM.24.thr.15. 3.224
+# FORM.24.lat.15. 39.913
+# FORM.24.thr.0. 3.710
+# FORM.24.lat.0. 37.075
+# FORM.24.thr.1. 3.632
+# FORM.24.lat.1. 37.858
+# FORM.24.thr.2. 3.273
+# FORM.24.lat.2. 42.406
+# FORM.24.thr.3. 3.598
+# FORM.24.lat.3. 37.974
+# FORM.24.thr.4. 3.842
+# FORM.24.lat.4. 36.232
+# FORM.24.thr.5. 3.643
+# FORM.24.lat.5. 37.777
+# FORM.24.thr.6. 3.910
+# FORM.24.lat.6. 35.471
+# FORM.24.thr.7. 3.599
+# FORM.24.lat.7. 37.988
+# FORM.24.thr.8. 3.953
+# FORM.24.lat.8. 35.134
+# FORM.24.thr.9. 3.720
+# FORM.24.lat.9. 36.791
+# FORM.24.thr.10. 3.708
+# FORM.24.lat.10. 37.114
+# FORM.24.thr.11. 3.921
+# FORM.24.lat.11. 35.337
+# FORM.24.thr.12. 3.737
+# FORM.24.lat.12. 36.769
+# FORM.24.thr.13. 3.876
+# FORM.24.lat.13. 35.677
+# FORM.24.thr.14. 3.024
+# FORM.24.lat.14. 43.833
+# FORM.24.thr.15. 3.816
+# FORM.24.lat.15. 36.305
+FORM.24.thr.0. 3.623
+FORM.24.lat.0. 38.712
+FORM.24.thr.1. 3.724
+FORM.24.lat.1. 38.762
+FORM.24.thr.2. 3.818
+FORM.24.lat.2. 37.376
+FORM.24.thr.3. 3.770
+FORM.24.lat.3. 37.959
+FORM.24.thr.4. 3.241
+FORM.24.lat.4. 42.947
+FORM.24.thr.5. 3.784
+FORM.24.lat.5. 38.107
+FORM.24.thr.6. 3.712
+FORM.24.lat.6. 38.535
+FORM.24.thr.7. 3.607
+FORM.24.lat.7. 38.885
+FORM.24.thr.8. 3.824
+FORM.24.lat.8. 37.342
+FORM.24.thr.9. 3.853
+FORM.24.lat.9. 37.084
+FORM.24.thr.10. 3.724
+FORM.24.lat.10. 39.131
+FORM.24.thr.11. 3.531
+FORM.24.lat.11. 40.600
+FORM.24.thr.12. 3.873
+FORM.24.lat.12. 37.066
+FORM.24.thr.13. 3.824
+FORM.24.lat.13. 37.435
+FORM.24.thr.14. 3.856
+FORM.24.lat.14. 36.702
+FORM.24.thr.15. 3.916
+FORM.24.lat.15. 36.685
+# TFORM.24.thr.0. 3.978
+# TFORM.24.lat.0. 29.824
+# TFORM.24.thr.1. 3.947
+# TFORM.24.lat.1. 30.183
+# TFORM.24.thr.2. 3.881
+# TFORM.24.lat.2. 30.904
+# TFORM.24.thr.3. 3.970
+# TFORM.24.lat.3. 29.858
+# TFORM.24.thr.4. 3.953
+# TFORM.24.lat.4. 30.263
+# TFORM.24.thr.5. 3.953
+# TFORM.24.lat.5. 30.136
+# TFORM.24.thr.6. 4.063
+# TFORM.24.lat.6. 29.298
+# TFORM.24.thr.7. 3.901
+# TFORM.24.lat.7. 30.374
+# TFORM.24.thr.8. 4.021
+# TFORM.24.lat.8. 29.643
+# TFORM.24.thr.9. 4.027
+# TFORM.24.lat.9. 29.747
+# TFORM.24.thr.10. 3.951
+# TFORM.24.lat.10. 30.211
+# TFORM.24.thr.11. 4.011
+# TFORM.24.lat.11. 29.589
+# TFORM.24.thr.12. 3.959
+# TFORM.24.lat.12. 30.130
+# TFORM.24.thr.13. 3.976
+# TFORM.24.lat.13. 30.003
+# TFORM.24.thr.14. 3.889
+# TFORM.24.lat.14. 30.767
+# TFORM.24.thr.15. 4.046
+# TFORM.24.lat.15. 29.450
+# TFORM.24.thr.0. 3.835
+# TFORM.24.lat.0. 32.418
+# TFORM.24.thr.1. 3.826
+# TFORM.24.lat.1. 32.389
+# TFORM.24.thr.2. 3.842
+# TFORM.24.lat.2. 32.529
+# TFORM.24.thr.3. 3.796
+# TFORM.24.lat.3. 32.450
+# TFORM.24.thr.4. 3.793
+# TFORM.24.lat.4. 32.444
+# TFORM.24.thr.5. 3.823
+# TFORM.24.lat.5. 32.460
+# TFORM.24.thr.6. 3.805
+# TFORM.24.lat.6. 32.377
+# TFORM.24.thr.7. 3.784
+# TFORM.24.lat.7. 32.408
+# TFORM.24.thr.8. 3.812
+# TFORM.24.lat.8. 32.410
+# TFORM.24.thr.9. 3.788
+# TFORM.24.lat.9. 32.396
+# TFORM.24.thr.10. 3.833
+# TFORM.24.lat.10. 32.411
+# TFORM.24.thr.11. 3.822
+# TFORM.24.lat.11. 32.395
+# TFORM.24.thr.12. 3.803
+# TFORM.24.lat.12. 32.402
+# TFORM.24.thr.13. 3.834
+# TFORM.24.lat.13. 32.429
+# TFORM.24.thr.14. 3.815
+# TFORM.24.lat.14. 32.545
+# TFORM.24.thr.15. 3.833
+# TFORM.24.lat.15. 32.394
+# TFORM.24.thr.0. 4.108
+# TFORM.24.lat.0. 31.297
+# TFORM.24.thr.1. 4.037
+# TFORM.24.lat.1. 31.795
+# TFORM.24.thr.2. 3.965
+# TFORM.24.lat.2. 32.682
+# TFORM.24.thr.3. 4.169
+# TFORM.24.lat.3. 30.961
+# TFORM.24.thr.4. 4.163
+# TFORM.24.lat.4. 31.010
+# TFORM.24.thr.5. 3.973
+# TFORM.24.lat.5. 32.387
+# TFORM.24.thr.6. 4.161
+# TFORM.24.lat.6. 31.105
+# TFORM.24.thr.7. 4.100
+# TFORM.24.lat.7. 31.465
+# TFORM.24.thr.8. 4.143
+# TFORM.24.lat.8. 30.745
+# TFORM.24.thr.9. 4.101
+# TFORM.24.lat.9. 31.432
+# TFORM.24.thr.10. 4.132
+# TFORM.24.lat.10. 31.143
+# TFORM.24.thr.11. 4.223
+# TFORM.24.lat.11. 30.390
+# TFORM.24.thr.12. 4.179
+# TFORM.24.lat.12. 30.844
+# TFORM.24.thr.13. 4.136
+# TFORM.24.lat.13. 31.157
+# TFORM.24.thr.14. 3.939
+# TFORM.24.lat.14. 32.769
+# TFORM.24.thr.15. 4.155
+# TFORM.24.lat.15. 31.061
+# TFORM.24.thr.0. 3.999
+# TFORM.24.lat.0. 34.645
+# TFORM.24.thr.1. 4.021
+# TFORM.24.lat.1. 34.383
+# TFORM.24.thr.2. 3.792
+# TFORM.24.lat.2. 35.647
+# TFORM.24.thr.3. 4.074
+# TFORM.24.lat.3. 33.993
+# TFORM.24.thr.4. 4.110
+# TFORM.24.lat.4. 33.764
+# TFORM.24.thr.5. 3.962
+# TFORM.24.lat.5. 34.880
+# TFORM.24.thr.6. 4.082
+# TFORM.24.lat.6. 33.873
+# TFORM.24.thr.7. 4.051
+# TFORM.24.lat.7. 34.142
+# TFORM.24.thr.8. 4.155
+# TFORM.24.lat.8. 33.275
+# TFORM.24.thr.9. 4.004
+# TFORM.24.lat.9. 34.502
+# TFORM.24.thr.10. 4.101
+# TFORM.24.lat.10. 33.767
+# TFORM.24.thr.11. 4.059
+# TFORM.24.lat.11. 33.847
+# TFORM.24.thr.12. 4.118
+# TFORM.24.lat.12. 33.571
+# TFORM.24.thr.13. 4.063
+# TFORM.24.lat.13. 34.240
+# TFORM.24.thr.14. 3.891
+# TFORM.24.lat.14. 35.440
+# TFORM.24.thr.15. 4.023
+# TFORM.24.lat.15. 34.451
+TFORM.24.thr.0. 4.093
+TFORM.24.lat.0. 34.917
+TFORM.24.thr.1. 4.079
+TFORM.24.lat.1. 34.962
+TFORM.24.thr.2. 4.135
+TFORM.24.lat.2. 34.961
+TFORM.24.thr.3. 4.146
+TFORM.24.lat.3. 34.475
+TFORM.24.thr.4. 4.095
+TFORM.24.lat.4. 34.850
+TFORM.24.thr.5. 4.146
+TFORM.24.lat.5. 34.875
+TFORM.24.thr.6. 4.070
+TFORM.24.lat.6. 35.200
+TFORM.24.thr.7. 4.136
+TFORM.24.lat.7. 33.999
+TFORM.24.thr.8. 4.116
+TFORM.24.lat.8. 34.683
+TFORM.24.thr.9. 4.123
+TFORM.24.lat.9. 34.570
+TFORM.24.thr.10. 4.117
+TFORM.24.lat.10. 34.282
+TFORM.24.thr.11. 4.064
+TFORM.24.lat.11. 35.340
+TFORM.24.thr.12. 4.153
+TFORM.24.lat.12. 33.971
+TFORM.24.thr.13. 4.232
+TFORM.24.lat.13. 34.097
+TFORM.24.thr.14. 4.189
+TFORM.24.lat.14. 34.074
+TFORM.24.thr.15. 4.152
+TFORM.24.lat.15. 34.108
+# MIX.24.thr.0. 3.303
+# MIX.24.lat.0. 36.414
+# MIX.24.thr.1. 3.336
+# MIX.24.lat.1. 36.051
+# MIX.24.thr.2. 3.299
+# MIX.24.lat.2. 36.576
+# MIX.24.thr.3. 3.392
+# MIX.24.lat.3. 35.371
+# MIX.24.thr.4. 3.236
+# MIX.24.lat.4. 37.092
+# MIX.24.thr.5. 3.330
+# MIX.24.lat.5. 36.004
+# MIX.24.thr.6. 3.426
+# MIX.24.lat.6. 35.390
+# MIX.24.thr.7. 3.303
+# MIX.24.lat.7. 36.390
+# MIX.24.thr.8. 3.385
+# MIX.24.lat.8. 35.544
+# MIX.24.thr.9. 3.346
+# MIX.24.lat.9. 35.876
+# MIX.24.thr.10. 3.395
+# MIX.24.lat.10. 35.363
+# MIX.24.thr.11. 3.324
+# MIX.24.lat.11. 36.760
+# MIX.24.thr.12. 3.287
+# MIX.24.lat.12. 36.502
+# MIX.24.thr.13. 3.136
+# MIX.24.lat.13. 38.328
+# MIX.24.thr.14. 3.301
+# MIX.24.lat.14. 36.356
+# MIX.24.thr.15. 3.391
+# MIX.24.lat.15. 35.368
+# MIX.24.thr.0. 2.677
+# MIX.24.lat.0. 45.291
+# MIX.24.thr.1. 3.365
+# MIX.24.lat.1. 37.244
+# MIX.24.thr.2. 3.332
+# MIX.24.lat.2. 37.595
+# MIX.24.thr.3. 3.398
+# MIX.24.lat.3. 37.156
+# MIX.24.thr.4. 3.355
+# MIX.24.lat.4. 37.461
+# MIX.24.thr.5. 3.355
+# MIX.24.lat.5. 37.266
+# MIX.24.thr.6. 3.359
+# MIX.24.lat.6. 36.990
+# MIX.24.thr.7. 3.350
+# MIX.24.lat.7. 37.391
+# MIX.24.thr.8. 3.377
+# MIX.24.lat.8. 37.119
+# MIX.24.thr.9. 3.378
+# MIX.24.lat.9. 37.128
+# MIX.24.thr.10. 3.380
+# MIX.24.lat.10. 37.273
+# MIX.24.thr.11. 3.381
+# MIX.24.lat.11. 37.184
+# MIX.24.thr.12. 3.361
+# MIX.24.lat.12. 37.253
+# MIX.24.thr.13. 3.338
+# MIX.24.lat.13. 37.533
+# MIX.24.thr.14. 3.331
+# MIX.24.lat.14. 37.533
+# MIX.24.thr.15. 3.378
+# MIX.24.lat.15. 37.309
+# MIX.24.thr.0. 3.354
+# MIX.24.lat.0. 38.676
+# MIX.24.thr.1. 3.353
+# MIX.24.lat.1. 38.753
+# MIX.24.thr.2. 3.230
+# MIX.24.lat.2. 39.299
+# MIX.24.thr.3. 3.467
+# MIX.24.lat.3. 37.262
+# MIX.24.thr.4. 3.506
+# MIX.24.lat.4. 37.511
+# MIX.24.thr.5. 3.347
+# MIX.24.lat.5. 38.604
+# MIX.24.thr.6. 3.446
+# MIX.24.lat.6. 37.591
+# MIX.24.thr.7. 3.375
+# MIX.24.lat.7. 38.451
+# MIX.24.thr.8. 3.557
+# MIX.24.lat.8. 37.031
+# MIX.24.thr.9. 3.411
+# MIX.24.lat.9. 37.889
+# MIX.24.thr.10. 3.476
+# MIX.24.lat.10. 37.767
+# MIX.24.thr.11. 3.352
+# MIX.24.lat.11. 37.535
+# MIX.24.thr.12. 3.311
+# MIX.24.lat.12. 39.362
+# MIX.24.thr.13. 3.399
+# MIX.24.lat.13. 38.045
+# MIX.24.thr.14. 3.159
+# MIX.24.lat.14. 40.444
+# MIX.24.thr.15. 3.419
+# MIX.24.lat.15. 37.703
+# MIX.24.thr.0. 3.541
+# MIX.24.lat.0. 39.983
+# MIX.24.thr.1. 3.470
+# MIX.24.lat.1. 40.336
+# MIX.24.thr.2. 3.512
+# MIX.24.lat.2. 40.195
+# MIX.24.thr.3. 3.406
+# MIX.24.lat.3. 41.225
+# MIX.24.thr.4. 3.287
+# MIX.24.lat.4. 42.075
+# MIX.24.thr.5. 3.481
+# MIX.24.lat.5. 39.883
+# MIX.24.thr.6. 3.460
+# MIX.24.lat.6. 40.312
+# MIX.24.thr.7. 3.493
+# MIX.24.lat.7. 40.006
+# MIX.24.thr.8. 3.606
+# MIX.24.lat.8. 38.851
+# MIX.24.thr.9. 3.532
+# MIX.24.lat.9. 39.325
+# MIX.24.thr.10. 3.581
+# MIX.24.lat.10. 39.122
+# MIX.24.thr.11. 3.635
+# MIX.24.lat.11. 38.453
+# MIX.24.thr.12. 3.558
+# MIX.24.lat.12. 39.401
+# MIX.24.thr.13. 3.584
+# MIX.24.lat.13. 39.077
+# MIX.24.thr.14. 3.451
+# MIX.24.lat.14. 40.829
+# MIX.24.thr.15. 3.591
+# MIX.24.lat.15. 38.958
+MIX.24.thr.0. 3.523
+MIX.24.lat.0. 40.603
+MIX.24.thr.1. 3.669
+MIX.24.lat.1. 39.372
+MIX.24.thr.2. 3.631
+MIX.24.lat.2. 39.120
+MIX.24.thr.3. 3.532
+MIX.24.lat.3. 41.402
+MIX.24.thr.4. 3.612
+MIX.24.lat.4. 40.122
+MIX.24.thr.5. 3.564
+MIX.24.lat.5. 40.040
+MIX.24.thr.6. 3.288
+MIX.24.lat.6. 42.782
+MIX.24.thr.7. 3.582
+MIX.24.lat.7. 40.465
+MIX.24.thr.8. 3.656
+MIX.24.lat.8. 39.610
+MIX.24.thr.9. 3.537
+MIX.24.lat.9. 40.510
+MIX.24.thr.10. 3.650
+MIX.24.lat.10. 39.712
+MIX.24.thr.11. 3.096
+MIX.24.lat.11. 44.319
+MIX.24.thr.12. 3.607
+MIX.24.lat.12. 39.864
+MIX.24.thr.13. 3.592
+MIX.24.lat.13. 39.717
+MIX.24.thr.14. 3.738
+MIX.24.lat.14. 38.678
+MIX.24.thr.15. 3.599
+MIX.24.lat.15. 40.192
+# TMIX.24.thr.0. 3.326
+# TMIX.24.lat.0. 36.214
+# TMIX.24.thr.1. 3.377
+# TMIX.24.lat.1. 35.875
+# TMIX.24.thr.2. 3.276
+# TMIX.24.lat.2. 36.443
+# TMIX.24.thr.3. 3.329
+# TMIX.24.lat.3. 35.760
+# TMIX.24.thr.4. 3.271
+# TMIX.24.lat.4. 36.422
+# TMIX.24.thr.5. 2.804
+# TMIX.24.lat.5. 42.810
+# TMIX.24.thr.6. 3.487
+# TMIX.24.lat.6. 35.118
+# TMIX.24.thr.7. 2.579
+# TMIX.24.lat.7. 44.853
+# TMIX.24.thr.8. 3.478
+# TMIX.24.lat.8. 35.082
+# TMIX.24.thr.9. 3.386
+# TMIX.24.lat.9. 35.415
+# TMIX.24.thr.10. 3.501
+# TMIX.24.lat.10. 34.930
+# TMIX.24.thr.11. 3.367
+# TMIX.24.lat.11. 35.488
+# TMIX.24.thr.12. 3.332
+# TMIX.24.lat.12. 35.974
+# TMIX.24.thr.13. 3.451
+# TMIX.24.lat.13. 35.636
+# TMIX.24.thr.14. 3.255
+# TMIX.24.lat.14. 36.754
+# TMIX.24.thr.15. 3.414
+# TMIX.24.lat.15. 35.326
+# TMIX.24.thr.0. 3.483
+# TMIX.24.lat.0. 35.997
+# TMIX.24.thr.1. 3.497
+# TMIX.24.lat.1. 35.814
+# TMIX.24.thr.2. 3.477
+# TMIX.24.lat.2. 35.711
+# TMIX.24.thr.3. 3.538
+# TMIX.24.lat.3. 35.413
+# TMIX.24.thr.4. 3.529
+# TMIX.24.lat.4. 35.639
+# TMIX.24.thr.5. 3.494
+# TMIX.24.lat.5. 35.821
+# TMIX.24.thr.6. 3.272
+# TMIX.24.lat.6. 37.154
+# TMIX.24.thr.7. 3.456
+# TMIX.24.lat.7. 35.763
+# TMIX.24.thr.8. 3.529
+# TMIX.24.lat.8. 35.451
+# TMIX.24.thr.9. 2.957
+# TMIX.24.lat.9. 42.269
+# TMIX.24.thr.10. 3.534
+# TMIX.24.lat.10. 35.464
+# TMIX.24.thr.11. 3.460
+# TMIX.24.lat.11. 36.328
+# TMIX.24.thr.12. 3.502
+# TMIX.24.lat.12. 35.768
+# TMIX.24.thr.13. 3.517
+# TMIX.24.lat.13. 35.661
+# TMIX.24.thr.14. 3.467
+# TMIX.24.lat.14. 36.519
+# TMIX.24.thr.15. 3.510
+# TMIX.24.lat.15. 35.724
+# TMIX.24.thr.0. 3.559
+# TMIX.24.lat.0. 36.545
+# TMIX.24.thr.1. 3.350
+# TMIX.24.lat.1. 38.527
+# TMIX.24.thr.2. 3.446
+# TMIX.24.lat.2. 37.522
+# TMIX.24.thr.3. 3.530
+# TMIX.24.lat.3. 36.422
+# TMIX.24.thr.4. 3.261
+# TMIX.24.lat.4. 39.857
+# TMIX.24.thr.5. 3.422
+# TMIX.24.lat.5. 37.675
+# TMIX.24.thr.6. 3.588
+# TMIX.24.lat.6. 36.203
+# TMIX.24.thr.7. 3.501
+# TMIX.24.lat.7. 37.156
+# TMIX.24.thr.8. 3.556
+# TMIX.24.lat.8. 35.946
+# TMIX.24.thr.9. 3.518
+# TMIX.24.lat.9. 36.959
+# TMIX.24.thr.10. 3.531
+# TMIX.24.lat.10. 36.525
+# TMIX.24.thr.11. 3.594
+# TMIX.24.lat.11. 36.216
+# TMIX.24.thr.12. 3.577
+# TMIX.24.lat.12. 36.395
+# TMIX.24.thr.13. 3.558
+# TMIX.24.lat.13. 36.303
+# TMIX.24.thr.14. 3.387
+# TMIX.24.lat.14. 38.463
+# TMIX.24.thr.15. 3.420
+# TMIX.24.lat.15. 36.855
+TMIX.24.thr.0. 3.524
+TMIX.24.lat.0. 39.789
+TMIX.24.thr.1. 3.516
+TMIX.24.lat.1. 39.294
+TMIX.24.thr.2. 3.464
+TMIX.24.lat.2. 40.495
+TMIX.24.thr.3. 3.729
+TMIX.24.lat.3. 37.618
+TMIX.24.thr.4. 3.636
+TMIX.24.lat.4. 38.435
+TMIX.24.thr.5. 3.546
+TMIX.24.lat.5. 38.866
+TMIX.24.thr.6. 3.718
+TMIX.24.lat.6. 37.725
+TMIX.24.thr.7. 3.545
+TMIX.24.lat.7. 39.395
+TMIX.24.thr.8. 3.710
+TMIX.24.lat.8. 37.613
+TMIX.24.thr.9. 3.537
+TMIX.24.lat.9. 39.328
+TMIX.24.thr.10. 3.091
+TMIX.24.lat.10. 44.915
+TMIX.24.thr.11. 3.721
+TMIX.24.lat.11. 37.555
+TMIX.24.thr.12. 3.207
+TMIX.24.lat.12. 43.316
+TMIX.24.thr.13. 3.571
+TMIX.24.lat.13. 39.266
+TMIX.24.thr.14. 3.419
+TMIX.24.lat.14. 40.274
+TMIX.24.thr.15. 3.667
+TMIX.24.lat.15. 38.120
+# TMIX.24.thr.0. 3.318
+# TMIX.24.lat.0. 44.422
+# TMIX.24.thr.1. 3.613
+# TMIX.24.lat.1. 40.421
+# TMIX.24.thr.2. 3.347
+# TMIX.24.lat.2. 43.261
+# TMIX.24.thr.3. 3.563
+# TMIX.24.lat.3. 40.559
+# TMIX.24.thr.4. 3.574
+# TMIX.24.lat.4. 40.886
+# TMIX.24.thr.5. 3.511
+# TMIX.24.lat.5. 41.350
+# TMIX.24.thr.6. 3.600
+# TMIX.24.lat.6. 40.684
+# TMIX.24.thr.7. 3.592
+# TMIX.24.lat.7. 40.324
+# TMIX.24.thr.8. 3.319
+# TMIX.24.lat.8. 43.700
+# TMIX.24.thr.9. 3.563
+# TMIX.24.lat.9. 41.046
+# TMIX.24.thr.10. 3.623
+# TMIX.24.lat.10. 40.484
+# TMIX.24.thr.11. 3.554
+# TMIX.24.lat.11. 41.010
+# TMIX.24.thr.12. 3.600
+# TMIX.24.lat.12. 40.512
+# TMIX.24.thr.13. 3.633
+# TMIX.24.lat.13. 40.160
+# TMIX.24.thr.14. 3.689
+# TMIX.24.lat.14. 39.854
+# TMIX.24.thr.15. 3.673
+# TMIX.24.lat.15. 39.761
+# FORM.32.thr.0. 1.418
+# FORM.32.lat.0. 42.089
+# FORM.32.thr.1. 1.406
+# FORM.32.lat.1. 42.726
+# FORM.32.thr.2. 1.425
+# FORM.32.lat.2. 42.125
+# FORM.32.thr.3. 1.420
+# FORM.32.lat.3. 42.434
+# FORM.32.thr.4. 1.422
+# FORM.32.lat.4. 42.093
+# FORM.32.thr.5. 1.444
+# FORM.32.lat.5. 41.589
+# FORM.32.thr.6. 1.440
+# FORM.32.lat.6. 41.603
+# FORM.32.thr.7. 1.420
+# FORM.32.lat.7. 42.206
+# FORM.32.thr.8. 1.450
+# FORM.32.lat.8. 41.332
+# FORM.32.thr.9. 1.434
+# FORM.32.lat.9. 41.901
+# FORM.32.thr.10. 1.422
+# FORM.32.lat.10. 42.036
+# FORM.32.thr.11. 1.410
+# FORM.32.lat.11. 42.251
+# FORM.32.thr.12. 1.393
+# FORM.32.lat.12. 42.890
+# FORM.32.thr.13. 1.419
+# FORM.32.lat.13. 42.180
+# FORM.32.thr.14. 1.396
+# FORM.32.lat.14. 43.094
+# FORM.32.thr.15. 1.425
+# FORM.32.lat.15. 42.351
+# FORM.32.thr.16. 1.426
+# FORM.32.lat.16. 42.143
+# FORM.32.thr.17. 1.409
+# FORM.32.lat.17. 40.977
+# FORM.32.thr.18. 1.409
+# FORM.32.lat.18. 42.517
+# FORM.32.thr.19. 1.410
+# FORM.32.lat.19. 42.412
+# FORM.32.thr.20. 1.409
+# FORM.32.lat.20. 42.563
+# FORM.32.thr.21. 1.394
+# FORM.32.lat.21. 42.960
+# FORM.32.thr.22. 1.399
+# FORM.32.lat.22. 42.783
+# FORM.32.thr.23. 1.449
+# FORM.32.lat.23. 41.382
+# FORM.32.thr.24. 1.460
+# FORM.32.lat.24. 40.680
+# FORM.32.thr.25. 1.442
+# FORM.32.lat.25. 41.448
+# FORM.32.thr.26. 1.425
+# FORM.32.lat.26. 42.013
+# FORM.32.thr.27. 1.384
+# FORM.32.lat.27. 43.358
+# FORM.32.thr.28. 1.427
+# FORM.32.lat.28. 42.091
+# FORM.32.thr.29. 1.408
+# FORM.32.lat.29. 42.454
+# FORM.32.thr.30. 1.401
+# FORM.32.lat.30. 42.723
+# FORM.32.thr.31. 1.420
+# FORM.32.lat.31. 42.246
+FORM.32.thr.0. 1.551
+FORM.32.lat.0. 40.713
+FORM.32.thr.1. 1.531
+FORM.32.lat.1. 41.082
+FORM.32.thr.2. 1.532
+FORM.32.lat.2. 42.051
+FORM.32.thr.3. 1.489
+FORM.32.lat.3. 43.444
+FORM.32.thr.4. 1.567
+FORM.32.lat.4. 41.160
+FORM.32.thr.5. 1.566
+FORM.32.lat.5. 41.099
+FORM.32.thr.6. 1.569
+FORM.32.lat.6. 40.102
+FORM.32.thr.7. 1.476
+FORM.32.lat.7. 42.692
+FORM.32.thr.8. 1.540
+FORM.32.lat.8. 41.065
+FORM.32.thr.9. 1.572
+FORM.32.lat.9. 40.267
+FORM.32.thr.10. 1.520
+FORM.32.lat.10. 42.548
+FORM.32.thr.11. 1.601
+FORM.32.lat.11. 40.151
+FORM.32.thr.12. 1.510
+FORM.32.lat.12. 41.800
+FORM.32.thr.13. 1.546
+FORM.32.lat.13. 41.720
+FORM.32.thr.14. 1.532
+FORM.32.lat.14. 41.999
+FORM.32.thr.15. 1.576
+FORM.32.lat.15. 40.843
+FORM.32.thr.16. 1.524
+FORM.32.lat.16. 42.267
+FORM.32.thr.17. 1.601
+FORM.32.lat.17. 40.183
+FORM.32.thr.18. 1.586
+FORM.32.lat.18. 40.590
+FORM.32.thr.19. 1.531
+FORM.32.lat.19. 40.861
+FORM.32.thr.20. 1.458
+FORM.32.lat.20. 43.353
+FORM.32.thr.21. 1.507
+FORM.32.lat.21. 41.811
+FORM.32.thr.22. 1.539
+FORM.32.lat.22. 42.090
+FORM.32.thr.23. 1.574
+FORM.32.lat.23. 40.244
+FORM.32.thr.24. 1.607
+FORM.32.lat.24. 40.076
+FORM.32.thr.25. 1.605
+FORM.32.lat.25. 40.154
+FORM.32.thr.26. 1.592
+FORM.32.lat.26. 40.452
+FORM.32.thr.27. 1.499
+FORM.32.lat.27. 43.087
+FORM.32.thr.28. 1.597
+FORM.32.lat.28. 40.313
+FORM.32.thr.29. 1.556
+FORM.32.lat.29. 40.631
+FORM.32.thr.30. 1.500
+FORM.32.lat.30. 42.161
+FORM.32.thr.31. 1.536
+FORM.32.lat.31. 42.113
+# FORM.32.thr.0. 1.601
+# FORM.32.lat.0. 41.448
+# FORM.32.thr.1. 1.532
+# FORM.32.lat.1. 43.531
+# FORM.32.thr.2. 1.533
+# FORM.32.lat.2. 43.402
+# FORM.32.thr.3. 1.525
+# FORM.32.lat.3. 43.442
+# FORM.32.thr.4. 1.562
+# FORM.32.lat.4. 42.595
+# FORM.32.thr.5. 1.600
+# FORM.32.lat.5. 41.231
+# FORM.32.thr.6. 1.608
+# FORM.32.lat.6. 41.230
+# FORM.32.thr.7. 1.517
+# FORM.32.lat.7. 44.059
+# FORM.32.thr.8. 1.623
+# FORM.32.lat.8. 40.745
+# FORM.32.thr.9. 1.610
+# FORM.32.lat.9. 41.228
+# FORM.32.thr.10. 1.499
+# FORM.32.lat.10. 43.763
+# FORM.32.thr.11. 1.615
+# FORM.32.lat.11. 41.109
+# FORM.32.thr.12. 1.589
+# FORM.32.lat.12. 41.671
+# FORM.32.thr.13. 1.578
+# FORM.32.lat.13. 42.198
+# FORM.32.thr.14. 1.501
+# FORM.32.lat.14. 44.548
+# FORM.32.thr.15. 1.575
+# FORM.32.lat.15. 42.225
+# FORM.32.thr.16. 1.492
+# FORM.32.lat.16. 44.988
+# FORM.32.thr.17. 1.516
+# FORM.32.lat.17. 43.914
+# FORM.32.thr.18. 1.591
+# FORM.32.lat.18. 42.248
+# FORM.32.thr.19. 1.487
+# FORM.32.lat.19. 44.833
+# FORM.32.thr.20. 1.518
+# FORM.32.lat.20. 43.674
+# FORM.32.thr.21. 1.569
+# FORM.32.lat.21. 42.442
+# FORM.32.thr.22. 1.571
+# FORM.32.lat.22. 42.514
+# FORM.32.thr.23. 1.601
+# FORM.32.lat.23. 41.297
+# FORM.32.thr.24. 1.595
+# FORM.32.lat.24. 41.821
+# FORM.32.thr.25. 1.590
+# FORM.32.lat.25. 41.795
+# FORM.32.thr.26. 1.530
+# FORM.32.lat.26. 43.578
+# FORM.32.thr.27. 1.476
+# FORM.32.lat.27. 45.249
+# FORM.32.thr.28. 1.599
+# FORM.32.lat.28. 41.601
+# FORM.32.thr.29. 1.609
+# FORM.32.lat.29. 41.158
+# FORM.32.thr.30. 1.488
+# FORM.32.lat.30. 45.090
+# FORM.32.thr.31. 1.476
+# FORM.32.lat.31. 44.676
+# FORM.32.thr.0. 1.510
+# FORM.32.lat.0. 45.671
+# FORM.32.thr.1. 1.548
+# FORM.32.lat.1. 44.511
+# FORM.32.thr.2. 1.537
+# FORM.32.lat.2. 45.664
+# FORM.32.thr.3. 1.493
+# FORM.32.lat.3. 46.805
+# FORM.32.thr.4. 1.513
+# FORM.32.lat.4. 46.592
+# FORM.32.thr.5. 1.487
+# FORM.32.lat.5. 46.138
+# FORM.32.thr.6. 1.608
+# FORM.32.lat.6. 43.532
+# FORM.32.thr.7. 1.514
+# FORM.32.lat.7. 46.452
+# FORM.32.thr.8. 1.471
+# FORM.32.lat.8. 46.521
+# FORM.32.thr.9. 1.514
+# FORM.32.lat.9. 45.553
+# FORM.32.thr.10. 1.493
+# FORM.32.lat.10. 46.969
+# FORM.32.thr.11. 1.502
+# FORM.32.lat.11. 47.009
+# FORM.32.thr.12. 1.545
+# FORM.32.lat.12. 45.286
+# FORM.32.thr.13. 1.515
+# FORM.32.lat.13. 46.427
+# FORM.32.thr.14. 1.531
+# FORM.32.lat.14. 45.693
+# FORM.32.thr.15. 1.505
+# FORM.32.lat.15. 45.818
+# FORM.32.thr.16. 1.520
+# FORM.32.lat.16. 46.425
+# FORM.32.thr.17. 1.563
+# FORM.32.lat.17. 43.825
+# FORM.32.thr.18. 1.535
+# FORM.32.lat.18. 45.921
+# FORM.32.thr.19. 1.508
+# FORM.32.lat.19. 46.735
+# FORM.32.thr.20. 1.516
+# FORM.32.lat.20. 46.544
+# FORM.32.thr.21. 1.558
+# FORM.32.lat.21. 44.987
+# FORM.32.thr.22. 1.534
+# FORM.32.lat.22. 46.135
+# FORM.32.thr.23. 1.510
+# FORM.32.lat.23. 45.428
+# FORM.32.thr.24. 1.483
+# FORM.32.lat.24. 46.139
+# FORM.32.thr.25. 1.514
+# FORM.32.lat.25. 46.297
+# FORM.32.thr.26. 1.485
+# FORM.32.lat.26. 47.257
+# FORM.32.thr.27. 1.509
+# FORM.32.lat.27. 46.472
+# FORM.32.thr.28. 1.486
+# FORM.32.lat.28. 46.235
+# FORM.32.thr.29. 1.520
+# FORM.32.lat.29. 45.216
+# FORM.32.thr.30. 1.455
+# FORM.32.lat.30. 47.054
+# FORM.32.thr.31. 1.495
+# FORM.32.lat.31. 46.730
+# TFORM.32.thr.0. 1.598
+# TFORM.32.lat.0. 36.633
+# TFORM.32.thr.1. 1.578
+# TFORM.32.lat.1. 37.278
+# TFORM.32.thr.2. 1.546
+# TFORM.32.lat.2. 38.081
+# TFORM.32.thr.3. 1.525
+# TFORM.32.lat.3. 38.203
+# TFORM.32.thr.4. 1.527
+# TFORM.32.lat.4. 38.600
+# TFORM.32.thr.5. 1.614
+# TFORM.32.lat.5. 36.358
+# TFORM.32.thr.6. 1.597
+# TFORM.32.lat.6. 36.118
+# TFORM.32.thr.7. 1.532
+# TFORM.32.lat.7. 38.170
+# TFORM.32.thr.8. 1.545
+# TFORM.32.lat.8. 37.846
+# TFORM.32.thr.9. 1.537
+# TFORM.32.lat.9. 38.319
+# TFORM.32.thr.10. 1.550
+# TFORM.32.lat.10. 37.930
+# TFORM.32.thr.11. 1.581
+# TFORM.32.lat.11. 36.874
+# TFORM.32.thr.12. 1.634
+# TFORM.32.lat.12. 35.886
+# TFORM.32.thr.13. 1.522
+# TFORM.32.lat.13. 38.579
+# TFORM.32.thr.14. 1.562
+# TFORM.32.lat.14. 37.601
+# TFORM.32.thr.15. 1.590
+# TFORM.32.lat.15. 37.036
+# TFORM.32.thr.16. 1.555
+# TFORM.32.lat.16. 37.796
+# TFORM.32.thr.17. 1.630
+# TFORM.32.lat.17. 35.917
+# TFORM.32.thr.18. 1.585
+# TFORM.32.lat.18. 37.006
+# TFORM.32.thr.19. 1.579
+# TFORM.32.lat.19. 37.306
+# TFORM.32.thr.20. 1.550
+# TFORM.32.lat.20. 37.971
+# TFORM.32.thr.21. 1.562
+# TFORM.32.lat.21. 37.525
+# TFORM.32.thr.22. 1.583
+# TFORM.32.lat.22. 37.127
+# TFORM.32.thr.23. 1.623
+# TFORM.32.lat.23. 36.171
+# TFORM.32.thr.24. 1.511
+# TFORM.32.lat.24. 38.943
+# TFORM.32.thr.25. 1.605
+# TFORM.32.lat.25. 36.497
+# TFORM.32.thr.26. 1.601
+# TFORM.32.lat.26. 36.658
+# TFORM.32.thr.27. 1.499
+# TFORM.32.lat.27. 38.244
+# TFORM.32.thr.28. 1.532
+# TFORM.32.lat.28. 38.350
+# TFORM.32.thr.29. 1.564
+# TFORM.32.lat.29. 37.559
+# TFORM.32.thr.30. 1.519
+# TFORM.32.lat.30. 38.676
+# TFORM.32.thr.31. 1.604
+# TFORM.32.lat.31. 36.665
+TFORM.32.thr.0. 1.645
+TFORM.32.lat.0. 39.656
+TFORM.32.thr.1. 1.601
+TFORM.32.lat.1. 39.740
+TFORM.32.thr.2. 1.712
+TFORM.32.lat.2. 37.507
+TFORM.32.thr.3. 1.678
+TFORM.32.lat.3. 38.700
+TFORM.32.thr.4. 1.679
+TFORM.32.lat.4. 38.326
+TFORM.32.thr.5. 1.639
+TFORM.32.lat.5. 38.907
+TFORM.32.thr.6. 1.722
+TFORM.32.lat.6. 37.231
+TFORM.32.thr.7. 1.660
+TFORM.32.lat.7. 38.834
+TFORM.32.thr.8. 1.720
+TFORM.32.lat.8. 37.498
+TFORM.32.thr.9. 1.708
+TFORM.32.lat.9. 37.784
+TFORM.32.thr.10. 1.701
+TFORM.32.lat.10. 37.707
+TFORM.32.thr.11. 1.728
+TFORM.32.lat.11. 37.439
+TFORM.32.thr.12. 1.706
+TFORM.32.lat.12. 37.798
+TFORM.32.thr.13. 1.693
+TFORM.32.lat.13. 38.093
+TFORM.32.thr.14. 1.698
+TFORM.32.lat.14. 37.909
+TFORM.32.thr.15. 1.701
+TFORM.32.lat.15. 37.745
+TFORM.32.thr.16. 1.706
+TFORM.32.lat.16. 37.904
+TFORM.32.thr.17. 1.712
+TFORM.32.lat.17. 37.383
+TFORM.32.thr.18. 1.698
+TFORM.32.lat.18. 37.850
+TFORM.32.thr.19. 1.685
+TFORM.32.lat.19. 38.326
+TFORM.32.thr.20. 1.685
+TFORM.32.lat.20. 38.377
+TFORM.32.thr.21. 1.679
+TFORM.32.lat.21. 38.609
+TFORM.32.thr.22. 1.695
+TFORM.32.lat.22. 38.303
+TFORM.32.thr.23. 1.608
+TFORM.32.lat.23. 39.689
+TFORM.32.thr.24. 1.708
+TFORM.32.lat.24. 37.671
+TFORM.32.thr.25. 1.721
+TFORM.32.lat.25. 37.355
+TFORM.32.thr.26. 1.699
+TFORM.32.lat.26. 38.184
+TFORM.32.thr.27. 1.640
+TFORM.32.lat.27. 39.339
+TFORM.32.thr.28. 1.698
+TFORM.32.lat.28. 38.282
+TFORM.32.thr.29. 1.695
+TFORM.32.lat.29. 37.809
+TFORM.32.thr.30. 1.658
+TFORM.32.lat.30. 38.400
+TFORM.32.thr.31. 1.679
+TFORM.32.lat.31. 38.455
+# TFORM.32.thr.0. 1.658
+# TFORM.32.lat.0. 39.412
+# TFORM.32.thr.1. 1.634
+# TFORM.32.lat.1. 39.727
+# TFORM.32.thr.2. 1.726
+# TFORM.32.lat.2. 38.133
+# TFORM.32.thr.3. 1.601
+# TFORM.32.lat.3. 40.645
+# TFORM.32.thr.4. 1.706
+# TFORM.32.lat.4. 37.851
+# TFORM.32.thr.5. 1.677
+# TFORM.32.lat.5. 39.074
+# TFORM.32.thr.6. 1.674
+# TFORM.32.lat.6. 37.471
+# TFORM.32.thr.7. 1.635
+# TFORM.32.lat.7. 40.063
+# TFORM.32.thr.8. 1.753
+# TFORM.32.lat.8. 38.559
+# TFORM.32.thr.9. 1.685
+# TFORM.32.lat.9. 38.624
+# TFORM.32.thr.10. 1.694
+# TFORM.32.lat.10. 38.684
+# TFORM.32.thr.11. 1.745
+# TFORM.32.lat.11. 37.718
+# TFORM.32.thr.12. 1.502
+# TFORM.32.lat.12. 41.023
+# TFORM.32.thr.13. 1.623
+# TFORM.32.lat.13. 39.291
+# TFORM.32.thr.14. 1.738
+# TFORM.32.lat.14. 38.671
+# TFORM.32.thr.15. 1.692
+# TFORM.32.lat.15. 38.814
+# TFORM.32.thr.16. 1.746
+# TFORM.32.lat.16. 38.479
+# TFORM.32.thr.17. 1.607
+# TFORM.32.lat.17. 40.744
+# TFORM.32.thr.18. 1.721
+# TFORM.32.lat.18. 38.106
+# TFORM.32.thr.19. 1.708
+# TFORM.32.lat.19. 38.386
+# TFORM.32.thr.20. 1.640
+# TFORM.32.lat.20. 39.855
+# TFORM.32.thr.21. 1.654
+# TFORM.32.lat.21. 39.413
+# TFORM.32.thr.22. 1.688
+# TFORM.32.lat.22. 39.634
+# TFORM.32.thr.23. 1.686
+# TFORM.32.lat.23. 38.267
+# TFORM.32.thr.24. 1.644
+# TFORM.32.lat.24. 39.890
+# TFORM.32.thr.25. 1.690
+# TFORM.32.lat.25. 39.908
+# TFORM.32.thr.26. 1.692
+# TFORM.32.lat.26. 39.557
+# TFORM.32.thr.27. 1.592
+# TFORM.32.lat.27. 41.984
+# TFORM.32.thr.28. 1.733
+# TFORM.32.lat.28. 37.843
+# TFORM.32.thr.29. 1.721
+# TFORM.32.lat.29. 38.160
+# TFORM.32.thr.30. 1.634
+# TFORM.32.lat.30. 40.363
+# TFORM.32.thr.31. 1.738
+# TFORM.32.lat.31. 37.823
+# TFORM.32.thr.0. 1.697
+# TFORM.32.lat.0. 40.827
+# TFORM.32.thr.1. 1.702
+# TFORM.32.lat.1. 40.913
+# TFORM.32.thr.2. 1.662
+# TFORM.32.lat.2. 41.550
+# TFORM.32.thr.3. 1.584
+# TFORM.32.lat.3. 43.587
+# TFORM.32.thr.4. 1.596
+# TFORM.32.lat.4. 43.360
+# TFORM.32.thr.5. 1.676
+# TFORM.32.lat.5. 41.429
+# TFORM.32.thr.6. 1.567
+# TFORM.32.lat.6. 44.041
+# TFORM.32.thr.7. 1.619
+# TFORM.32.lat.7. 42.856
+# TFORM.32.thr.8. 1.682
+# TFORM.32.lat.8. 41.264
+# TFORM.32.thr.9. 1.693
+# TFORM.32.lat.9. 40.848
+# TFORM.32.thr.10. 1.595
+# TFORM.32.lat.10. 43.453
+# TFORM.32.thr.11. 1.712
+# TFORM.32.lat.11. 40.283
+# TFORM.32.thr.12. 1.598
+# TFORM.32.lat.12. 42.835
+# TFORM.32.thr.13. 1.606
+# TFORM.32.lat.13. 43.297
+# TFORM.32.thr.14. 1.668
+# TFORM.32.lat.14. 41.645
+# TFORM.32.thr.15. 1.742
+# TFORM.32.lat.15. 39.804
+# TFORM.32.thr.16. 1.576
+# TFORM.32.lat.16. 44.256
+# TFORM.32.thr.17. 1.628
+# TFORM.32.lat.17. 42.628
+# TFORM.32.thr.18. 1.571
+# TFORM.32.lat.18. 44.261
+# TFORM.32.thr.19. 1.628
+# TFORM.32.lat.19. 41.941
+# TFORM.32.thr.20. 1.652
+# TFORM.32.lat.20. 41.780
+# TFORM.32.thr.21. 1.586
+# TFORM.32.lat.21. 43.252
+# TFORM.32.thr.22. 1.657
+# TFORM.32.lat.22. 41.610
+# TFORM.32.thr.23. 1.711
+# TFORM.32.lat.23. 40.555
+# TFORM.32.thr.24. 1.574
+# TFORM.32.lat.24. 44.238
+# TFORM.32.thr.25. 1.612
+# TFORM.32.lat.25. 41.503
+# TFORM.32.thr.26. 1.564
+# TFORM.32.lat.26. 44.237
+# TFORM.32.thr.27. 1.596
+# TFORM.32.lat.27. 44.058
+# TFORM.32.thr.28. 1.593
+# TFORM.32.lat.28. 43.617
+# TFORM.32.thr.29. 1.673
+# TFORM.32.lat.29. 41.526
+# TFORM.32.thr.30. 1.674
+# TFORM.32.lat.30. 41.395
+# TFORM.32.thr.31. 1.593
+# TFORM.32.lat.31. 43.653
+# MIX.32.thr.0. 1.221
+# MIX.32.lat.0. 49.394
+# MIX.32.thr.1. 1.246
+# MIX.32.lat.1. 48.277
+# MIX.32.thr.2. 1.157
+# MIX.32.lat.2. 51.918
+# MIX.32.thr.3. 1.185
+# MIX.32.lat.3. 50.866
+# MIX.32.thr.4. 1.242
+# MIX.32.lat.4. 48.839
+# MIX.32.thr.5. 1.140
+# MIX.32.lat.5. 52.511
+# MIX.32.thr.6. 1.258
+# MIX.32.lat.6. 48.244
+# MIX.32.thr.7. 1.194
+# MIX.32.lat.7. 50.038
+# MIX.32.thr.8. 1.177
+# MIX.32.lat.8. 52.285
+# MIX.32.thr.9. 1.196
+# MIX.32.lat.9. 50.250
+# MIX.32.thr.10. 1.170
+# MIX.32.lat.10. 51.811
+# MIX.32.thr.11. 1.222
+# MIX.32.lat.11. 49.780
+# MIX.32.thr.12. 1.190
+# MIX.32.lat.12. 51.336
+# MIX.32.thr.13. 1.167
+# MIX.32.lat.13. 51.506
+# MIX.32.thr.14. 1.183
+# MIX.32.lat.14. 51.050
+# MIX.32.thr.15. 1.190
+# MIX.32.lat.15. 51.030
+# MIX.32.thr.16. 1.187
+# MIX.32.lat.16. 51.123
+# MIX.32.thr.17. 1.197
+# MIX.32.lat.17. 50.400
+# MIX.32.thr.18. 1.167
+# MIX.32.lat.18. 52.069
+# MIX.32.thr.19. 1.210
+# MIX.32.lat.19. 49.659
+# MIX.32.thr.20. 1.218
+# MIX.32.lat.20. 49.813
+# MIX.32.thr.21. 1.206
+# MIX.32.lat.21. 49.880
+# MIX.32.thr.22. 1.217
+# MIX.32.lat.22. 49.277
+# MIX.32.thr.23. 1.246
+# MIX.32.lat.23. 48.193
+# MIX.32.thr.24. 1.182
+# MIX.32.lat.24. 51.105
+# MIX.32.thr.25. 1.158
+# MIX.32.lat.25. 51.112
+# MIX.32.thr.26. 1.164
+# MIX.32.lat.26. 52.357
+# MIX.32.thr.27. 1.179
+# MIX.32.lat.27. 51.227
+# MIX.32.thr.28. 1.238
+# MIX.32.lat.28. 48.460
+# MIX.32.thr.29. 1.240
+# MIX.32.lat.29. 48.402
+# MIX.32.thr.30. 1.196
+# MIX.32.lat.30. 51.255
+# MIX.32.thr.31. 1.186
+# MIX.32.lat.31. 50.487
+# MIX.32.thr.0. 1.346
+# MIX.32.lat.0. 48.357
+# MIX.32.thr.1. 1.358
+# MIX.32.lat.1. 48.191
+# MIX.32.thr.2. 1.347
+# MIX.32.lat.2. 48.355
+# MIX.32.thr.3. 1.150
+# MIX.32.lat.3. 57.681
+# MIX.32.thr.4. 1.184
+# MIX.32.lat.4. 57.293
+# MIX.32.thr.5. 1.167
+# MIX.32.lat.5. 56.983
+# MIX.32.thr.6. 1.346
+# MIX.32.lat.6. 48.280
+# MIX.32.thr.7. 1.345
+# MIX.32.lat.7. 48.503
+# MIX.32.thr.8. 1.354
+# MIX.32.lat.8. 48.228
+# MIX.32.thr.9. 1.351
+# MIX.32.lat.9. 48.345
+# MIX.32.thr.10. 1.356
+# MIX.32.lat.10. 48.573
+# MIX.32.thr.11. 1.352
+# MIX.32.lat.11. 48.343
+# MIX.32.thr.12. 1.337
+# MIX.32.lat.12. 49.041
+# MIX.32.thr.13. 1.323
+# MIX.32.lat.13. 49.393
+# MIX.32.thr.14. 1.263
+# MIX.32.lat.14. 52.375
+# MIX.32.thr.15. 1.165
+# MIX.32.lat.15. 55.468
+# MIX.32.thr.16. 1.353
+# MIX.32.lat.16. 48.172
+# MIX.32.thr.17. 1.356
+# MIX.32.lat.17. 48.062
+# MIX.32.thr.18. 1.351
+# MIX.32.lat.18. 48.235
+# MIX.32.thr.19. 1.353
+# MIX.32.lat.19. 48.900
+# MIX.32.thr.20. 1.280
+# MIX.32.lat.20. 51.241
+# MIX.32.thr.21. 1.337
+# MIX.32.lat.21. 48.703
+# MIX.32.thr.22. 1.360
+# MIX.32.lat.22. 48.622
+# MIX.32.thr.23. 1.323
+# MIX.32.lat.23. 48.686
+# MIX.32.thr.24. 1.374
+# MIX.32.lat.24. 48.242
+# MIX.32.thr.25. 1.310
+# MIX.32.lat.25. 49.754
+# MIX.32.thr.26. 1.353
+# MIX.32.lat.26. 48.319
+# MIX.32.thr.27. 1.147
+# MIX.32.lat.27. 57.532
+# MIX.32.thr.28. 1.345
+# MIX.32.lat.28. 48.430
+# MIX.32.thr.29. 1.350
+# MIX.32.lat.29. 48.263
+# MIX.32.thr.30. 1.374
+# MIX.32.lat.30. 48.103
+# MIX.32.thr.31. 1.337
+# MIX.32.lat.31. 49.103
+MIX.32.thr.0. 1.268
+MIX.32.lat.0. 53.454
+MIX.32.thr.1. 1.393
+MIX.32.lat.1. 48.397
+MIX.32.thr.2. 1.395
+MIX.32.lat.2. 47.504
+MIX.32.thr.3. 1.366
+MIX.32.lat.3. 48.846
+MIX.32.thr.4. 1.405
+MIX.32.lat.4. 47.520
+MIX.32.thr.5. 1.343
+MIX.32.lat.5. 50.159
+MIX.32.thr.6. 1.269
+MIX.32.lat.6. 52.860
+MIX.32.thr.7. 1.388
+MIX.32.lat.7. 48.353
+MIX.32.thr.8. 1.383
+MIX.32.lat.8. 46.762
+MIX.32.thr.9. 1.351
+MIX.32.lat.9. 50.396
+MIX.32.thr.10. 1.220
+MIX.32.lat.10. 55.493
+MIX.32.thr.11. 1.413
+MIX.32.lat.11. 46.998
+MIX.32.thr.12. 1.270
+MIX.32.lat.12. 53.283
+MIX.32.thr.13. 1.358
+MIX.32.lat.13. 49.052
+MIX.32.thr.14. 1.316
+MIX.32.lat.14. 51.572
+MIX.32.thr.15. 1.367
+MIX.32.lat.15. 49.736
+MIX.32.thr.16. 1.410
+MIX.32.lat.16. 47.006
+MIX.32.thr.17. 1.391
+MIX.32.lat.17. 47.911
+MIX.32.thr.18. 1.408
+MIX.32.lat.18. 47.301
+MIX.32.thr.19. 1.354
+MIX.32.lat.19. 49.738
+MIX.32.thr.20. 1.323
+MIX.32.lat.20. 51.292
+MIX.32.thr.21. 1.368
+MIX.32.lat.21. 48.750
+MIX.32.thr.22. 1.388
+MIX.32.lat.22. 48.326
+MIX.32.thr.23. 1.411
+MIX.32.lat.23. 47.107
+MIX.32.thr.24. 1.232
+MIX.32.lat.24. 55.425
+MIX.32.thr.25. 1.228
+MIX.32.lat.25. 55.628
+MIX.32.thr.26. 1.411
+MIX.32.lat.26. 46.957
+MIX.32.thr.27. 1.222
+MIX.32.lat.27. 55.446
+MIX.32.thr.28. 1.357
+MIX.32.lat.28. 49.436
+MIX.32.thr.29. 1.395
+MIX.32.lat.29. 47.790
+MIX.32.thr.30. 1.412
+MIX.32.lat.30. 47.341
+MIX.32.thr.31. 1.338
+MIX.32.lat.31. 50.225
+# MIX.32.thr.0. 1.252
+# MIX.32.lat.0. 54.055
+# MIX.32.thr.1. 1.286
+# MIX.32.lat.1. 52.704
+# MIX.32.thr.2. 1.242
+# MIX.32.lat.2. 56.003
+# MIX.32.thr.3. 1.161
+# MIX.32.lat.3. 61.017
+# MIX.32.thr.4. 1.245
+# MIX.32.lat.4. 55.765
+# MIX.32.thr.5. 1.214
+# MIX.32.lat.5. 57.727
+# MIX.32.thr.6. 1.234
+# MIX.32.lat.6. 56.904
+# MIX.32.thr.7. 1.278
+# MIX.32.lat.7. 54.387
+# MIX.32.thr.8. 1.311
+# MIX.32.lat.8. 52.016
+# MIX.32.thr.9. 1.242
+# MIX.32.lat.9. 54.990
+# MIX.32.thr.10. 1.250
+# MIX.32.lat.10. 54.342
+# MIX.32.thr.11. 1.211
+# MIX.32.lat.11. 56.450
+# MIX.32.thr.12. 1.192
+# MIX.32.lat.12. 58.921
+# MIX.32.thr.13. 1.093
+# MIX.32.lat.13. 62.662
+# MIX.32.thr.14. 1.193
+# MIX.32.lat.14. 58.892
+# MIX.32.thr.15. 1.287
+# MIX.32.lat.15. 52.936
+# MIX.32.thr.16. 1.245
+# MIX.32.lat.16. 55.761
+# MIX.32.thr.17. 1.251
+# MIX.32.lat.17. 56.295
+# MIX.32.thr.18. 1.283
+# MIX.32.lat.18. 54.831
+# MIX.32.thr.19. 1.096
+# MIX.32.lat.19. 64.400
+# MIX.32.thr.20. 1.277
+# MIX.32.lat.20. 54.753
+# MIX.32.thr.21. 1.258
+# MIX.32.lat.21. 55.631
+# MIX.32.thr.22. 1.273
+# MIX.32.lat.22. 52.893
+# MIX.32.thr.23. 1.297
+# MIX.32.lat.23. 53.991
+# MIX.32.thr.24. 1.259
+# MIX.32.lat.24. 54.160
+# MIX.32.thr.25. 1.279
+# MIX.32.lat.25. 53.275
+# MIX.32.thr.26. 1.300
+# MIX.32.lat.26. 52.551
+# MIX.32.thr.27. 1.248
+# MIX.32.lat.27. 56.197
+# MIX.32.thr.28. 1.296
+# MIX.32.lat.28. 52.290
+# MIX.32.thr.29. 1.300
+# MIX.32.lat.29. 53.600
+# MIX.32.thr.30. 1.311
+# MIX.32.lat.30. 53.325
+# MIX.32.thr.31. 1.261
+# MIX.32.lat.31. 53.845
+# TMIX.32.thr.0. 1.176
+# TMIX.32.lat.0. 51.619
+# TMIX.32.thr.1. 1.215
+# TMIX.32.lat.1. 50.230
+# TMIX.32.thr.2. 1.175
+# TMIX.32.lat.2. 52.007
+# TMIX.32.thr.3. 1.176
+# TMIX.32.lat.3. 51.188
+# TMIX.32.thr.4. 1.217
+# TMIX.32.lat.4. 49.913
+# TMIX.32.thr.5. 1.228
+# TMIX.32.lat.5. 49.062
+# TMIX.32.thr.6. 1.236
+# TMIX.32.lat.6. 49.009
+# TMIX.32.thr.7. 1.203
+# TMIX.32.lat.7. 50.464
+# TMIX.32.thr.8. 1.214
+# TMIX.32.lat.8. 50.625
+# TMIX.32.thr.9. 1.249
+# TMIX.32.lat.9. 48.361
+# TMIX.32.thr.10. 1.206
+# TMIX.32.lat.10. 49.538
+# TMIX.32.thr.11. 1.216
+# TMIX.32.lat.11. 49.900
+# TMIX.32.thr.12. 1.215
+# TMIX.32.lat.12. 49.986
+# TMIX.32.thr.13. 1.195
+# TMIX.32.lat.13. 50.533
+# TMIX.32.thr.14. 1.181
+# TMIX.32.lat.14. 51.016
+# TMIX.32.thr.15. 1.223
+# TMIX.32.lat.15. 49.259
+# TMIX.32.thr.16. 1.172
+# TMIX.32.lat.16. 51.945
+# TMIX.32.thr.17. 1.247
+# TMIX.32.lat.17. 48.774
+# TMIX.32.thr.18. 1.239
+# TMIX.32.lat.18. 49.490
+# TMIX.32.thr.19. 1.199
+# TMIX.32.lat.19. 49.688
+# TMIX.32.thr.20. 1.185
+# TMIX.32.lat.20. 52.057
+# TMIX.32.thr.21. 1.203
+# TMIX.32.lat.21. 50.092
+# TMIX.32.thr.22. 1.213
+# TMIX.32.lat.22. 50.028
+# TMIX.32.thr.23. 1.184
+# TMIX.32.lat.23. 51.988
+# TMIX.32.thr.24. 1.207
+# TMIX.32.lat.24. 50.523
+# TMIX.32.thr.25. 1.154
+# TMIX.32.lat.25. 50.766
+# TMIX.32.thr.26. 1.238
+# TMIX.32.lat.26. 48.899
+# TMIX.32.thr.27. 1.188
+# TMIX.32.lat.27. 50.836
+# TMIX.32.thr.28. 1.219
+# TMIX.32.lat.28. 49.744
+# TMIX.32.thr.29. 1.226
+# TMIX.32.lat.29. 49.533
+# TMIX.32.thr.30. 1.267
+# TMIX.32.lat.30. 47.740
+# TMIX.32.thr.31. 1.194
+# TMIX.32.lat.31. 51.526
+TMIX.32.thr.0. 1.185
+TMIX.32.lat.0. 54.123
+TMIX.32.thr.1. 1.418
+TMIX.32.lat.1. 45.709
+TMIX.32.thr.2. 1.413
+TMIX.32.lat.2. 45.789
+TMIX.32.thr.3. 1.392
+TMIX.32.lat.3. 46.668
+TMIX.32.thr.4. 1.399
+TMIX.32.lat.4. 46.112
+TMIX.32.thr.5. 1.209
+TMIX.32.lat.5. 54.138
+TMIX.32.thr.6. 1.412
+TMIX.32.lat.6. 45.738
+TMIX.32.thr.7. 1.354
+TMIX.32.lat.7. 48.134
+TMIX.32.thr.8. 1.215
+TMIX.32.lat.8. 54.463
+TMIX.32.thr.9. 1.420
+TMIX.32.lat.9. 45.623
+TMIX.32.thr.10. 1.406
+TMIX.32.lat.10. 46.206
+TMIX.32.thr.11. 1.418
+TMIX.32.lat.11. 45.683
+TMIX.32.thr.12. 1.420
+TMIX.32.lat.12. 45.725
+TMIX.32.thr.13. 1.409
+TMIX.32.lat.13. 45.774
+TMIX.32.thr.14. 1.375
+TMIX.32.lat.14. 48.041
+TMIX.32.thr.15. 1.415
+TMIX.32.lat.15. 45.751
+TMIX.32.thr.16. 1.409
+TMIX.32.lat.16. 45.819
+TMIX.32.thr.17. 1.417
+TMIX.32.lat.17. 45.828
+TMIX.32.thr.18. 1.204
+TMIX.32.lat.18. 54.163
+TMIX.32.thr.19. 1.284
+TMIX.32.lat.19. 50.867
+TMIX.32.thr.20. 1.411
+TMIX.32.lat.20. 45.707
+TMIX.32.thr.21. 1.405
+TMIX.32.lat.21. 45.998
+TMIX.32.thr.22. 1.409
+TMIX.32.lat.22. 45.924
+TMIX.32.thr.23. 1.419
+TMIX.32.lat.23. 45.706
+TMIX.32.thr.24. 1.421
+TMIX.32.lat.24. 45.717
+TMIX.32.thr.25. 1.417
+TMIX.32.lat.25. 45.743
+TMIX.32.thr.26. 1.381
+TMIX.32.lat.26. 46.700
+TMIX.32.thr.27. 1.237
+TMIX.32.lat.27. 51.863
+TMIX.32.thr.28. 1.415
+TMIX.32.lat.28. 45.861
+TMIX.32.thr.29. 1.398
+TMIX.32.lat.29. 46.413
+TMIX.32.thr.30. 1.404
+TMIX.32.lat.30. 46.669
+TMIX.32.thr.31. 1.411
+TMIX.32.lat.31. 45.868
+# TMIX.32.thr.0. 1.328
+# TMIX.32.lat.0. 50.794
+# TMIX.32.thr.1. 1.274
+# TMIX.32.lat.1. 52.948
+# TMIX.32.thr.2. 1.239
+# TMIX.32.lat.2. 55.210
+# TMIX.32.thr.3. 1.305
+# TMIX.32.lat.3. 51.825
+# TMIX.32.thr.4. 1.319
+# TMIX.32.lat.4. 50.514
+# TMIX.32.thr.5. 1.307
+# TMIX.32.lat.5. 51.584
+# TMIX.32.thr.6. 1.354
+# TMIX.32.lat.6. 50.048
+# TMIX.32.thr.7. 1.291
+# TMIX.32.lat.7. 52.385
+# TMIX.32.thr.8. 1.310
+# TMIX.32.lat.8. 52.290
+# TMIX.32.thr.9. 1.279
+# TMIX.32.lat.9. 53.425
+# TMIX.32.thr.10. 1.291
+# TMIX.32.lat.10. 52.479
+# TMIX.32.thr.11. 1.337
+# TMIX.32.lat.11. 50.493
+# TMIX.32.thr.12. 1.173
+# TMIX.32.lat.12. 58.822
+# TMIX.32.thr.13. 1.178
+# TMIX.32.lat.13. 57.069
+# TMIX.32.thr.14. 1.283
+# TMIX.32.lat.14. 53.024
+# TMIX.32.thr.15. 1.266
+# TMIX.32.lat.15. 53.735
+# TMIX.32.thr.16. 1.346
+# TMIX.32.lat.16. 50.172
+# TMIX.32.thr.17. 1.346
+# TMIX.32.lat.17. 50.126
+# TMIX.32.thr.18. 1.123
+# TMIX.32.lat.18. 59.857
+# TMIX.32.thr.19. 1.237
+# TMIX.32.lat.19. 55.045
+# TMIX.32.thr.20. 1.327
+# TMIX.32.lat.20. 50.593
+# TMIX.32.thr.21. 1.324
+# TMIX.32.lat.21. 50.917
+# TMIX.32.thr.22. 1.249
+# TMIX.32.lat.22. 54.555
+# TMIX.32.thr.23. 1.298
+# TMIX.32.lat.23. 52.921
+# TMIX.32.thr.24. 1.342
+# TMIX.32.lat.24. 50.355
+# TMIX.32.thr.25. 1.305
+# TMIX.32.lat.25. 52.496
+# TMIX.32.thr.26. 1.346
+# TMIX.32.lat.26. 50.134
+# TMIX.32.thr.27. 1.282
+# TMIX.32.lat.27. 52.668
+# TMIX.32.thr.28. 1.341
+# TMIX.32.lat.28. 50.359
+# TMIX.32.thr.29. 1.283
+# TMIX.32.lat.29. 52.891
+# TMIX.32.thr.30. 1.246
+# TMIX.32.lat.30. 55.620
+# TMIX.32.thr.31. 1.342
+# TMIX.32.lat.31. 50.198
+# TMIX.32.thr.0. 1.276
+# TMIX.32.lat.0. 54.891
+# TMIX.32.thr.1. 1.194
+# TMIX.32.lat.1. 59.271
+# TMIX.32.thr.2. 1.318
+# TMIX.32.lat.2. 52.828
+# TMIX.32.thr.3. 1.240
+# TMIX.32.lat.3. 56.315
+# TMIX.32.thr.4. 1.295
+# TMIX.32.lat.4. 53.906
+# TMIX.32.thr.5. 1.209
+# TMIX.32.lat.5. 57.442
+# TMIX.32.thr.6. 1.223
+# TMIX.32.lat.6. 56.493
+# TMIX.32.thr.7. 1.254
+# TMIX.32.lat.7. 56.383
+# TMIX.32.thr.8. 1.268
+# TMIX.32.lat.8. 56.213
+# TMIX.32.thr.9. 1.232
+# TMIX.32.lat.9. 58.176
+# TMIX.32.thr.10. 1.161
+# TMIX.32.lat.10. 60.365
+# TMIX.32.thr.11. 1.288
+# TMIX.32.lat.11. 54.750
+# TMIX.32.thr.12. 1.224
+# TMIX.32.lat.12. 56.840
+# TMIX.32.thr.13. 1.265
+# TMIX.32.lat.13. 56.444
+# TMIX.32.thr.14. 1.280
+# TMIX.32.lat.14. 54.461
+# TMIX.32.thr.15. 1.310
+# TMIX.32.lat.15. 53.111
+# TMIX.32.thr.16. 1.267
+# TMIX.32.lat.16. 55.660
+# TMIX.32.thr.17. 1.229
+# TMIX.32.lat.17. 56.792
+# TMIX.32.thr.18. 1.296
+# TMIX.32.lat.18. 53.779
+# TMIX.32.thr.19. 1.198
+# TMIX.32.lat.19. 59.178
+# TMIX.32.thr.20. 1.228
+# TMIX.32.lat.20. 58.177
+# TMIX.32.thr.21. 1.246
+# TMIX.32.lat.21. 56.638
+# TMIX.32.thr.22. 1.238
+# TMIX.32.lat.22. 56.188
+# TMIX.32.thr.23. 1.316
+# TMIX.32.lat.23. 52.846
+# TMIX.32.thr.24. 1.276
+# TMIX.32.lat.24. 54.740
+# TMIX.32.thr.25. 1.296
+# TMIX.32.lat.25. 53.778
+# TMIX.32.thr.26. 1.227
+# TMIX.32.lat.26. 58.458
+# TMIX.32.thr.27. 1.178
+# TMIX.32.lat.27. 60.280
+# TMIX.32.thr.28. 1.171
+# TMIX.32.lat.28. 60.462
+# TMIX.32.thr.29. 1.280
+# TMIX.32.lat.29. 55.171
+# TMIX.32.thr.30. 1.268
+# TMIX.32.lat.30. 55.175
+# TMIX.32.thr.31. 1.240
+# TMIX.32.lat.31. 56.490
+# FORM.40.thr.0. 1.077
+# FORM.40.lat.0. 55.587
+# FORM.40.thr.1. 1.053
+# FORM.40.lat.1. 57.315
+# FORM.40.thr.2. 1.105
+# FORM.40.lat.2. 55.170
+# FORM.40.thr.3. 1.049
+# FORM.40.lat.3. 55.321
+# FORM.40.thr.4. 1.042
+# FORM.40.lat.4. 56.080
+# FORM.40.thr.5. 1.066
+# FORM.40.lat.5. 57.110
+# FORM.40.thr.6. 1.083
+# FORM.40.lat.6. 54.063
+# FORM.40.thr.7. 1.079
+# FORM.40.lat.7. 55.527
+# FORM.40.thr.8. 1.066
+# FORM.40.lat.8. 55.395
+# FORM.40.thr.9. 1.087
+# FORM.40.lat.9. 53.959
+# FORM.40.thr.10. 1.053
+# FORM.40.lat.10. 55.653
+# FORM.40.thr.11. 1.072
+# FORM.40.lat.11. 54.637
+# FORM.40.thr.12. 1.079
+# FORM.40.lat.12. 55.583
+# FORM.40.thr.13. 1.068
+# FORM.40.lat.13. 54.794
+# FORM.40.thr.14. 1.078
+# FORM.40.lat.14. 55.729
+# FORM.40.thr.15. 1.080
+# FORM.40.lat.15. 55.513
+# FORM.40.thr.16. 1.077
+# FORM.40.lat.16. 55.641
+# FORM.40.thr.17. 1.059
+# FORM.40.lat.17. 55.392
+# FORM.40.thr.18. 1.106
+# FORM.40.lat.18. 53.153
+# FORM.40.thr.19. 1.049
+# FORM.40.lat.19. 55.602
+# FORM.40.thr.20. 1.042
+# FORM.40.lat.20. 56.045
+# FORM.40.thr.21. 1.078
+# FORM.40.lat.21. 57.034
+# FORM.40.thr.22. 1.072
+# FORM.40.lat.22. 54.570
+# FORM.40.thr.23. 1.099
+# FORM.40.lat.23. 54.816
+# FORM.40.thr.24. 1.056
+# FORM.40.lat.24. 55.309
+# FORM.40.thr.25. 1.075
+# FORM.40.lat.25. 55.629
+# FORM.40.thr.26. 1.074
+# FORM.40.lat.26. 55.464
+# FORM.40.thr.27. 1.094
+# FORM.40.lat.27. 54.748
+# FORM.40.thr.28. 1.076
+# FORM.40.lat.28. 54.304
+# FORM.40.thr.29. 1.095
+# FORM.40.lat.29. 55.012
+# FORM.40.thr.30. 1.105
+# FORM.40.lat.30. 54.451
+# FORM.40.thr.31. 1.070
+# FORM.40.lat.31. 55.553
+FORM.40.thr.0. 1.248
+FORM.40.lat.0. 50.606
+FORM.40.thr.1. 1.161
+FORM.40.lat.1. 56.164
+FORM.40.thr.2. 1.258
+FORM.40.lat.2. 50.043
+FORM.40.thr.3. 1.258
+FORM.40.lat.3. 49.832
+FORM.40.thr.4. 1.280
+FORM.40.lat.4. 49.064
+FORM.40.thr.5. 1.135
+FORM.40.lat.5. 56.725
+FORM.40.thr.6. 1.282
+FORM.40.lat.6. 49.217
+FORM.40.thr.7. 1.257
+FORM.40.lat.7. 50.102
+FORM.40.thr.8. 1.274
+FORM.40.lat.8. 49.434
+FORM.40.thr.9. 1.285
+FORM.40.lat.9. 48.964
+FORM.40.thr.10. 1.260
+FORM.40.lat.10. 50.080
+FORM.40.thr.11. 1.278
+FORM.40.lat.11. 49.213
+FORM.40.thr.12. 1.275
+FORM.40.lat.12. 49.447
+FORM.40.thr.13. 1.281
+FORM.40.lat.13. 49.106
+FORM.40.thr.14. 1.244
+FORM.40.lat.14. 51.340
+FORM.40.thr.15. 1.186
+FORM.40.lat.15. 54.488
+FORM.40.thr.16. 1.240
+FORM.40.lat.16. 51.981
+FORM.40.thr.17. 1.281
+FORM.40.lat.17. 49.161
+FORM.40.thr.18. 1.288
+FORM.40.lat.18. 48.874
+FORM.40.thr.19. 1.262
+FORM.40.lat.19. 49.924
+FORM.40.thr.20. 1.276
+FORM.40.lat.20. 49.452
+FORM.40.thr.21. 1.236
+FORM.40.lat.21. 50.983
+FORM.40.thr.22. 1.282
+FORM.40.lat.22. 49.153
+FORM.40.thr.23. 1.240
+FORM.40.lat.23. 50.883
+FORM.40.thr.24. 1.244
+FORM.40.lat.24. 50.566
+FORM.40.thr.25. 1.228
+FORM.40.lat.25. 51.480
+FORM.40.thr.26. 1.268
+FORM.40.lat.26. 49.767
+FORM.40.thr.27. 1.263
+FORM.40.lat.27. 49.914
+FORM.40.thr.28. 1.293
+FORM.40.lat.28. 49.019
+FORM.40.thr.29. 1.251
+FORM.40.lat.29. 50.430
+FORM.40.thr.30. 1.281
+FORM.40.lat.30. 49.142
+FORM.40.thr.31. 1.175
+FORM.40.lat.31. 53.440
+# FORM.40.thr.0. 1.185
+# FORM.40.lat.0. 58.818
+# FORM.40.thr.1. 1.081
+# FORM.40.lat.1. 64.269
+# FORM.40.thr.2. 1.145
+# FORM.40.lat.2. 60.418
+# FORM.40.thr.3. 1.169
+# FORM.40.lat.3. 59.579
+# FORM.40.thr.4. 1.188
+# FORM.40.lat.4. 58.612
+# FORM.40.thr.5. 0.988
+# FORM.40.lat.5. 70.142
+# FORM.40.thr.6. 1.148
+# FORM.40.lat.6. 60.660
+# FORM.40.thr.7. 1.170
+# FORM.40.lat.7. 59.437
+# FORM.40.thr.8. 1.164
+# FORM.40.lat.8. 59.641
+# FORM.40.thr.9. 1.164
+# FORM.40.lat.9. 59.988
+# FORM.40.thr.10. 1.160
+# FORM.40.lat.10. 60.029
+# FORM.40.thr.11. 1.191
+# FORM.40.lat.11. 57.902
+# FORM.40.thr.12. 1.203
+# FORM.40.lat.12. 57.810
+# FORM.40.thr.13. 1.180
+# FORM.40.lat.13. 58.783
+# FORM.40.thr.14. 1.156
+# FORM.40.lat.14. 60.524
+# FORM.40.thr.15. 1.113
+# FORM.40.lat.15. 62.680
+# FORM.40.thr.16. 1.153
+# FORM.40.lat.16. 60.694
+# FORM.40.thr.17. 1.171
+# FORM.40.lat.17. 58.775
+# FORM.40.thr.18. 1.172
+# FORM.40.lat.18. 59.149
+# FORM.40.thr.19. 1.192
+# FORM.40.lat.19. 58.403
+# FORM.40.thr.20. 1.158
+# FORM.40.lat.20. 59.462
+# FORM.40.thr.21. 1.163
+# FORM.40.lat.21. 59.995
+# FORM.40.thr.22. 1.161
+# FORM.40.lat.22. 59.622
+# FORM.40.thr.23. 1.157
+# FORM.40.lat.23. 59.845
+# FORM.40.thr.24. 1.170
+# FORM.40.lat.24. 58.925
+# FORM.40.thr.25. 1.147
+# FORM.40.lat.25. 60.753
+# FORM.40.thr.26. 1.199
+# FORM.40.lat.26. 58.340
+# FORM.40.thr.27. 1.184
+# FORM.40.lat.27. 59.117
+# FORM.40.thr.28. 1.193
+# FORM.40.lat.28. 58.098
+# FORM.40.thr.29. 1.196
+# FORM.40.lat.29. 57.998
+# FORM.40.thr.30. 1.197
+# FORM.40.lat.30. 58.254
+# FORM.40.thr.31. 1.122
+# FORM.40.lat.31. 61.993
+# FORM.40.thr.0. 1.199
+# FORM.40.lat.0. 62.058
+# FORM.40.thr.1. 1.162
+# FORM.40.lat.1. 64.085
+# FORM.40.thr.2. 1.202
+# FORM.40.lat.2. 62.321
+# FORM.40.thr.3. 1.208
+# FORM.40.lat.3. 61.413
+# FORM.40.thr.4. 1.191
+# FORM.40.lat.4. 61.835
+# FORM.40.thr.5. 1.097
+# FORM.40.lat.5. 67.975
+# FORM.40.thr.6. 1.202
+# FORM.40.lat.6. 61.749
+# FORM.40.thr.7. 1.208
+# FORM.40.lat.7. 61.497
+# FORM.40.thr.8. 1.199
+# FORM.40.lat.8. 61.819
+# FORM.40.thr.9. 1.219
+# FORM.40.lat.9. 61.488
+# FORM.40.thr.10. 1.202
+# FORM.40.lat.10. 62.261
+# FORM.40.thr.11. 1.217
+# FORM.40.lat.11. 61.386
+# FORM.40.thr.12. 1.202
+# FORM.40.lat.12. 61.569
+# FORM.40.thr.13. 1.206
+# FORM.40.lat.13. 61.983
+# FORM.40.thr.14. 1.164
+# FORM.40.lat.14. 63.530
+# FORM.40.thr.15. 1.139
+# FORM.40.lat.15. 64.028
+# FORM.40.thr.16. 1.181
+# FORM.40.lat.16. 63.488
+# FORM.40.thr.17. 1.216
+# FORM.40.lat.17. 61.774
+# FORM.40.thr.18. 1.220
+# FORM.40.lat.18. 61.670
+# FORM.40.thr.19. 1.192
+# FORM.40.lat.19. 62.111
+# FORM.40.thr.20. 1.207
+# FORM.40.lat.20. 61.423
+# FORM.40.thr.21. 1.189
+# FORM.40.lat.21. 62.205
+# FORM.40.thr.22. 1.203
+# FORM.40.lat.22. 61.318
+# FORM.40.thr.23. 1.191
+# FORM.40.lat.23. 62.012
+# FORM.40.thr.24. 1.206
+# FORM.40.lat.24. 62.123
+# FORM.40.thr.25. 1.200
+# FORM.40.lat.25. 62.426
+# FORM.40.thr.26. 1.209
+# FORM.40.lat.26. 61.394
+# FORM.40.thr.27. 1.192
+# FORM.40.lat.27. 62.213
+# FORM.40.thr.28. 1.204
+# FORM.40.lat.28. 61.463
+# FORM.40.thr.29. 1.218
+# FORM.40.lat.29. 61.650
+# FORM.40.thr.30. 1.204
+# FORM.40.lat.30. 61.683
+# FORM.40.thr.31. 1.167
+# FORM.40.lat.31. 63.819
+TFORM.40.thr.0. 1.495
+TFORM.40.lat.0. 40.413
+TFORM.40.thr.1. 1.495
+TFORM.40.lat.1. 39.913
+TFORM.40.thr.2. 1.510
+TFORM.40.lat.2. 40.334
+TFORM.40.thr.3. 1.475
+TFORM.40.lat.3. 40.815
+TFORM.40.thr.4. 1.485
+TFORM.40.lat.4. 40.671
+TFORM.40.thr.5. 1.493
+TFORM.40.lat.5. 40.457
+TFORM.40.thr.6. 1.485
+TFORM.40.lat.6. 40.749
+TFORM.40.thr.7. 1.509
+TFORM.40.lat.7. 39.914
+TFORM.40.thr.8. 1.517
+TFORM.40.lat.8. 39.317
+TFORM.40.thr.9. 1.563
+TFORM.40.lat.9. 38.206
+TFORM.40.thr.10. 1.514
+TFORM.40.lat.10. 39.469
+TFORM.40.thr.11. 1.554
+TFORM.40.lat.11. 38.329
+TFORM.40.thr.12. 1.490
+TFORM.40.lat.12. 40.630
+TFORM.40.thr.13. 1.557
+TFORM.40.lat.13. 38.281
+TFORM.40.thr.14. 1.495
+TFORM.40.lat.14. 40.077
+TFORM.40.thr.15. 1.500
+TFORM.40.lat.15. 40.184
+TFORM.40.thr.16. 1.486
+TFORM.40.lat.16. 40.381
+TFORM.40.thr.17. 1.466
+TFORM.40.lat.17. 40.818
+TFORM.40.thr.18. 1.603
+TFORM.40.lat.18. 37.086
+TFORM.40.thr.19. 1.483
+TFORM.40.lat.19. 40.665
+TFORM.40.thr.20. 1.514
+TFORM.40.lat.20. 40.114
+TFORM.40.thr.21. 1.534
+TFORM.40.lat.21. 39.165
+TFORM.40.thr.22. 1.526
+TFORM.40.lat.22. 38.964
+TFORM.40.thr.23. 1.517
+TFORM.40.lat.23. 39.350
+TFORM.40.thr.24. 1.485
+TFORM.40.lat.24. 40.663
+TFORM.40.thr.25. 1.487
+TFORM.40.lat.25. 40.239
+TFORM.40.thr.26. 1.495
+TFORM.40.lat.26. 40.429
+TFORM.40.thr.27. 1.507
+TFORM.40.lat.27. 39.985
+TFORM.40.thr.28. 1.540
+TFORM.40.lat.28. 38.649
+TFORM.40.thr.29. 1.534
+TFORM.40.lat.29. 39.947
+TFORM.40.thr.30. 1.518
+TFORM.40.lat.30. 39.653
+TFORM.40.thr.31. 1.495
+TFORM.40.lat.31. 39.597
+# TFORM.40.thr.0. 1.424
+# TFORM.40.lat.0. 45.411
+# TFORM.40.thr.1. 1.335
+# TFORM.40.lat.1. 48.794
+# TFORM.40.thr.2. 1.437
+# TFORM.40.lat.2. 44.402
+# TFORM.40.thr.3. 1.448
+# TFORM.40.lat.3. 44.312
+# TFORM.40.thr.4. 1.461
+# TFORM.40.lat.4. 44.043
+# TFORM.40.thr.5. 1.330
+# TFORM.40.lat.5. 48.635
+# TFORM.40.thr.6. 1.450
+# TFORM.40.lat.6. 44.618
+# TFORM.40.thr.7. 1.435
+# TFORM.40.lat.7. 45.585
+# TFORM.40.thr.8. 1.465
+# TFORM.40.lat.8. 44.301
+# TFORM.40.thr.9. 1.471
+# TFORM.40.lat.9. 44.091
+# TFORM.40.thr.10. 1.448
+# TFORM.40.lat.10. 44.560
+# TFORM.40.thr.11. 1.456
+# TFORM.40.lat.11. 43.825
+# TFORM.40.thr.12. 1.474
+# TFORM.40.lat.12. 44.132
+# TFORM.40.thr.13. 1.470
+# TFORM.40.lat.13. 44.129
+# TFORM.40.thr.14. 1.399
+# TFORM.40.lat.14. 46.397
+# TFORM.40.thr.15. 1.400
+# TFORM.40.lat.15. 46.910
+# TFORM.40.thr.16. 1.399
+# TFORM.40.lat.16. 46.498
+# TFORM.40.thr.17. 1.450
+# TFORM.40.lat.17. 44.022
+# TFORM.40.thr.18. 1.482
+# TFORM.40.lat.18. 43.856
+# TFORM.40.thr.19. 1.435
+# TFORM.40.lat.19. 45.047
+# TFORM.40.thr.20. 1.436
+# TFORM.40.lat.20. 44.604
+# TFORM.40.thr.21. 1.434
+# TFORM.40.lat.21. 45.108
+# TFORM.40.thr.22. 1.478
+# TFORM.40.lat.22. 43.939
+# TFORM.40.thr.23. 1.393
+# TFORM.40.lat.23. 46.440
+# TFORM.40.thr.24. 1.466
+# TFORM.40.lat.24. 44.150
+# TFORM.40.thr.25. 1.402
+# TFORM.40.lat.25. 46.073
+# TFORM.40.thr.26. 1.474
+# TFORM.40.lat.26. 44.077
+# TFORM.40.thr.27. 1.386
+# TFORM.40.lat.27. 47.201
+# TFORM.40.thr.28. 1.470
+# TFORM.40.lat.28. 43.860
+# TFORM.40.thr.29. 1.474
+# TFORM.40.lat.29. 44.015
+# TFORM.40.thr.30. 1.478
+# TFORM.40.lat.30. 44.000
+# TFORM.40.thr.31. 1.427
+# TFORM.40.lat.31. 46.341
+# TFORM.40.thr.0. 1.488
+# TFORM.40.lat.0. 46.730
+# TFORM.40.thr.1. 1.441
+# TFORM.40.lat.1. 47.594
+# TFORM.40.thr.2. 1.568
+# TFORM.40.lat.2. 44.255
+# TFORM.40.thr.3. 1.560
+# TFORM.40.lat.3. 44.334
+# TFORM.40.thr.4. 1.534
+# TFORM.40.lat.4. 45.224
+# TFORM.40.thr.5. 1.462
+# TFORM.40.lat.5. 47.390
+# TFORM.40.thr.6. 1.463
+# TFORM.40.lat.6. 47.477
+# TFORM.40.thr.7. 1.479
+# TFORM.40.lat.7. 46.505
+# TFORM.40.thr.8. 1.515
+# TFORM.40.lat.8. 45.872
+# TFORM.40.thr.9. 1.490
+# TFORM.40.lat.9. 46.475
+# TFORM.40.thr.10. 1.473
+# TFORM.40.lat.10. 47.093
+# TFORM.40.thr.11. 1.586
+# TFORM.40.lat.11. 43.549
+# TFORM.40.thr.12. 1.551
+# TFORM.40.lat.12. 44.616
+# TFORM.40.thr.13. 1.572
+# TFORM.40.lat.13. 44.169
+# TFORM.40.thr.14. 1.465
+# TFORM.40.lat.14. 47.114
+# TFORM.40.thr.15. 1.473
+# TFORM.40.lat.15. 47.163
+# TFORM.40.thr.16. 1.497
+# TFORM.40.lat.16. 45.969
+# TFORM.40.thr.17. 1.432
+# TFORM.40.lat.17. 48.388
+# TFORM.40.thr.18. 1.546
+# TFORM.40.lat.18. 44.844
+# TFORM.40.thr.19. 1.519
+# TFORM.40.lat.19. 45.442
+# TFORM.40.thr.20. 1.566
+# TFORM.40.lat.20. 44.451
+# TFORM.40.thr.21. 1.519
+# TFORM.40.lat.21. 45.759
+# TFORM.40.thr.22. 1.583
+# TFORM.40.lat.22. 43.783
+# TFORM.40.thr.23. 1.452
+# TFORM.40.lat.23. 47.836
+# TFORM.40.thr.24. 1.463
+# TFORM.40.lat.24. 47.432
+# TFORM.40.thr.25. 1.506
+# TFORM.40.lat.25. 46.235
+# TFORM.40.thr.26. 1.457
+# TFORM.40.lat.26. 47.745
+# TFORM.40.thr.27. 1.459
+# TFORM.40.lat.27. 47.211
+# TFORM.40.thr.28. 1.577
+# TFORM.40.lat.28. 43.997
+# TFORM.40.thr.29. 1.565
+# TFORM.40.lat.29. 44.588
+# TFORM.40.thr.30. 1.554
+# TFORM.40.lat.30. 44.892
+# TFORM.40.thr.31. 1.477
+# TFORM.40.lat.31. 46.642
+# TFORM.40.thr.0. 1.508
+# TFORM.40.lat.0. 49.324
+# TFORM.40.thr.1. 1.500
+# TFORM.40.lat.1. 49.399
+# TFORM.40.thr.2. 1.452
+# TFORM.40.lat.2. 49.398
+# TFORM.40.thr.3. 1.509
+# TFORM.40.lat.3. 49.233
+# TFORM.40.thr.4. 1.523
+# TFORM.40.lat.4. 49.034
+# TFORM.40.thr.5. 1.504
+# TFORM.40.lat.5. 49.865
+# TFORM.40.thr.6. 1.518
+# TFORM.40.lat.6. 49.220
+# TFORM.40.thr.7. 1.517
+# TFORM.40.lat.7. 49.266
+# TFORM.40.thr.8. 1.517
+# TFORM.40.lat.8. 49.133
+# TFORM.40.thr.9. 1.508
+# TFORM.40.lat.9. 49.211
+# TFORM.40.thr.10. 1.515
+# TFORM.40.lat.10. 49.254
+# TFORM.40.thr.11. 1.517
+# TFORM.40.lat.11. 49.158
+# TFORM.40.thr.12. 1.514
+# TFORM.40.lat.12. 49.308
+# TFORM.40.thr.13. 1.520
+# TFORM.40.lat.13. 49.321
+# TFORM.40.thr.14. 1.499
+# TFORM.40.lat.14. 49.251
+# TFORM.40.thr.15. 1.495
+# TFORM.40.lat.15. 49.420
+# TFORM.40.thr.16. 1.511
+# TFORM.40.lat.16. 49.382
+# TFORM.40.thr.17. 1.514
+# TFORM.40.lat.17. 49.195
+# TFORM.40.thr.18. 1.515
+# TFORM.40.lat.18. 49.317
+# TFORM.40.thr.19. 1.519
+# TFORM.40.lat.19. 49.184
+# TFORM.40.thr.20. 1.528
+# TFORM.40.lat.20. 49.178
+# TFORM.40.thr.21. 1.507
+# TFORM.40.lat.21. 49.163
+# TFORM.40.thr.22. 1.520
+# TFORM.40.lat.22. 49.177
+# TFORM.40.thr.23. 1.517
+# TFORM.40.lat.23. 49.341
+# TFORM.40.thr.24. 1.522
+# TFORM.40.lat.24. 49.263
+# TFORM.40.thr.25. 1.492
+# TFORM.40.lat.25. 49.398
+# TFORM.40.thr.26. 1.520
+# TFORM.40.lat.26. 49.148
+# TFORM.40.thr.27. 1.492
+# TFORM.40.lat.27. 50.164
+# TFORM.40.thr.28. 1.523
+# TFORM.40.lat.28. 49.192
+# TFORM.40.thr.29. 1.524
+# TFORM.40.lat.29. 49.211
+# TFORM.40.thr.30. 1.524
+# TFORM.40.lat.30. 49.159
+# TFORM.40.thr.31. 1.487
+# TFORM.40.lat.31. 49.414
+# MIX.40.thr.0. 0.895
+# MIX.40.lat.0. 68.843
+# MIX.40.thr.1. 0.778
+# MIX.40.lat.1. 76.703
+# MIX.40.thr.2. 0.978
+# MIX.40.lat.2. 61.809
+# MIX.40.thr.3. 0.927
+# MIX.40.lat.3. 66.186
+# MIX.40.thr.4. 0.895
+# MIX.40.lat.4. 66.887
+# MIX.40.thr.5. 0.909
+# MIX.40.lat.5. 66.093
+# MIX.40.thr.6. 0.942
+# MIX.40.lat.6. 64.052
+# MIX.40.thr.7. 0.936
+# MIX.40.lat.7. 65.424
+# MIX.40.thr.8. 0.913
+# MIX.40.lat.8. 67.064
+# MIX.40.thr.9. 0.919
+# MIX.40.lat.9. 66.358
+# MIX.40.thr.10. 0.920
+# MIX.40.lat.10. 66.410
+# MIX.40.thr.11. 0.957
+# MIX.40.lat.11. 63.169
+# MIX.40.thr.12. 0.929
+# MIX.40.lat.12. 65.234
+# MIX.40.thr.13. 0.925
+# MIX.40.lat.13. 65.514
+# MIX.40.thr.14. 0.893
+# MIX.40.lat.14. 67.233
+# MIX.40.thr.15. 0.944
+# MIX.40.lat.15. 64.274
+# MIX.40.thr.16. 0.926
+# MIX.40.lat.16. 65.052
+# MIX.40.thr.17. 0.905
+# MIX.40.lat.17. 67.528
+# MIX.40.thr.18. 0.922
+# MIX.40.lat.18. 66.049
+# MIX.40.thr.19. 0.934
+# MIX.40.lat.19. 65.255
+# MIX.40.thr.20. 0.922
+# MIX.40.lat.20. 65.855
+# MIX.40.thr.21. 0.901
+# MIX.40.lat.21. 68.214
+# MIX.40.thr.22. 0.949
+# MIX.40.lat.22. 63.917
+# MIX.40.thr.23. 0.900
+# MIX.40.lat.23. 68.034
+# MIX.40.thr.24. 0.956
+# MIX.40.lat.24. 63.424
+# MIX.40.thr.25. 0.904
+# MIX.40.lat.25. 67.219
+# MIX.40.thr.26. 0.911
+# MIX.40.lat.26. 67.156
+# MIX.40.thr.27. 0.888
+# MIX.40.lat.27. 68.994
+# MIX.40.thr.28. 0.919
+# MIX.40.lat.28. 66.148
+# MIX.40.thr.29. 0.927
+# MIX.40.lat.29. 65.690
+# MIX.40.thr.30. 0.931
+# MIX.40.lat.30. 65.062
+# MIX.40.thr.31. 0.915
+# MIX.40.lat.31. 65.692
+MIX.40.thr.0. 0.989
+MIX.40.lat.0. 64.938
+MIX.40.thr.1. 0.925
+MIX.40.lat.1. 71.037
+MIX.40.thr.2. 0.858
+MIX.40.lat.2. 77.095
+MIX.40.thr.3. 1.004
+MIX.40.lat.3. 64.653
+MIX.40.thr.4. 1.002
+MIX.40.lat.4. 64.750
+MIX.40.thr.5. 0.948
+MIX.40.lat.5. 69.044
+MIX.40.thr.6. 1.005
+MIX.40.lat.6. 64.620
+MIX.40.thr.7. 0.926
+MIX.40.lat.7. 70.993
+MIX.40.thr.8. 1.002
+MIX.40.lat.8. 64.762
+MIX.40.thr.9. 1.010
+MIX.40.lat.9. 64.638
+MIX.40.thr.10. 1.002
+MIX.40.lat.10. 64.790
+MIX.40.thr.11. 1.002
+MIX.40.lat.11. 64.514
+MIX.40.thr.12. 1.007
+MIX.40.lat.12. 64.495
+MIX.40.thr.13. 0.948
+MIX.40.lat.13. 69.517
+MIX.40.thr.14. 1.001
+MIX.40.lat.14. 64.973
+MIX.40.thr.15. 0.960
+MIX.40.lat.15. 69.661
+MIX.40.thr.16. 0.963
+MIX.40.lat.16. 66.465
+MIX.40.thr.17. 1.009
+MIX.40.lat.17. 64.603
+MIX.40.thr.18. 1.004
+MIX.40.lat.18. 64.671
+MIX.40.thr.19. 0.999
+MIX.40.lat.19. 64.743
+MIX.40.thr.20. 1.009
+MIX.40.lat.20. 64.592
+MIX.40.thr.21. 0.848
+MIX.40.lat.21. 77.490
+MIX.40.thr.22. 1.007
+MIX.40.lat.22. 64.634
+MIX.40.thr.23. 0.992
+MIX.40.lat.23. 65.265
+MIX.40.thr.24. 1.004
+MIX.40.lat.24. 64.640
+MIX.40.thr.25. 0.961
+MIX.40.lat.25. 67.319
+MIX.40.thr.26. 0.861
+MIX.40.lat.26. 73.679
+MIX.40.thr.27. 0.854
+MIX.40.lat.27. 77.072
+MIX.40.thr.28. 1.005
+MIX.40.lat.28. 64.607
+MIX.40.thr.29. 1.006
+MIX.40.lat.29. 64.631
+MIX.40.thr.30. 1.001
+MIX.40.lat.30. 64.749
+MIX.40.thr.31. 0.990
+MIX.40.lat.31. 65.379
+# MIX.40.thr.0. 0.932
+# MIX.40.lat.0. 76.752
+# MIX.40.thr.1. 0.936
+# MIX.40.lat.1. 75.479
+# MIX.40.thr.2. 0.880
+# MIX.40.lat.2. 82.772
+# MIX.40.thr.3. 0.915
+# MIX.40.lat.3. 78.302
+# MIX.40.thr.4. 0.922
+# MIX.40.lat.4. 77.468
+# MIX.40.thr.5. 0.859
+# MIX.40.lat.5. 79.149
+# MIX.40.thr.6. 0.950
+# MIX.40.lat.6. 73.755
+# MIX.40.thr.7. 0.885
+# MIX.40.lat.7. 80.154
+# MIX.40.thr.8. 0.976
+# MIX.40.lat.8. 72.432
+# MIX.40.thr.9. 0.968
+# MIX.40.lat.9. 72.713
+# MIX.40.thr.10. 0.972
+# MIX.40.lat.10. 72.403
+# MIX.40.thr.11. 0.974
+# MIX.40.lat.11. 71.891
+# MIX.40.thr.12. 0.908
+# MIX.40.lat.12. 79.005
+# MIX.40.thr.13. 0.958
+# MIX.40.lat.13. 73.838
+# MIX.40.thr.14. 0.895
+# MIX.40.lat.14. 80.519
+# MIX.40.thr.15. 0.891
+# MIX.40.lat.15. 78.963
+# MIX.40.thr.16. 0.936
+# MIX.40.lat.16. 75.189
+# MIX.40.thr.17. 0.926
+# MIX.40.lat.17. 77.735
+# MIX.40.thr.18. 0.908
+# MIX.40.lat.18. 77.960
+# MIX.40.thr.19. 0.954
+# MIX.40.lat.19. 73.271
+# MIX.40.thr.20. 0.903
+# MIX.40.lat.20. 78.081
+# MIX.40.thr.21. 0.932
+# MIX.40.lat.21. 76.538
+# MIX.40.thr.22. 0.967
+# MIX.40.lat.22. 72.331
+# MIX.40.thr.23. 0.900
+# MIX.40.lat.23. 80.544
+# MIX.40.thr.24. 0.929
+# MIX.40.lat.24. 75.984
+# MIX.40.thr.25. 0.916
+# MIX.40.lat.25. 76.296
+# MIX.40.thr.26. 0.881
+# MIX.40.lat.26. 83.165
+# MIX.40.thr.27. 0.950
+# MIX.40.lat.27. 74.952
+# MIX.40.thr.28. 0.957
+# MIX.40.lat.28. 74.597
+# MIX.40.thr.29. 0.874
+# MIX.40.lat.29. 80.832
+# MIX.40.thr.30. 0.973
+# MIX.40.lat.30. 72.669
+# MIX.40.thr.31. 0.934
+# MIX.40.lat.31. 75.072
+# MIX.40.thr.0. 0.993
+# MIX.40.lat.0. 76.126
+# MIX.40.thr.1. 0.992
+# MIX.40.lat.1. 75.696
+# MIX.40.thr.2. 1.014
+# MIX.40.lat.2. 75.377
+# MIX.40.thr.3. 1.004
+# MIX.40.lat.3. 75.673
+# MIX.40.thr.4. 0.990
+# MIX.40.lat.4. 75.716
+# MIX.40.thr.5. 0.990
+# MIX.40.lat.5. 75.887
+# MIX.40.thr.6. 0.922
+# MIX.40.lat.6. 84.644
+# MIX.40.thr.7. 0.996
+# MIX.40.lat.7. 75.639
+# MIX.40.thr.8. 1.010
+# MIX.40.lat.8. 75.386
+# MIX.40.thr.9. 1.013
+# MIX.40.lat.9. 75.263
+# MIX.40.thr.10. 1.003
+# MIX.40.lat.10. 75.210
+# MIX.40.thr.11. 0.996
+# MIX.40.lat.11. 75.980
+# MIX.40.thr.12. 1.002
+# MIX.40.lat.12. 76.337
+# MIX.40.thr.13. 1.014
+# MIX.40.lat.13. 75.672
+# MIX.40.thr.14. 0.994
+# MIX.40.lat.14. 75.558
+# MIX.40.thr.15. 0.994
+# MIX.40.lat.15. 75.970
+# MIX.40.thr.16. 0.996
+# MIX.40.lat.16. 75.518
+# MIX.40.thr.17. 1.016
+# MIX.40.lat.17. 76.076
+# MIX.40.thr.18. 1.017
+# MIX.40.lat.18. 75.703
+# MIX.40.thr.19. 1.010
+# MIX.40.lat.19. 75.055
+# MIX.40.thr.20. 1.004
+# MIX.40.lat.20. 75.462
+# MIX.40.thr.21. 0.923
+# MIX.40.lat.21. 82.752
+# MIX.40.thr.22. 1.002
+# MIX.40.lat.22. 75.983
+# MIX.40.thr.23. 0.992
+# MIX.40.lat.23. 75.969
+# MIX.40.thr.24. 1.006
+# MIX.40.lat.24. 75.215
+# MIX.40.thr.25. 0.986
+# MIX.40.lat.25. 76.072
+# MIX.40.thr.26. 1.008
+# MIX.40.lat.26. 75.470
+# MIX.40.thr.27. 1.014
+# MIX.40.lat.27. 75.348
+# MIX.40.thr.28. 0.999
+# MIX.40.lat.28. 75.850
+# MIX.40.thr.29. 0.915
+# MIX.40.lat.29. 82.283
+# MIX.40.thr.30. 1.003
+# MIX.40.lat.30. 76.294
+# MIX.40.thr.31. 1.002
+# MIX.40.lat.31. 75.788
+# TMIX.40.thr.0. 0.912
+# TMIX.40.lat.0. 66.460
+# TMIX.40.thr.1. 0.859
+# TMIX.40.lat.1. 70.011
+# TMIX.40.thr.2. 0.902
+# TMIX.40.lat.2. 67.512
+# TMIX.40.thr.3. 0.885
+# TMIX.40.lat.3. 68.452
+# TMIX.40.thr.4. 0.928
+# TMIX.40.lat.4. 67.154
+# TMIX.40.thr.5. 0.890
+# TMIX.40.lat.5. 68.879
+# TMIX.40.thr.6. 0.897
+# TMIX.40.lat.6. 67.415
+# TMIX.40.thr.7. 0.884
+# TMIX.40.lat.7. 69.026
+# TMIX.40.thr.8. 0.914
+# TMIX.40.lat.8. 65.996
+# TMIX.40.thr.9. 0.902
+# TMIX.40.lat.9. 68.582
+# TMIX.40.thr.10. 0.909
+# TMIX.40.lat.10. 66.582
+# TMIX.40.thr.11. 0.885
+# TMIX.40.lat.11. 69.538
+# TMIX.40.thr.12. 0.926
+# TMIX.40.lat.12. 65.307
+# TMIX.40.thr.13. 0.942
+# TMIX.40.lat.13. 64.897
+# TMIX.40.thr.14. 0.884
+# TMIX.40.lat.14. 68.882
+# TMIX.40.thr.15. 0.894
+# TMIX.40.lat.15. 67.825
+# TMIX.40.thr.16. 0.896
+# TMIX.40.lat.16. 66.843
+# TMIX.40.thr.17. 0.888
+# TMIX.40.lat.17. 69.100
+# TMIX.40.thr.18. 0.932
+# TMIX.40.lat.18. 64.824
+# TMIX.40.thr.19. 0.922
+# TMIX.40.lat.19. 64.852
+# TMIX.40.thr.20. 0.924
+# TMIX.40.lat.20. 65.571
+# TMIX.40.thr.21. 0.914
+# TMIX.40.lat.21. 66.071
+# TMIX.40.thr.22. 0.952
+# TMIX.40.lat.22. 62.631
+# TMIX.40.thr.23. 0.897
+# TMIX.40.lat.23. 67.620
+# TMIX.40.thr.24. 0.912
+# TMIX.40.lat.24. 66.473
+# TMIX.40.thr.25. 0.887
+# TMIX.40.lat.25. 67.986
+# TMIX.40.thr.26. 0.917
+# TMIX.40.lat.26. 65.926
+# TMIX.40.thr.27. 0.875
+# TMIX.40.lat.27. 69.362
+# TMIX.40.thr.28. 0.915
+# TMIX.40.lat.28. 66.257
+# TMIX.40.thr.29. 0.888
+# TMIX.40.lat.29. 68.307
+# TMIX.40.thr.30. 0.902
+# TMIX.40.lat.30. 67.703
+# TMIX.40.thr.31. 0.883
+# TMIX.40.lat.31. 69.895
+TMIX.40.thr.0. 0.964
+TMIX.40.lat.0. 68.034
+TMIX.40.thr.1. 0.953
+TMIX.40.lat.1. 68.735
+TMIX.40.thr.2. 0.984
+TMIX.40.lat.2. 65.003
+TMIX.40.thr.3. 1.006
+TMIX.40.lat.3. 64.425
+TMIX.40.thr.4. 1.005
+TMIX.40.lat.4. 64.367
+TMIX.40.thr.5. 0.951
+TMIX.40.lat.5. 68.566
+TMIX.40.thr.6. 0.996
+TMIX.40.lat.6. 65.110
+TMIX.40.thr.7. 0.969
+TMIX.40.lat.7. 67.131
+TMIX.40.thr.8. 0.997
+TMIX.40.lat.8. 64.799
+TMIX.40.thr.9. 1.004
+TMIX.40.lat.9. 64.525
+TMIX.40.thr.10. 0.989
+TMIX.40.lat.10. 65.541
+TMIX.40.thr.11. 0.996
+TMIX.40.lat.11. 64.895
+TMIX.40.thr.12. 0.889
+TMIX.40.lat.12. 76.345
+TMIX.40.thr.13. 0.981
+TMIX.40.lat.13. 66.923
+TMIX.40.thr.14. 0.863
+TMIX.40.lat.14. 76.582
+TMIX.40.thr.15. 0.971
+TMIX.40.lat.15. 67.251
+TMIX.40.thr.16. 0.988
+TMIX.40.lat.16. 65.602
+TMIX.40.thr.17. 1.004
+TMIX.40.lat.17. 64.533
+TMIX.40.thr.18. 0.892
+TMIX.40.lat.18. 76.720
+TMIX.40.thr.19. 0.985
+TMIX.40.lat.19. 65.789
+TMIX.40.thr.20. 1.003
+TMIX.40.lat.20. 64.594
+TMIX.40.thr.21. 0.967
+TMIX.40.lat.21. 67.667
+TMIX.40.thr.22. 1.002
+TMIX.40.lat.22. 64.685
+TMIX.40.thr.23. 0.919
+TMIX.40.lat.23. 72.513
+TMIX.40.thr.24. 0.988
+TMIX.40.lat.24. 64.819
+TMIX.40.thr.25. 0.951
+TMIX.40.lat.25. 68.782
+TMIX.40.thr.26. 0.994
+TMIX.40.lat.26. 65.565
+TMIX.40.thr.27. 0.990
+TMIX.40.lat.27. 65.610
+TMIX.40.thr.28. 0.973
+TMIX.40.lat.28. 65.493
+TMIX.40.thr.29. 1.007
+TMIX.40.lat.29. 64.327
+TMIX.40.thr.30. 1.001
+TMIX.40.lat.30. 64.808
+TMIX.40.thr.31. 0.970
+TMIX.40.lat.31. 67.056
+# TMIX.40.thr.0. 0.986
+# TMIX.40.lat.0. 71.078
+# TMIX.40.thr.1. 0.963
+# TMIX.40.lat.1. 73.436
+# TMIX.40.thr.2. 0.981
+# TMIX.40.lat.2. 71.795
+# TMIX.40.thr.3. 1.002
+# TMIX.40.lat.3. 71.273
+# TMIX.40.thr.4. 0.998
+# TMIX.40.lat.4. 71.197
+# TMIX.40.thr.5. 0.976
+# TMIX.40.lat.5. 71.846
+# TMIX.40.thr.6. 0.927
+# TMIX.40.lat.6. 76.605
+# TMIX.40.thr.7. 0.991
+# TMIX.40.lat.7. 71.878
+# TMIX.40.thr.8. 0.981
+# TMIX.40.lat.8. 72.631
+# TMIX.40.thr.9. 1.001
+# TMIX.40.lat.9. 69.617
+# TMIX.40.thr.10. 1.038
+# TMIX.40.lat.10. 67.572
+# TMIX.40.thr.11. 1.016
+# TMIX.40.lat.11. 69.073
+# TMIX.40.thr.12. 0.935
+# TMIX.40.lat.12. 76.612
+# TMIX.40.thr.13. 0.990
+# TMIX.40.lat.13. 72.653
+# TMIX.40.thr.14. 0.958
+# TMIX.40.lat.14. 74.851
+# TMIX.40.thr.15. 0.999
+# TMIX.40.lat.15. 70.643
+# TMIX.40.thr.16. 0.987
+# TMIX.40.lat.16. 70.407
+# TMIX.40.thr.17. 0.983
+# TMIX.40.lat.17. 71.688
+# TMIX.40.thr.18. 0.926
+# TMIX.40.lat.18. 76.328
+# TMIX.40.thr.19. 0.925
+# TMIX.40.lat.19. 76.385
+# TMIX.40.thr.20. 1.044
+# TMIX.40.lat.20. 67.211
+# TMIX.40.thr.21. 0.973
+# TMIX.40.lat.21. 71.140
+# TMIX.40.thr.22. 0.978
+# TMIX.40.lat.22. 72.506
+# TMIX.40.thr.23. 0.956
+# TMIX.40.lat.23. 73.882
+# TMIX.40.thr.24. 1.039
+# TMIX.40.lat.24. 67.434
+# TMIX.40.thr.25. 0.971
+# TMIX.40.lat.25. 72.379
+# TMIX.40.thr.26. 0.935
+# TMIX.40.lat.26. 76.413
+# TMIX.40.thr.27. 0.994
+# TMIX.40.lat.27. 70.786
+# TMIX.40.thr.28. 0.940
+# TMIX.40.lat.28. 76.703
+# TMIX.40.thr.29. 1.048
+# TMIX.40.lat.29. 66.749
+# TMIX.40.thr.30. 1.044
+# TMIX.40.lat.30. 67.200
+# TMIX.40.thr.31. 1.014
+# TMIX.40.lat.31. 69.154
+# TMIX.40.thr.0. 0.962
+# TMIX.40.lat.0. 77.730
+# TMIX.40.thr.1. 0.967
+# TMIX.40.lat.1. 77.649
+# TMIX.40.thr.2. 0.967
+# TMIX.40.lat.2. 77.569
+# TMIX.40.thr.3. 0.963
+# TMIX.40.lat.3. 77.634
+# TMIX.40.thr.4. 0.971
+# TMIX.40.lat.4. 77.638
+# TMIX.40.thr.5. 0.930
+# TMIX.40.lat.5. 79.470
+# TMIX.40.thr.6. 0.970
+# TMIX.40.lat.6. 77.521
+# TMIX.40.thr.7. 0.966
+# TMIX.40.lat.7. 77.769
+# TMIX.40.thr.8. 0.965
+# TMIX.40.lat.8. 77.505
+# TMIX.40.thr.9. 0.961
+# TMIX.40.lat.9. 77.688
+# TMIX.40.thr.10. 0.964
+# TMIX.40.lat.10. 77.497
+# TMIX.40.thr.11. 0.966
+# TMIX.40.lat.11. 77.865
+# TMIX.40.thr.12. 0.972
+# TMIX.40.lat.12. 77.431
+# TMIX.40.thr.13. 0.962
+# TMIX.40.lat.13. 77.477
+# TMIX.40.thr.14. 0.890
+# TMIX.40.lat.14. 86.124
+# TMIX.40.thr.15. 0.965
+# TMIX.40.lat.15. 77.524
+# TMIX.40.thr.16. 0.963
+# TMIX.40.lat.16. 77.541
+# TMIX.40.thr.17. 0.968
+# TMIX.40.lat.17. 77.559
+# TMIX.40.thr.18. 0.970
+# TMIX.40.lat.18. 77.474
+# TMIX.40.thr.19. 0.962
+# TMIX.40.lat.19. 77.624
+# TMIX.40.thr.20. 0.961
+# TMIX.40.lat.20. 77.546
+# TMIX.40.thr.21. 0.956
+# TMIX.40.lat.21. 77.830
+# TMIX.40.thr.22. 0.966
+# TMIX.40.lat.22. 77.506
+# TMIX.40.thr.23. 0.967
+# TMIX.40.lat.23. 77.600
+# TMIX.40.thr.24. 0.964
+# TMIX.40.lat.24. 77.805
+# TMIX.40.thr.25. 0.961
+# TMIX.40.lat.25. 77.607
+# TMIX.40.thr.26. 0.971
+# TMIX.40.lat.26. 77.440
+# TMIX.40.thr.27. 0.966
+# TMIX.40.lat.27. 77.494
+# TMIX.40.thr.28. 0.972
+# TMIX.40.lat.28. 77.456
+# TMIX.40.thr.29. 0.964
+# TMIX.40.lat.29. 77.487
+# TMIX.40.thr.30. 0.966
+# TMIX.40.lat.30. 77.435
+# TMIX.40.thr.31. 0.974
+# TMIX.40.lat.31. 77.467

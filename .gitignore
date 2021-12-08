@@ -34,7 +34,7 @@ a_*
 hotstuff-app
 hotstuff-client
 plots/
-res/
+scripts/build/res/
 */__pycache__/*
 lib/
 sample/
