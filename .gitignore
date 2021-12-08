@@ -33,7 +33,6 @@ log*
 a_*
 hotstuff-app
 hotstuff-client
-plots/
 scripts/build/res/
 */__pycache__/*
 lib/
