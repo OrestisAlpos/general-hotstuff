@@ -253,9 +253,9 @@ int benchGeneralized(PrimeOrderModGroup G, const string& quorumsConfFile, long n
         shuffle(S.begin(), S.end(), gen);
         std::unordered_set<hotstuff::ReplicaID> A;
         while (true){
-            int A_size = rand()%n + 1;
-            for (long i = 0; i < A_size; i++){
-                A.insert(S.at(i));
+            int A_size = GeneralizedVss::msp.d(); //CHANGE THIS IF YOU USE GENERALIZED ACCESS STRUCTURE
+            for (long j = 0; j < A_size; j++){
+                A.insert(S.at(j));
             }
             if (GeneralizedVss::msp.isAuthorizedGroup(A)){
                 break;
@@ -350,8 +350,8 @@ int main(){
     //     benchThreshold(G, n);
     // }
     int from = 3;
-    int to = 101;
-    int step = 8;
+    int to = 103;
+    int step = 10;
     int repetitions = 10;
     for (int n = from; n <= to; n+=step){
         benchThreshold(G, n / 2 + 1, n, "THR", repetitions);

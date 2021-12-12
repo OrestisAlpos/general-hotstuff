@@ -156,3 +156,20 @@ ZZ_p H_prime(ZZ_p h1, ZZ_p h2, ZZ_p h3, ZZ_p h4, ZZ_p h5, ZZ_p h6, PrimeOrderMod
     return ZZ_p({}, NTL:: ZZFromBytes(digest, digest_len));
     
 }
+
+    // x and y are t pairs, such that f(xj) = yj
+    // Returns the corresponding Lagrange coefficients at point 0
+    // Operations done in Zq
+    vec_ZZ_p getLagrange(ZZ q, const vec_ZZ_p& x){
+        ZZ_p::init(q);
+        vec_ZZ_p coefs;
+        coefs.SetLength(x.length());
+        for (long j = 0; j < x.length(); j++){
+            coefs[j] = ZZ_p(1);
+            for (long k = 0; k < x.length(); k++){
+                if (k == j) continue;
+                coefs[j] = coefs[j] * x[k] / (x[k] - x[j]);
+            }
+        }
+        return coefs;  
+    }

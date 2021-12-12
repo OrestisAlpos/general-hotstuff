@@ -1,4 +1,4 @@
-for replicas in $(seq 3 101)
+for replicas in $(seq 3 103)
 do
     divide=$((2 * $replicas + 1))
     by=3
@@ -16,7 +16,7 @@ do
     echo $conf > conf/quorum_confs/quorums_thres_${replicas}.json
 done
 
-for replicas in $(seq 3 101)
+for replicas in $(seq 3 103)
 do
     divide=$(($replicas + 1)) 
     by=2

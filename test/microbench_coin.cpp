@@ -76,22 +76,6 @@ namespace ThresholdCoin{
         return (H_prime(G.g, Vj, hj, gtilde, coinj, htildej, G) == proofj.c);
     }
 
-    // x and y are t pairs, such that f(xj) = yj
-    // Returns the corresponding Lagrange coefficients at point 0
-    vec_ZZ_p getLagrange(const vec_ZZ_p& x){
-        ZZ_p::init(G.q);
-        vec_ZZ_p coefs;
-        coefs.SetLength(x.length());
-        for (long j = 0; j < x.length(); j++){
-            coefs[j] = ZZ_p(1);
-            for (long k = 0; k < x.length(); k++){
-                if (k == j) continue;
-                coefs[j] = coefs[j] * x[k] / (x[k] - x[j]);
-            }
-        }
-        return coefs;  
-    }
-
     ZZ_p combine(const std::unordered_set<hotstuff::ReplicaID>& A, const vec_ZZ_p& coin_shares){ //For testing only, pass all shares and use only those owned by parties in A
         // each coin_shares[j] is gtildej
         ZZ_p::init(G.q);
@@ -101,7 +85,8 @@ namespace ThresholdCoin{
                 indexes_A.append(ZZ_p(j+1));
             }
         }
-        vec_ZZ_p lagrange_coefs = getLagrange(indexes_A);
+        ZZ_p::init(G.q);
+        vec_ZZ_p lagrange_coefs = getLagrange(G.q, indexes_A); 
         
         ZZ_p::init(G.p);
         vec_ZZ_p values_A;
@@ -111,9 +96,15 @@ namespace ThresholdCoin{
             }
         }
         ZZ_p res = ZZ_p(1);
+        // cout << "Thresh: " << indexes_A.length() << endl;
+        // cout << "Thresh: " << lagrange_coefs << endl;
+        // std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
         for (long k = 0; k < indexes_A.length(); k++){
             res *= power(values_A[k], rep(lagrange_coefs[k]));
         }
+        // std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+        // std::chrono::duration<double, std::milli> elapsed = end - begin;
+        // cout << "Thresh: " << elapsed.count() << endl;
         return res;
     }
 }
@@ -192,9 +183,15 @@ namespace GeneralizedCoin{
             }
         }
         ZZ_p res = ZZ_p(1);
+        // cout << "Gen: " << coin_shares_A.length() << endl;
+        // cout << "Gen: " << lambda_A << endl;
+        // std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
         for (long k = 0; k < coin_shares_A.length(); k++){
             res *= power(coin_shares_A[k], rep(lambda_A[k]));
         }
+        // std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+        // std::chrono::duration<double, std::milli> elapsed = end - begin;
+        // cout << "Gen: " << elapsed.count() << endl;
         return res;
     }
 }
@@ -252,6 +249,7 @@ int benchThreshold(PrimeOrderModGroup G, long t, long n, string marker, int repe
         elapsedVerify += (end - begin) / ThresholdCoin::n; //average time it takes a party to verify one share
 
         //combine
+        //Tested on theshold AS: getLagrange is slower than getRecombination, by ~0.15 ms for n=52, t=27
         std::vector<hotstuff::ReplicaID> S;
         for (long i = 0; i < ThresholdCoin::n; i++){
             S.push_back(i);
@@ -336,6 +334,7 @@ int benchGeneralized(PrimeOrderModGroup G, const string& quorumsConfFile, long n
         elapsedVerify += (end - begin) / GeneralizedCoin::msp.m(); //average time it takes a party to verify one share
 
         //combine
+        //Tested: If A_size > than the threshold, then some coefficients are small and the recombination is faster!
         std::vector<hotstuff::ReplicaID> S;
         for (long i = 0; i < n; i++){
             S.push_back(i);
@@ -345,7 +344,8 @@ int benchGeneralized(PrimeOrderModGroup G, const string& quorumsConfFile, long n
         shuffle(S.begin(), S.end(), gen);
         std::unordered_set<hotstuff::ReplicaID> A;
         while (true){
-            int A_size = rand()%n + 1;
+            // long A_size = rand()%n + 1;
+            int A_size = GeneralizedCoin::msp.d(); //CHANGE THIS IF YOU USE GENERALIZED ACCESS STRUCTURE
             for (long i = 0; i < A_size; i++){
                 A.insert(S.at(i));
             }
@@ -443,8 +443,8 @@ int main(){
     PrimeOrderModGroup G = getGroup(p_size,q_size);
     
     int from = 3;
-    int to = 101;
-    int step = 8;
+    int to = 103;
+    int step = 10;
     int repetitions = 10;
     for (int n = from; n <= to; n+=step){
         benchThreshold(G, n / 2 + 1, n, "THR", repetitions);
