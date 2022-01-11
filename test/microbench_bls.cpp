@@ -1,6 +1,7 @@
 #include <random> 
 #include <chrono> 
 #include <stdlib.h>
+#include <map>
 #include "hotstuff/crypto.h"
 #include "hotstuff/quorums.h"
 #include "algebra_utils.h"
@@ -24,13 +25,16 @@ inline bls::SecretKey Fr_ntl_to_mcl_Sec(const NTL::ZZ_p val){
 }
 
 int benchThreshold( long t, long n, string marker, int repetitions = 1){
-    std::chrono::duration<double, std::milli> elapsedSignBls = std::chrono::milliseconds(0);
-    std::chrono::duration<double, std::milli> elapsedVerifyBls = std::chrono::milliseconds(0);
-    std::chrono::duration<double, std::milli> elapsedCombineBls = std::chrono::milliseconds(0);
-    std::chrono::duration<double, std::milli> elapsedSignEcdsa = std::chrono::milliseconds(0);
-    std::chrono::duration<double, std::milli> elapsedVerifyEcdsa = std::chrono::milliseconds(0);
+    std::vector<std::chrono::duration<double, std::milli>> elapsedSign;
+    std::vector<std::chrono::duration<double, std::milli>> elapsedVerify;
+    std::vector<std::chrono::duration<double, std::milli>> elapsedCombine;
+    std::chrono::duration<double, std::milli> elapsedSignAvg = std::chrono::milliseconds(0);
+    std::chrono::duration<double, std::milli> elapsedVerifyAvg = std::chrono::milliseconds(0);
+    std::chrono::duration<double, std::milli> elapsedCombineAvg = std::chrono::milliseconds(0);
     std::chrono::steady_clock::time_point begin;
     std::chrono::steady_clock::time_point end;
+    std::chrono::steady_clock::time_point begin2;
+    std::chrono::steady_clock::time_point end2;
 
     for (int i = 0; i < repetitions; i++){
         std::string msg = "message" + std::to_string(i);
@@ -57,23 +61,29 @@ int benchThreshold( long t, long n, string marker, int repetitions = 1){
         bls::SignatureVec sigVec(n);
         begin = std::chrono::steady_clock::now();
         for (long j = 0; j < n; j++){
+            begin2 = std::chrono::steady_clock::now();
             secVec[j].sign(sigVec[j], msg);
+            end2 = std::chrono::steady_clock::now();
+            elapsedSign.push_back(end2-begin2);
         }
         end = std::chrono::steady_clock::now();
-        elapsedSignBls += (end - begin) / n;
+        elapsedSignAvg += (end - begin) / n;
         
         //VERIFY with BLS
         begin = std::chrono::steady_clock::now();
         for (long j = 0; j < n; j++){
+            begin2 = std::chrono::steady_clock::now();
             if (!(sigVec[j].verify(pubVec[j], msg))){
                 cout << "Problem: " << j << endl;
                 return 1;
             }
+            end2 = std::chrono::steady_clock::now();
+            elapsedVerify.push_back(end2-begin2);
         }    
         end = std::chrono::steady_clock::now();
-        elapsedVerifyBls += (end - begin) / n;
+        elapsedVerifyAvg += (end - begin) / n;
 
-        //Combine partial signatures
+        //COMBINE partial signatures
         std::vector<hotstuff::ReplicaID> S;
         for (long j = 0; j < n; j++){
             S.push_back(j);
@@ -109,7 +119,8 @@ int benchThreshold( long t, long n, string marker, int repetitions = 1){
         s.recoverGeneralised(sigsToCombine, lagrange_coefs);
 
         end = std::chrono::steady_clock::now();
-        elapsedCombineBls += end - begin;
+        elapsedCombine.push_back(end-begin);
+        elapsedCombineAvg += end - begin;
         
         if (!(s.verify(pub, msg))){
             cout << "Problem with combined signature " << endl;
@@ -123,22 +134,33 @@ int benchThreshold( long t, long n, string marker, int repetitions = 1){
         }
         
     }
-    
-    std::cout << marker << "." << n << ".SIGN. " << elapsedSignBls.count() / repetitions << endl;
-    std::cout << marker << "." << n << ".VERIF. " << elapsedVerifyBls.count() / repetitions << endl;
-    std::cout << marker << "." << n << ".COMB. " << elapsedCombineBls.count() / repetitions << endl;
+    for (std::chrono::duration<double, std::milli> s : elapsedSign){
+        std::cout << marker << "." << n << ".SIGN. " << s.count() << endl;    
+    }
+    for (std::chrono::duration<double, std::milli> v : elapsedVerify){
+        std::cout << marker << "." << n << ".VERIF. " << v.count() << endl;    
+    }
+    for (std::chrono::duration<double, std::milli> c : elapsedCombine){
+        std::cout << marker << "." << n << ".COMB. " << c.count() << endl;    
+    }
+    std::cout << marker << "." << n << ".SIGNAVG. " << elapsedSignAvg.count() / repetitions << endl;
+    std::cout << marker << "." << n << ".VERIFAVG. " << elapsedVerifyAvg.count() / repetitions << endl;
+    std::cout << marker << "." << n << ".COMBAVG. " << elapsedCombineAvg.count() / repetitions << endl;
     return 0;
 }
 
 
 int benchGeneralized(const string& quorumsConfFile, long n, string marker, int repetitions = 1){
-    std::chrono::duration<double, std::milli> elapsedSignBls = std::chrono::milliseconds(0);
-    std::chrono::duration<double, std::milli> elapsedVerifyBls = std::chrono::milliseconds(0);
-    std::chrono::duration<double, std::milli> elapsedCombineBls = std::chrono::milliseconds(0);
-    std::chrono::duration<double, std::milli> elapsedSignEcdsa = std::chrono::milliseconds(0);
-    std::chrono::duration<double, std::milli> elapsedVerifyEcdsa = std::chrono::milliseconds(0);
+    std::vector<std::chrono::duration<double, std::milli>> elapsedSign;
+    std::vector<std::chrono::duration<double, std::milli>> elapsedVerify;
+    std::vector<std::chrono::duration<double, std::milli>> elapsedCombine;
+    std::chrono::duration<double, std::milli> elapsedSignAvg = std::chrono::milliseconds(0);
+    std::chrono::duration<double, std::milli> elapsedVerifyAvg = std::chrono::milliseconds(0);
+    std::chrono::duration<double, std::milli> elapsedCombineAvg = std::chrono::milliseconds(0);
     std::chrono::steady_clock::time_point begin;
     std::chrono::steady_clock::time_point end;
+    std::chrono::steady_clock::time_point begin2;
+    std::chrono::steady_clock::time_point end2;
 
     for (int i = 0; i < repetitions; i++){
         std::string msg = "message" + std::to_string(i);
@@ -168,26 +190,47 @@ int benchGeneralized(const string& quorumsConfFile, long n, string marker, int r
         }
         
         //SIGN with BLS
+        std::map<int, std::chrono::duration<double, std::milli>> elapsedSignPerParty;
+        for (long ii = 0; ii < n; ii++){
+            elapsedSignPerParty[ii] = std::chrono::milliseconds(0);
+        }
         bls::SignatureVec sigVec(as.msp.m());
         begin = std::chrono::steady_clock::now();
         for (long j = 0; j < as.msp.m(); j++){
+            begin2 = std::chrono::steady_clock::now();
             secVec[j].sign(sigVec[j], msg);
+            end2 = std::chrono::steady_clock::now();
+            elapsedSignPerParty[as.msp.L[j]] += end2-begin2;
+            
         }
         end = std::chrono::steady_clock::now();
-        elapsedSignBls += (end - begin) / as.msp.m();
-        
+        elapsedSignAvg += (end - begin) / as.msp.m(); //average time it takes a party to generate one signature share
+        for (long ii = 0; ii < n; ii++){
+            elapsedSign.push_back(elapsedSignPerParty[ii]); //average time it takes a party to generate all of its signature shares
+        }
+
         //VERIFY with BLS
+        std::map<int, std::chrono::duration<double, std::milli>> elapsedVerifyPerParty;
+        for (long ii = 0; ii < n; ii++){
+            elapsedVerifyPerParty[ii] = std::chrono::milliseconds(0);
+        }
         begin = std::chrono::steady_clock::now();
         for (long j = 0; j < as.msp.m(); j++){
+            begin2 = std::chrono::steady_clock::now();
             if (!(sigVec[j].verify(pubVec[j], msg))){
                 cout << "Problem: " << j << endl;
                 return 1;
             }
+            end2 = std::chrono::steady_clock::now();
+            elapsedVerifyPerParty[as.msp.L[j]] += end2-begin2;
         }    
         end = std::chrono::steady_clock::now();
-        elapsedVerifyBls += (end - begin) / as.msp.m();
+        elapsedVerifyAvg += (end - begin) / as.msp.m();  //average time it takes a party to verify one signature share
+        for (long ii = 0; ii < n; ii++){
+            elapsedVerify.push_back(elapsedVerifyPerParty[ii]); //average time it takes a party to verify all of its signature shares
+        }
 
-        //Combine partial signatures
+        //COMBINE partial signatures
         std::vector<hotstuff::ReplicaID> S;
         for (long j = 0; j < n; j++){
             S.push_back(j);
@@ -197,8 +240,12 @@ int benchGeneralized(const string& quorumsConfFile, long n, string marker, int r
         shuffle(S.begin(), S.end(), gen);
         std::unordered_set<hotstuff::ReplicaID> A;
         while (true){
-            // long A_size = rand()%n + 1;
-            long A_size = as.msp.d(); //CHANGE THIS IF YOU USE GENERALIZED ACCESS STRUCTURE
+            long A_size;
+            if (marker == "GEN" || marker == "GENCOMPL"){
+                A_size = as.msp.d();
+            }else{
+                A_size = rand()%n + 1;
+            }
             for (long j = 0; j < A_size; j++){
                 A.insert(S.at(j));
             }
@@ -208,16 +255,16 @@ int benchGeneralized(const string& quorumsConfFile, long n, string marker, int r
         }
         // cout << "size " << A.size() << endl;
 
-        vec_ZZ_p indexes_A;
-        std::string FrOrderStr;
-        bls::getCurveOrder(FrOrderStr);
+        // vec_ZZ_p indexes_A;
+        // std::string FrOrderStr;
+        // bls::getCurveOrder(FrOrderStr);
 
         bls::SignatureVec sigsToCombine;
         for (int j = 0; j < as.msp.m(); j++){
             if (A.count(as.msp.L[j]) > 0){
                 sigsToCombine.push_back(sigVec[j]);
                 // idsToCombine.push_back(idVec[j]);
-                indexes_A.append(ZZ_p(as.msp.L[j]) + 1);
+                // indexes_A.append(ZZ_p(as.msp.L[j]) + 1);
             }
         }
         
@@ -232,7 +279,8 @@ int benchGeneralized(const string& quorumsConfFile, long n, string marker, int r
         // cout << recomb_vector_ntl << endl;
         s.recoverGeneralised(sigsToCombine, recomb_vector_mcl);
         end = std::chrono::steady_clock::now();
-        elapsedCombineBls += end - begin;
+        elapsedCombine.push_back(end-begin);
+        elapsedCombineAvg += end - begin;
         
         if (!(s.verify(pub, msg))){
             cout << "Problem with combined generalized signature " << endl;
@@ -246,10 +294,18 @@ int benchGeneralized(const string& quorumsConfFile, long n, string marker, int r
         }
         
     }
-    
-    std::cout << marker << "." << n << ".SIGN. " << elapsedSignBls.count() / repetitions << endl;
-    std::cout << marker << "." << n << ".VERIF. " << elapsedVerifyBls.count() / repetitions << endl;
-    std::cout << marker << "." << n << ".COMB. " << elapsedCombineBls.count() / repetitions << endl;
+    for (std::chrono::duration<double, std::milli> s : elapsedSign){
+        std::cout << marker << "." << n << ".SIGN. " << s.count() << endl;    
+    }
+    for (std::chrono::duration<double, std::milli> v : elapsedVerify){
+        std::cout << marker << "." << n << ".VERIF. " << v.count() << endl;    
+    }
+    for (std::chrono::duration<double, std::milli> c : elapsedCombine){
+        std::cout << marker << "." << n << ".COMB. " << c.count() << endl;    
+    }
+    std::cout << marker << "." << n << ".SIGNAVG. " << elapsedSignAvg.count() / repetitions << endl;
+    std::cout << marker << "." << n << ".VERIFAVG. " << elapsedVerifyAvg.count() / repetitions << endl;
+    std::cout << marker << "." << n << ".COMBAVG. " << elapsedCombineAvg.count() / repetitions << endl;
     return 0;
 }
 
@@ -263,7 +319,7 @@ int main(){
     int from = 3;
     int to = 103;
     int step = 10;
-    int repetitions = 10;
+    int repetitions = 200;
     for (int n = from; n <= to; n+=step){
         benchThreshold(n / 2 + 1, n, "THR", repetitions);
     }
@@ -271,14 +327,17 @@ int main(){
         std::string quorumSpec = "conf/quorum_confs/quorums_maj_thres_" + std::to_string(n) + ".json";
         benchGeneralized(quorumSpec, n, "GEN", repetitions);
         // std::string quorumSpec = "conf/quorum_confs/1common_k13.json";
-       
     }
+    // for (int n = from; n <= to; n+=step){
+    //     benchThreshold(2*n/3 + 1, n, "THRCOMPL", repetitions);
+    // }
+    // for (int n = from; n <= to; n+=step){
+    //     std::string quorumSpec = "conf/quorum_confs/quorums_thres_" + std::to_string(n) + ".json";
+    //     benchGeneralized(quorumSpec, n, "GENCOMPL", repetitions);
+    // }
     for (int n = from; n <= to; n+=step){
-        benchThreshold(2*n/3 + 1, n, "THRCOMPL", repetitions);
-    }
-    for (int n = from; n <= to; n+=step){
-        std::string quorumSpec = "conf/quorum_confs/quorums_thres_" + std::to_string(n) + ".json";
-        benchGeneralized(quorumSpec, n, "GENCOMPL", repetitions);
+        std::string quorumSpec = "conf/quorum_confs/unbalanced_" + std::to_string(n) + ".json";
+        benchGeneralized(quorumSpec, n, "UNBAL", repetitions);
     }
     return 0;
 }

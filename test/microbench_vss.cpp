@@ -1,6 +1,7 @@
 #include <random> 
 #include <chrono> 
 #include <stdlib.h>
+#include <map>
 #include  "hotstuff/quorums.h"
 #include "hotstuff/crypto.h"
 #include <NTL/mat_ZZ_p.h>
@@ -143,12 +144,17 @@ namespace GeneralizedVss{
 
 
 int benchThreshold(PrimeOrderModGroup G, long t, long n, string marker, int repetitions = 1){
+    std::vector<std::chrono::duration<double, std::milli>> elapsedShare;
+    std::vector<std::chrono::duration<double, std::milli>> elapsedVerify;
+    std::vector<std::chrono::duration<double, std::milli>> elapsedReconstruct;
+    std::chrono::duration<double, std::milli> elapsedShareAvg = std::chrono::milliseconds(0);
+    std::chrono::duration<double, std::milli> elapsedVerifyAvg = std::chrono::milliseconds(0);
+    std::chrono::duration<double, std::milli> elapsedReconstructAvg = std::chrono::milliseconds(0);
     std::chrono::steady_clock::time_point begin;
     std::chrono::steady_clock::time_point end;
-    std::chrono::duration<double, std::milli> elapsedShare = std::chrono::milliseconds(0);
-    std::chrono::duration<double, std::milli> elapsedVerify = std::chrono::milliseconds(0);
-    std::chrono::duration<double, std::milli> elapsedReconstruct = std::chrono::milliseconds(0);
-    
+    std::chrono::steady_clock::time_point begin2;
+    std::chrono::steady_clock::time_point end2;
+
     for (int i = 0; i < repetitions; i++){
         ZZ_p::init(G.q);
         ZZ_p secret = random_ZZ_p();
@@ -164,18 +170,22 @@ int benchThreshold(PrimeOrderModGroup G, long t, long n, string marker, int repe
         begin = std::chrono::steady_clock::now();
         ThresholdVss::share(secret, s, s_prime, C);
         end = std::chrono::steady_clock::now();
-        elapsedShare += end - begin; //time to share a secret
+        elapsedShare.push_back(end-begin);
+        elapsedShareAvg += end - begin; //time to share a secret
 
         //verify
         begin = std::chrono::steady_clock::now();
         for (long j = 0; j < ThresholdVss::n; j++){
+            begin2 = std::chrono::steady_clock::now();
             if (!ThresholdVss::verify(j, s[j], s_prime[j], C)){
                 cout << "Problem in share verification: " << j << endl;
                 return 1;
             }
+            end2 = std::chrono::steady_clock::now();
+            elapsedVerify.push_back(end2-begin2);
         }
         end = std::chrono::steady_clock::now();
-        elapsedVerify += (end - begin) / ThresholdVss::n; //average time it takes a party to verify one share
+        elapsedVerifyAvg += (end - begin) / ThresholdVss::n; //average time it takes a party to verify one share
 
         //reconsruct
         std::vector<hotstuff::ReplicaID> S;
@@ -195,25 +205,41 @@ int benchThreshold(PrimeOrderModGroup G, long t, long n, string marker, int repe
         begin = std::chrono::steady_clock::now();
         ZZ_p secret_recomb = ThresholdVss::reconstruct(A, s);
         end = std::chrono::steady_clock::now();
-        elapsedReconstruct += end - begin;
+        elapsedReconstruct.push_back(end-begin);
+        elapsedReconstructAvg += end - begin;
         if (secret_recomb != secret){
             cout << "Problem in reconstruction: " << secret_recomb << endl;
             return 1;
         }
     }
 
-    cout << marker << "." << n << ".SHARE. " << elapsedShare.count() / repetitions << endl;
-    cout << marker << "." << n << ".VERIF. " << elapsedVerify.count() / repetitions << endl;
-    cout << marker << "." << n << ".RECON. " << elapsedReconstruct.count() / repetitions << endl;
+    for (std::chrono::duration<double, std::milli> s : elapsedShare){
+        std::cout << marker << "." << n << ".SHARE. " << s.count() << endl;    
+    }
+    for (std::chrono::duration<double, std::milli> c : elapsedVerify){
+        std::cout << marker << "." << n << ".VERIF. " << c.count() << endl;    
+    }
+    for (std::chrono::duration<double, std::milli> c : elapsedReconstruct){
+        std::cout << marker << "." << n << ".RECON. " << c.count() << endl;    
+    }
+
+    cout << marker << "." << n << ".SHAREAVG. " << elapsedShareAvg.count() / repetitions << endl;
+    cout << marker << "." << n << ".VERIFAVG. " << elapsedVerifyAvg.count() / repetitions << endl;
+    cout << marker << "." << n << ".RECONAVG. " << elapsedReconstructAvg.count() / repetitions << endl;
 }
 
 
 int benchGeneralized(PrimeOrderModGroup G, const string& quorumsConfFile, long n, string marker, int repetitions = 1){    
+    std::vector<std::chrono::duration<double, std::milli>> elapsedShare;
+    std::vector<std::chrono::duration<double, std::milli>> elapsedVerify;
+    std::vector<std::chrono::duration<double, std::milli>> elapsedReconstruct;
+    std::chrono::duration<double, std::milli> elapsedShareAvg = std::chrono::milliseconds(0);
+    std::chrono::duration<double, std::milli> elapsedVerifyAvg = std::chrono::milliseconds(0);
+    std::chrono::duration<double, std::milli> elapsedReconstructAvg = std::chrono::milliseconds(0);
     std::chrono::steady_clock::time_point begin;
     std::chrono::steady_clock::time_point end;
-    std::chrono::duration<double, std::milli> elapsedShare = std::chrono::milliseconds(0);
-    std::chrono::duration<double, std::milli> elapsedVerify = std::chrono::milliseconds(0);
-    std::chrono::duration<double, std::milli> elapsedReconstruct = std::chrono::milliseconds(0);
+    std::chrono::steady_clock::time_point begin2;
+    std::chrono::steady_clock::time_point end2;
     
     for (int i = 0; i < repetitions; i++){
         ZZ_p::init(G.q);
@@ -230,19 +256,29 @@ int benchGeneralized(PrimeOrderModGroup G, const string& quorumsConfFile, long n
         begin = std::chrono::steady_clock::now();
         GeneralizedVss::share(secret, s, s_prime, C);
         end = std::chrono::steady_clock::now();
-        elapsedShare += end - begin; //time to share a secret
+        elapsedShare.push_back(end-begin);
+        elapsedShareAvg += end - begin; //time to share a secret
 
         //verify
+        std::map<int, std::chrono::duration<double, std::milli>> elapsedPerParty;
+        for (long ii = 0; ii < n; ii++){
+            elapsedPerParty[ii] = std::chrono::milliseconds(0);
+        }
         begin = std::chrono::steady_clock::now();
-        for (long j = 0; j < GeneralizedVss::msp.m(); j++){ // Verify each share individually
+        for (long j = 0; j < GeneralizedVss::msp.m(); j++){ 
+            begin2 = std::chrono::steady_clock::now();
             if (!GeneralizedVss::verify(j, s[j], s_prime[j], C)){
                 cout << "Problem in generalized share verification: " << j << endl;
                 return 1;
             }
+            end2 = std::chrono::steady_clock::now();
+            elapsedPerParty[GeneralizedVss::msp.L[j]] += end2-begin2;
         }
         end = std::chrono::steady_clock::now();
-        elapsedVerify += (end - begin) / GeneralizedVss::msp.m(); //average time it takes a party to verify one individual share
-
+        elapsedVerifyAvg += (end - begin) / GeneralizedVss::msp.m(); //average time it takes a party to verify one individual share
+        for (long ii = 0; ii < n; ii++){
+            elapsedVerify.push_back(elapsedPerParty[ii]); //average time it takes a party to verify all of its shares
+        }
         //reconsruct
         std::vector<hotstuff::ReplicaID> S;
         for (long i = 0; i < n; i++){
@@ -253,7 +289,12 @@ int benchGeneralized(PrimeOrderModGroup G, const string& quorumsConfFile, long n
         shuffle(S.begin(), S.end(), gen);
         std::unordered_set<hotstuff::ReplicaID> A;
         while (true){
-            int A_size = GeneralizedVss::msp.d(); //CHANGE THIS IF YOU USE GENERALIZED ACCESS STRUCTURE
+            long A_size;
+            if (marker == "GEN" || marker == "GENCOMPL"){
+                A_size = GeneralizedVss::msp.d(); //CHANGE THIS IF YOU USE GENERALIZED ACCESS STRUCTURE
+            }else{
+                A_size = rand()%n + 1;
+            }
             for (long j = 0; j < A_size; j++){
                 A.insert(S.at(j));
             }
@@ -267,7 +308,8 @@ int benchGeneralized(PrimeOrderModGroup G, const string& quorumsConfFile, long n
         begin = std::chrono::steady_clock::now();
         ZZ_p secret_recomb = GeneralizedVss::reconstruct(A, s);
         end = std::chrono::steady_clock::now();
-        elapsedReconstruct += end - begin;
+        elapsedReconstruct.push_back(end-begin);
+        elapsedReconstructAvg += end - begin;
         if (secret_recomb != secret){
             cout << "Problem in generalized reconstruction: " << secret_recomb << endl;
             return 1;
@@ -275,9 +317,19 @@ int benchGeneralized(PrimeOrderModGroup G, const string& quorumsConfFile, long n
 
     }
 
-    cout << marker << "." << n << ".SHARE. " << elapsedShare.count() / repetitions << endl;
-    cout << marker << "." << n << ".VERIF. " << elapsedVerify.count() / repetitions << endl;
-    cout << marker << "." << n << ".RECON. " << elapsedReconstruct.count() / repetitions << endl;
+    for (std::chrono::duration<double, std::milli> s : elapsedShare){
+        std::cout << marker << "." << n << ".SHARE. " << s.count() << endl;    
+    }
+    for (std::chrono::duration<double, std::milli> c : elapsedVerify){
+        std::cout << marker << "." << n << ".VERIF. " << c.count() << endl;    
+    }
+    for (std::chrono::duration<double, std::milli> c : elapsedReconstruct){
+        std::cout << marker << "." << n << ".RECON. " << c.count() << endl;    
+    }
+
+    cout << marker << "." << n << ".SHAREAVG. " << elapsedShareAvg.count() / repetitions << endl;
+    cout << marker << "." << n << ".VERIFAVG. " << elapsedVerifyAvg.count() / repetitions << endl;
+    cout << marker << "." << n << ".RECONAVG. " << elapsedReconstructAvg.count() / repetitions << endl;
 }
 
 
@@ -352,7 +404,7 @@ int main(){
     int from = 3;
     int to = 103;
     int step = 10;
-    int repetitions = 10;
+    int repetitions = 200;
     for (int n = from; n <= to; n+=step){
         benchThreshold(G, n / 2 + 1, n, "THR", repetitions);
     }
@@ -360,12 +412,16 @@ int main(){
         std::string quorumSpec = "conf/quorum_confs/quorums_maj_thres_" + std::to_string(n) + ".json";
         benchGeneralized(G, quorumSpec, n, "GEN", repetitions);
     }
+    // for (int n = from; n <= to; n+=step){
+    //     benchThreshold(G, 2*n/3 + 1, n, "THRCOMPL", repetitions);
+    // }
+    // for (int n = from; n <= to; n+=step){
+    //     std::string quorumSpec = "conf/quorum_confs/quorums_thres_" + std::to_string(n) + ".json";
+    //     benchGeneralized(G, quorumSpec, n, "GENCOMPL", repetitions);
+    // }
     for (int n = from; n <= to; n+=step){
-        benchThreshold(G, 2*n/3 + 1, n, "THRCOMPL", repetitions);
-    }
-    for (int n = from; n <= to; n+=step){
-        std::string quorumSpec = "conf/quorum_confs/quorums_thres_" + std::to_string(n) + ".json";
-        benchGeneralized(G, quorumSpec, n, "GENCOMPL", repetitions);
+        std::string quorumSpec = "conf/quorum_confs/unbalanced_" + std::to_string(n) + ".json";
+        benchGeneralized(G, quorumSpec, n, "UNBAL", repetitions);
     }
    return 0;
 }

@@ -1,6 +1,7 @@
 #include <random> 
 #include <chrono> 
 #include <stdlib.h>
+#include <map>
 #include  "hotstuff/quorums.h"
 #include "hotstuff/crypto.h"
 #include <NTL/mat_ZZ_p.h>
@@ -198,13 +199,18 @@ namespace GeneralizedCoin{
 
 
 int benchThreshold(PrimeOrderModGroup G, long t, long n, string marker, int repetitions = 1){
+    std::vector<std::chrono::duration<double, std::milli>> elapsedKeyGen;
+    std::vector<std::chrono::duration<double, std::milli>> elapsedGenerateCoin;
+    std::vector<std::chrono::duration<double, std::milli>> elapsedVerify;
+    std::vector<std::chrono::duration<double, std::milli>> elapsedCombine;
+    std::chrono::duration<double, std::milli> elapsedKeyGenAvg = std::chrono::milliseconds(0);
+    std::chrono::duration<double, std::milli> elapsedGenerateCoinAvg = std::chrono::milliseconds(0);
+    std::chrono::duration<double, std::milli> elapsedVerifyAvg = std::chrono::milliseconds(0);
+    std::chrono::duration<double, std::milli> elapsedCombineAvg = std::chrono::milliseconds(0);
     std::chrono::steady_clock::time_point begin;
     std::chrono::steady_clock::time_point end;
-    std::chrono::duration<double, std::milli> elapsedKeyGen = std::chrono::milliseconds(0);
-    std::chrono::duration<double, std::milli> elapsedGenerateCoin = std::chrono::milliseconds(0);
-    std::chrono::duration<double, std::milli> elapsedVerify = std::chrono::milliseconds(0);
-    std::chrono::duration<double, std::milli> elapsedCombine = std::chrono::milliseconds(0);
-    
+    std::chrono::steady_clock::time_point begin2;
+    std::chrono::steady_clock::time_point end2;
     for (int i = 0; i < repetitions; i++){
         //init 
         ThresholdCoin::init(G, t, n);
@@ -227,26 +233,33 @@ int benchThreshold(PrimeOrderModGroup G, long t, long n, string marker, int repe
         begin = std::chrono::steady_clock::now();
         ThresholdCoin::keyGen(s, V0, V, secret);
         end = std::chrono::steady_clock::now();
-        elapsedKeyGen += end - begin;
+        elapsedKeyGen.push_back(end-begin);
+        elapsedKeyGenAvg += end - begin;
 
         //generate coin shares
         begin = std::chrono::steady_clock::now();
         for (long j = 0; j < ThresholdCoin::n; j++){
+            begin2 = std::chrono::steady_clock::now();
             ThresholdCoin::generateCoinShare(C, j, s[j], coin_shares[j], validity_proofs[j]);
+            end2 = std::chrono::steady_clock::now();
+            elapsedGenerateCoin.push_back(end2-begin2);
         }
         end = std::chrono::steady_clock::now();
-        elapsedGenerateCoin += (end - begin) / ThresholdCoin::n; //average time it takes a party to verify one share
+        elapsedGenerateCoinAvg += (end - begin) / ThresholdCoin::n; //average time it takes a party to verify one share
 
         //verify
         begin = std::chrono::steady_clock::now();
         for (long j = 0; j < ThresholdCoin::n; j++){
+            begin2 = std::chrono::steady_clock::now();
             if (!ThresholdCoin::verify(C, j, V[j], coin_shares[j], validity_proofs[j])){
                 cout << "Problem: " << j << endl;
                 return 1;
             }
+            end2 = std::chrono::steady_clock::now();
+            elapsedVerify.push_back(end2-begin2);
         }
         end = std::chrono::steady_clock::now();
-        elapsedVerify += (end - begin) / ThresholdCoin::n; //average time it takes a party to verify one share
+        elapsedVerifyAvg += (end - begin) / ThresholdCoin::n; //average time it takes a party to verify one share
 
         //combine
         //Tested on theshold AS: getLagrange is slower than getRecombination, by ~0.15 ms for n=52, t=27
@@ -267,28 +280,47 @@ int benchThreshold(PrimeOrderModGroup G, long t, long n, string marker, int repe
         begin = std::chrono::steady_clock::now();
         ZZ_p coin_value = ThresholdCoin::combine(A, coin_shares);
         end = std::chrono::steady_clock::now();
-        elapsedCombine += end - begin;
+        elapsedCombine.push_back(end-begin);
+        elapsedCombineAvg += end - begin;
         if (coin_value != power(gtilde, rep(secret))){
             cout << "Problem in combine: " << coin_value << endl;
             return 1;
         }
     }
+    for (std::chrono::duration<double, std::milli> s : elapsedKeyGen){
+        std::cout << marker << "." << n << ".KEYGEN. " << s.count() << endl;    
+    }
+    for (std::chrono::duration<double, std::milli> s : elapsedGenerateCoin){
+        std::cout << marker << "." << n << ".GENER. " << s.count() << endl;    
+    }
+    for (std::chrono::duration<double, std::milli> c : elapsedVerify){
+        std::cout << marker << "." << n << ".VERIF. " << c.count() << endl;    
+    }
+    for (std::chrono::duration<double, std::milli> c : elapsedCombine){
+        std::cout << marker << "." << n << ".COMB. " << c.count() << endl;    
+    }
 
-    cout << marker << "." << n << ".KEYGEN. " << elapsedKeyGen.count() / repetitions << endl;
-    cout << marker << "." << n << ".GENER. " << elapsedGenerateCoin.count() / repetitions << endl;
-    cout << marker << "." << n << ".VERIF. " << elapsedVerify.count() / repetitions << endl;
-    cout << marker << "." << n << ".COMB. " << elapsedCombine.count() / repetitions << endl;
+    cout << marker << "." << n << ".KEYGENAVG. " << elapsedKeyGenAvg.count() / repetitions << endl;
+    cout << marker << "." << n << ".GENERAVG. " << elapsedGenerateCoinAvg.count() / repetitions << endl;
+    cout << marker << "." << n << ".VERIFAVG. " << elapsedVerifyAvg.count() / repetitions << endl;
+    cout << marker << "." << n << ".COMBAVG. " << elapsedCombineAvg.count() / repetitions << endl;
     return 0;
 }
 
 
 int benchGeneralized(PrimeOrderModGroup G, const string& quorumsConfFile, long n, string marker, int repetitions = 1){    
+    std::vector<std::chrono::duration<double, std::milli>> elapsedKeyGen;
+    std::vector<std::chrono::duration<double, std::milli>> elapsedGenerateCoin;
+    std::vector<std::chrono::duration<double, std::milli>> elapsedVerify;
+    std::vector<std::chrono::duration<double, std::milli>> elapsedCombine;
+    std::chrono::duration<double, std::milli> elapsedKeyGenAvg = std::chrono::milliseconds(0);
+    std::chrono::duration<double, std::milli> elapsedGenerateCoinAvg = std::chrono::milliseconds(0);
+    std::chrono::duration<double, std::milli> elapsedVerifyAvg = std::chrono::milliseconds(0);
+    std::chrono::duration<double, std::milli> elapsedCombineAvg = std::chrono::milliseconds(0);
     std::chrono::steady_clock::time_point begin;
     std::chrono::steady_clock::time_point end;
-    std::chrono::duration<double, std::milli> elapsedKeyGen = std::chrono::milliseconds(0);
-    std::chrono::duration<double, std::milli> elapsedGenerateCoin = std::chrono::milliseconds(0);
-    std::chrono::duration<double, std::milli> elapsedVerify = std::chrono::milliseconds(0);
-    std::chrono::duration<double, std::milli> elapsedCombine = std::chrono::milliseconds(0);
+    std::chrono::steady_clock::time_point begin2;
+    std::chrono::steady_clock::time_point end2;
     
     for (int i = 0; i < repetitions; i++){
         //init
@@ -312,26 +344,48 @@ int benchGeneralized(PrimeOrderModGroup G, const string& quorumsConfFile, long n
         begin = std::chrono::steady_clock::now();
         GeneralizedCoin::keyGen(s, V0, V, secret);
         end = std::chrono::steady_clock::now();
-        elapsedKeyGen += end - begin;
+        elapsedKeyGen.push_back(end-begin);
+        elapsedKeyGenAvg += end - begin;
 
         //generate coin shares
+        std::map<int, std::chrono::duration<double, std::milli>> elapsedGeneratePerParty;
+        for (long ii = 0; ii < n; ii++){
+            elapsedGeneratePerParty[ii] = std::chrono::milliseconds(0);
+        }
         begin = std::chrono::steady_clock::now();
         for (long j = 0; j < GeneralizedCoin::msp.m(); j++){
+            begin2 = std::chrono::steady_clock::now();    
             GeneralizedCoin::generateCoinShare(C, j, s[j], coin_shares[j], validity_proofs[j]);
+            end2 = std::chrono::steady_clock::now();
+            elapsedGeneratePerParty[GeneralizedCoin::msp.L[j]] += end2-begin2;
+            
         }
         end = std::chrono::steady_clock::now();
-        elapsedGenerateCoin += (end - begin) / GeneralizedCoin::msp.m(); //average time it takes a party to verify one share
+        elapsedGenerateCoinAvg += (end - begin) / GeneralizedCoin::msp.m(); //average time it takes a party to generate one share
+        for (long ii = 0; ii < n; ii++){
+            elapsedGenerateCoin.push_back(elapsedGeneratePerParty[ii]); //average time it takes a party to generate all of its shares
+        }
 
         //verify
+        std::map<int, std::chrono::duration<double, std::milli>> elapsedVerifyPerParty;
+        for (long ii = 0; ii < n; ii++){
+            elapsedVerifyPerParty[ii] = std::chrono::milliseconds(0);
+        }
         begin = std::chrono::steady_clock::now();
         for (long j = 0; j < GeneralizedCoin::msp.m(); j++){
+            begin2 = std::chrono::steady_clock::now();
             if (!GeneralizedCoin::verify(C, j, V[j], coin_shares[j], validity_proofs[j])){
                 cout << "Problem: " << j << endl;
                 return 1;
             }
+            end2 = std::chrono::steady_clock::now();
+            elapsedVerifyPerParty[GeneralizedCoin::msp.L[j]] += end2-begin2;
         }
         end = std::chrono::steady_clock::now();
-        elapsedVerify += (end - begin) / GeneralizedCoin::msp.m(); //average time it takes a party to verify one share
+        elapsedVerifyAvg += (end - begin) / GeneralizedCoin::msp.m(); //average time it takes a party to verify one share
+        for (long ii = 0; ii < n; ii++){
+            elapsedVerify.push_back(elapsedVerifyPerParty[ii]); //average time it takes a party to verify all of its shares
+        }
 
         //combine
         //Tested: If A_size > than the threshold, then some coefficients are small and the recombination is faster!
@@ -344,8 +398,12 @@ int benchGeneralized(PrimeOrderModGroup G, const string& quorumsConfFile, long n
         shuffle(S.begin(), S.end(), gen);
         std::unordered_set<hotstuff::ReplicaID> A;
         while (true){
-            // long A_size = rand()%n + 1;
-            int A_size = GeneralizedCoin::msp.d(); //CHANGE THIS IF YOU USE GENERALIZED ACCESS STRUCTURE
+            long A_size;
+            if (marker == "GEN" || marker == "GENCOMPL"){
+                A_size = GeneralizedCoin::msp.d();
+            }else{
+                A_size = rand()%n + 1;
+            }
             for (long i = 0; i < A_size; i++){
                 A.insert(S.at(i));
             }
@@ -359,7 +417,8 @@ int benchGeneralized(PrimeOrderModGroup G, const string& quorumsConfFile, long n
         begin = std::chrono::steady_clock::now();
         ZZ_p coin_value = GeneralizedCoin::combine(A, coin_shares);
         end = std::chrono::steady_clock::now();
-        elapsedCombine += end - begin;
+        elapsedCombine.push_back(end-begin);
+        elapsedCombineAvg += end - begin;
         if (coin_value != power(gtilde, rep(secret))){
             cout << "Problem in combine: " << coin_value << endl;
             return 1;
@@ -367,10 +426,24 @@ int benchGeneralized(PrimeOrderModGroup G, const string& quorumsConfFile, long n
 
     }
 
-    cout << marker << "." << n << ".KEYGEN. " << elapsedKeyGen.count() / repetitions << endl;
-    cout << marker << "." << n << ".GENER. " << elapsedGenerateCoin.count() / repetitions << endl;
-    cout << marker << "." << n << ".VERIF. " << elapsedVerify.count() / repetitions << endl;
-    cout << marker << "." << n << ".COMB. " << elapsedCombine.count() / repetitions << endl;
+    for (std::chrono::duration<double, std::milli> s : elapsedKeyGen){
+        std::cout << marker << "." << n << ".KEYGEN. " << s.count() << endl;    
+    }
+    for (std::chrono::duration<double, std::milli> s : elapsedGenerateCoin){
+        std::cout << marker << "." << n << ".GENER. " << s.count() << endl;    
+    }
+    for (std::chrono::duration<double, std::milli> c : elapsedVerify){
+        std::cout << marker << "." << n << ".VERIF. " << c.count() << endl;    
+    }
+    for (std::chrono::duration<double, std::milli> c : elapsedCombine){
+        std::cout << marker << "." << n << ".COMB. " << c.count() << endl;    
+    }
+
+    cout << marker << "." << n << ".KEYGENAVG. " << elapsedKeyGenAvg.count() / repetitions << endl;
+    cout << marker << "." << n << ".GENERAVG. " << elapsedGenerateCoinAvg.count() / repetitions << endl;
+    cout << marker << "." << n << ".VERIFAVG. " << elapsedVerifyAvg.count() / repetitions << endl;
+    cout << marker << "." << n << ".COMBAVG. " << elapsedCombineAvg.count() / repetitions << endl;
+    return 0;
 }
 
 
@@ -445,7 +518,7 @@ int main(){
     int from = 3;
     int to = 103;
     int step = 10;
-    int repetitions = 10;
+    int repetitions = 200;
     for (int n = from; n <= to; n+=step){
         benchThreshold(G, n / 2 + 1, n, "THR", repetitions);
     }
@@ -453,12 +526,16 @@ int main(){
         std::string quorumSpec = "conf/quorum_confs/quorums_maj_thres_" + std::to_string(n) + ".json";
         benchGeneralized(G, quorumSpec, n, "GEN", repetitions);
     }
+    // for (int n = from; n <= to; n+=step){
+    //     benchThreshold(G, 2*n/3 + 1, n, "THRCOMPL", repetitions);
+    // }
+    // for (int n = from; n <= to; n+=step){
+    //     std::string quorumSpec = "conf/quorum_confs/quorums_thres_" + std::to_string(n) + ".json";
+    //     benchGeneralized(G, quorumSpec, n, "GENCOMPL", repetitions);
+    // }
     for (int n = from; n <= to; n+=step){
-        benchThreshold(G, 2*n/3 + 1, n, "THRCOMPL", repetitions);
-    }
-    for (int n = from; n <= to; n+=step){
-        std::string quorumSpec = "conf/quorum_confs/quorums_thres_" + std::to_string(n) + ".json";
-        benchGeneralized(G, quorumSpec, n, "GENCOMPL", repetitions);
+        std::string quorumSpec = "conf/quorum_confs/unbalanced_" + std::to_string(n) + ".json";
+        benchGeneralized(G, quorumSpec, n, "UNBAL", repetitions);
     }
     
    return 0;
