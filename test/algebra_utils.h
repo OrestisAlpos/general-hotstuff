@@ -173,3 +173,25 @@ ZZ_p H_prime(ZZ_p h1, ZZ_p h2, ZZ_p h3, ZZ_p h4, ZZ_p h5, ZZ_p h6, PrimeOrderMod
         }
         return coefs;  
     }
+
+// For threshold AS (like in configurations GEN, GEN_COMPL, GEN_MAJ) this will return an set with the minimu number of parties (t).
+// Otherwise it keeps adding random parties to the set until it becomes authorized
+std::unordered_set<hotstuff::ReplicaID> getAuthorizedSet(long n, const hotstuff::quorums::Msp& msp){
+    std::vector<hotstuff::ReplicaID> all_parties;
+        for (long i = 0; i < n; i++){
+            all_parties.push_back(i);
+        }
+        auto seed = std::chrono::system_clock::now().time_since_epoch().count();
+        auto gen = std::default_random_engine(seed);
+        shuffle(all_parties.begin(), all_parties.end(), gen);
+        std::unordered_set<hotstuff::ReplicaID> auth_set;
+        long j = 0;
+        while (true){
+            auth_set.insert(all_parties.at(j));
+            j++;
+            if (msp.isAuthorizedGroup(auth_set)){
+                break;
+            }
+        }
+        return auth_set;
+}

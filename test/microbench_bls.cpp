@@ -43,6 +43,7 @@ int benchThreshold( long t, long n, string marker, int repetitions = 1){
         bls::SecretKey sec;
         bls::PublicKey pub;
         sec.init(); //generates random sk
+        
         sec.getPublicKey(pub);
         bls::SecretKeyVec msk;			//msk contains the t coefs. of the polynomial
         sec.getMasterSecretKey(msk, t); //makes msk[0]==sec and the other entries random
@@ -113,9 +114,11 @@ int benchThreshold( long t, long n, string marker, int repetitions = 1){
         // s.recover(sigsToCombine, idsToCombine);
         
         vec_ZZ_p lagrange_coefs_ntl = getLagrange(NTL::ZZ(NTL::INIT_VAL, FrOrderStr.c_str()), indexes_A);
+        
         bls::IdVec lagrange_coefs(lagrange_coefs_ntl.length());
         for (long j = 0; j < lagrange_coefs_ntl.length(); j++)
             lagrange_coefs[j] = Fr_ntl_to_mcl_Id(lagrange_coefs_ntl[j]); 
+        
         s.recoverGeneralised(sigsToCombine, lagrange_coefs);
 
         end = std::chrono::steady_clock::now();
@@ -191,8 +194,10 @@ int benchGeneralized(const string& quorumsConfFile, long n, string marker, int r
         
         //SIGN with BLS
         std::map<int, std::chrono::duration<double, std::milli>> elapsedSignPerParty;
+        std::map<int, int> sharesPerParty;
         for (long ii = 0; ii < n; ii++){
             elapsedSignPerParty[ii] = std::chrono::milliseconds(0);
+            sharesPerParty[ii] = 0;
         }
         bls::SignatureVec sigVec(as.msp.m());
         begin = std::chrono::steady_clock::now();
@@ -201,12 +206,12 @@ int benchGeneralized(const string& quorumsConfFile, long n, string marker, int r
             secVec[j].sign(sigVec[j], msg);
             end2 = std::chrono::steady_clock::now();
             elapsedSignPerParty[as.msp.L[j]] += end2-begin2;
-            
+            sharesPerParty[as.msp.L[j]]++;
         }
         end = std::chrono::steady_clock::now();
-        elapsedSignAvg += (end - begin) / as.msp.m(); //average time it takes a party to generate one signature share
+        elapsedSignAvg += (end - begin) / as.msp.m(); //average time it takes a party to generate one signature share, average over all parties and all their shares
         for (long ii = 0; ii < n; ii++){
-            elapsedSign.push_back(elapsedSignPerParty[ii]); //average time it takes a party to generate all of its signature shares
+            elapsedSign.push_back(elapsedSignPerParty[ii] / sharesPerParty[ii]); //average time it takes a party to generate one of its signature shares
         }
 
         //VERIFY with BLS
@@ -227,32 +232,11 @@ int benchGeneralized(const string& quorumsConfFile, long n, string marker, int r
         end = std::chrono::steady_clock::now();
         elapsedVerifyAvg += (end - begin) / as.msp.m();  //average time it takes a party to verify one signature share
         for (long ii = 0; ii < n; ii++){
-            elapsedVerify.push_back(elapsedVerifyPerParty[ii]); //average time it takes a party to verify all of its signature shares
+            elapsedVerify.push_back(elapsedVerifyPerParty[ii] / sharesPerParty[ii]); //average time it takes a party to verify one of its signature shares
         }
 
         //COMBINE partial signatures
-        std::vector<hotstuff::ReplicaID> S;
-        for (long j = 0; j < n; j++){
-            S.push_back(j);
-        }
-        auto seed = std::chrono::system_clock::now().time_since_epoch().count();
-        auto gen = std::default_random_engine(seed);
-        shuffle(S.begin(), S.end(), gen);
-        std::unordered_set<hotstuff::ReplicaID> A;
-        while (true){
-            long A_size;
-            if (marker == "GEN" || marker == "GENCOMPL"){
-                A_size = as.msp.d();
-            }else{
-                A_size = rand()%n + 1;
-            }
-            for (long j = 0; j < A_size; j++){
-                A.insert(S.at(j));
-            }
-            if (as.msp.isAuthorizedGroup(A)){
-                break;
-            }
-        }
+        std::unordered_set<hotstuff::ReplicaID> A = getAuthorizedSet(n, as.msp);
         // cout << "size " << A.size() << endl;
 
         // vec_ZZ_p indexes_A;
@@ -316,18 +300,18 @@ int main(){
     bls::getCurveOrder(FrOrderStr);
     NTL::ZZ_p::init(NTL::ZZ(NTL::INIT_VAL, FrOrderStr.c_str()));
 
-    int from = 3;
-    int to = 103;
-    int step = 10;
-    int repetitions = 200;
-    for (int n = from; n <= to; n+=step){
-        benchThreshold(n / 2 + 1, n, "THR", repetitions);
-    }
-    for (int n = from; n <= to; n+=step){
-        std::string quorumSpec = "conf/quorum_confs/quorums_maj_thres_" + std::to_string(n) + ".json";
-        benchGeneralized(quorumSpec, n, "GEN", repetitions);
-        // std::string quorumSpec = "conf/quorum_confs/1common_k13.json";
-    }
+
+    // int from = 3;
+    // int to = 103;
+    // int step = 20;
+    // int repetitions = 10;
+    // for (int n = from; n <= to; n+=step){
+    //     benchThreshold(n / 2 + 1, n, "THR", repetitions);
+    // }
+    // for (int n = from; n <= to; n+=step){
+    //     std::string quorumSpec = "conf/quorum_confs/quorums_maj_thres_" + std::to_string(n) + ".json";
+    //     benchGeneralized(quorumSpec, n, "GEN", repetitions);
+    // }
     // for (int n = from; n <= to; n+=step){
     //     benchThreshold(2*n/3 + 1, n, "THRCOMPL", repetitions);
     // }
@@ -335,9 +319,21 @@ int main(){
     //     std::string quorumSpec = "conf/quorum_confs/quorums_thres_" + std::to_string(n) + ".json";
     //     benchGeneralized(quorumSpec, n, "GENCOMPL", repetitions);
     // }
-    for (int n = from; n <= to; n+=step){
-        std::string quorumSpec = "conf/quorum_confs/unbalanced_" + std::to_string(n) + ".json";
-        benchGeneralized(quorumSpec, n, "UNBAL", repetitions);
-    }
+    // for (int n = from; n <= to; n+=step){
+    //     std::string quorumSpec = "conf/quorum_confs/unbalanced_" + std::to_string(n) + ".json";
+    //     benchGeneralized(quorumSpec, n, "UNBAL", repetitions);
+    // }
+    
+    int repetitions = 10;
+    for (auto n: {4, 16, 36, 64, 100}){
+        benchThreshold(n / 2 + 1, n, "THR", repetitions);
+        std::string quorumSpec = "conf/quorum_confs/quorums_maj_thres_" + std::to_string(n) + ".json";
+        benchGeneralized(quorumSpec, n, "GEN_MAJ", repetitions);
+        quorumSpec = "conf/quorum_confs/unbalanced_" + std::to_string(n) + ".json";
+        benchGeneralized(quorumSpec, n, "GEN_UNBAL", repetitions);
+        quorumSpec = "conf/quorum_confs/kgrid_" + std::to_string(n) + ".json";
+        benchGeneralized(quorumSpec, n, "GEN_KGRID", repetitions);
+    }    
+
     return 0;
 }

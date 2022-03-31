@@ -1,0 +1,9 @@
+### GEN_MAJ 4 ###
+Matrix M of msp is:
+[[1 1 1]
+[1 2 4]
+[1 3 9]
+[1 4 16]
+]
+Matrix L of msp is:
+0->0 1->1 2->2 3->3 

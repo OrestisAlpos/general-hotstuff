@@ -22,3 +22,6 @@ target_link_libraries(microbench_vss hotstuff_static)
 
 add_executable(microbench_coin microbench_coin.cpp)
 target_link_libraries(microbench_coin hotstuff_static)
+
+add_executable(microbench_auth microbench_auth.cpp)
+target_link_libraries(microbench_auth hotstuff_static)

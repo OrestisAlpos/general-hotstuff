@@ -81,7 +81,7 @@ add_subdirectory(bls)
 include_directories(bls/include)
 include_directories(bls/mcl/include)
 
-option(BUILD_SHARED "build shared library." OFF)
+option(BUILD_SHARED "build shared library." ON)
 if(BUILD_SHARED)
     set_property(TARGET hotstuff PROPERTY POSITION_INDEPENDENT_CODE 1)
     add_library(hotstuff_shared SHARED $<TARGET_OBJECTS:hotstuff>)
