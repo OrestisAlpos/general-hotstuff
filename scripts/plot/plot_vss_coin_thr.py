@@ -160,7 +160,7 @@ def plotVssShareVsCommitment(configurationsToPlot, filename):
             yerr=[np.std(d) for d in dataShareComputeShares[configuration].values()], 
             color=color[configuration],
             edgecolor="white",
-            hatch='x',
+            hatch='//',
             # label=legend[configuration] 
             # marker=marker[configuration],
             # capsize=3
