@@ -41,30 +41,18 @@ namespace ThresholdVss{
             if (deg(f) == t-1) break;
         }
         SetCoeff(f, 0, secret);
-        // cout << "Polynomial f: " << f << endl;
         ZZ_pX f_prime;
         while (true){
             f_prime = random_ZZ_pX(t);
             if (deg(f_prime) == t-1) break;
         }
-        // cout << "Polynomial f': " << f_prime << endl;
         clear(s); s.SetLength(n); 
         clear(s_prime); s_prime.SetLength(n);
-        // vec_ZZ_p points; points.SetLength(n);
-        // for (long j = 0; j < n; j++){ //party 0 gets f(1), ..., party i gets f(i+1)
-        //     points[j] = ZZ_p(j+1);
-        // }
-    
         for (long j = 0; j < n; j++){ //party 0 gets f(1), ..., party i gets f(i+1)
             ZZ_p point = ZZ_p(j+1);
-            // s[j] = eval(f, point);
-            // s_prime[j] = eval(f_prime, point);
             eval(s[j], f, point);
             eval(s_prime[j], f_prime, point);
         }
-        
-        // s = eval(f, points);
-        // s_prime = eval(f_prime, points);
         end = std::chrono::steady_clock::now();
         elapsedShareComputeShares.push_back(end-begin);
 

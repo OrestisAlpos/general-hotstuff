@@ -21,6 +21,10 @@ dataAuthGroupSize = defaultdict(dict)
 dataActualMspRows = defaultdict(dict)
 dataBitsInRecomb = defaultdict(dict)
 dataMspSize = defaultdict(dict)
+dataBlsScenario1Time = defaultdict(dict)
+dataBlsScenario2Time = defaultdict(dict)
+dataBlsScenario1Size = defaultdict(dict)
+dataBlsScenario2Size = defaultdict(dict)
 
 for configuration in configurations:
     dataSign[configuration] = defaultdict(list)
@@ -36,6 +40,10 @@ for configuration in configurations:
     dataActualMspRows[configuration] = defaultdict(list)    
     dataBitsInRecomb[configuration] = defaultdict(list)    
     dataMspSize[configuration] = defaultdict(list)    
+    dataBlsScenario1Time[configuration] = defaultdict(list)    
+    dataBlsScenario2Time[configuration] = defaultdict(list)    
+    dataBlsScenario1Size[configuration] = defaultdict(list)    
+    dataBlsScenario2Size[configuration] = defaultdict(list)    
 
 pattern=dict()
 pattern["THR"] = "."
@@ -51,7 +59,7 @@ color["UNBAL"]="royalblue"
 
 color["GEN_MAJ"]=color["GEN"]="dodgerblue"
 color["GEN_UNBAL"]=color["UNBAL"]
-color["GEN_KGRID"]="darkblue"
+color["GEN_KGRID"]="black"
 
 marker=dict()
 marker["THR"] = "x"
@@ -91,63 +99,99 @@ def plot(data, configurationsToPlot, filename, withLegend=True, ylabel="time (ms
     plt.ylabel(ylabel)
     leg=[]
     if withLegend:
-        # if sys.argv[1] == "vss":
-        #     leg = ['Threshold VSS n/2', 'Generalized VSS n/2', 'Threshold VSS 2n/3', 'Generalized VSS 2n/3']
-        # elif sys.argv[1] == "coin":
-        #     leg = ['Threshold coin n/2', 'Generalized coin n/2', 'Threshold coin 2n/3', 'Generalized coin 2n/3']
-        # elif sys.argv[1] == "bls":
-        #     leg = ['Threshold BLS n/2', 'Generalized BLS n/2', 'Threshold BLS 2n/3', 'Generalized BLS 2n/3']
         for configuration in configurationsToPlot:
             leg.append(legend[configuration])
         plt.legend(leg, loc='upper left')
     plt.grid(True)
     plt.show()
-    plt.savefig(filename)
+    plt.savefig(filename, bbox_inches="tight")
     plt.clf()
 
-def plotComparativeBar(data1, data2, label1, label2, configurationsToPlot, filename, withLegend=True):
+def plotBlsSignVerify(configurationsToPlot, filename):
+    # leg1=[]
+    # leg2=[]
+    measure1 = []
+    measure2 = []
+    for configuration in configurationsToPlot:
+        measure1.append( plt.errorbar(
+            x=[k for k in dataSign[configuration].keys()],
+            y=[np.mean(d)  for d in dataSign[configuration].values()], #each d is a list of time durations
+            yerr=[np.std(d)  for d in dataSign[configuration].values()], 
+            color=color[configuration], 
+            marker=marker[configuration],
+            capsize=3,
+            label=legend[configuration]) )
+        # leg1.append(legend[configuration])
+        measure2.append( plt.errorbar(
+            x=[k for k in dataVerify[configuration].keys()],
+            y=[np.mean(d)  for d in dataVerify[configuration].values()], #each d is a list of time durations
+            yerr=[np.std(d)  for d in dataVerify[configuration].values()], 
+            color=color[configuration], 
+            marker=marker[configuration],
+            capsize=3,
+            label=legend[configuration]) )
+        # leg2.append(legend[configuration])
+    
+    plt.xticks([k for k in dataSign[configuration].keys()]) # show only values n for which we have a point
+    plt.xlabel("number of parties")
+    plt.ylabel("time (ms)")    
+
+    legend1 = plt.legend(handles=measure1, loc='upper left', title='Verify')
+    legend2 = plt.legend(handles=measure2, loc='lower right', bbox_to_anchor=(1, 0.1), title='Sign')
+    plt.gca().add_artist(legend1)
+    plt.grid(True)
+    plt.show()
+    plt.savefig(filename, bbox_inches="tight")
+    plt.clf()
+
+def plotVssShareVsCommitment(configurationsToPlot, filename):
     # leg=[]
-    width=4
+    width=0.2
     i=0
     fig, ax = plt.subplots()
+    lines=[]
     for configuration in configurationsToPlot:
-        height1 = [np.mean(d) for d in data1[configuration].values()]
-        ax.bar(
-            x=[k - width/2 + i*width  for k in data1[configuration].keys()], 
+        datalen = len(dataShareComputeShares[configuration].keys())
+        height1 = [np.mean(d) for d in dataShareComputeShares[configuration].values()]
+        lines.append( ax.bar(
+            x=[k - width + i*width   for k in range(datalen)], 
             height=height1, 
             width=width,
-            yerr=[np.std(d) for d in data1[configuration].values()], 
+            yerr=[np.std(d) for d in dataShareComputeShares[configuration].values()], 
             color=color[configuration],
-            edgecolor="black",
+            edgecolor="white",
             hatch='x',
-            label=legend[configuration] + " " + label1 
+            # label=legend[configuration] 
             # marker=marker[configuration],
             # capsize=3
-            )
+            ))
         # leg.append(legend[configuration] + " Shares")
-        ax.bar(
-            x=[k - width/2 + i*width  for k in data2[configuration].keys()], 
-            height=[np.mean(d) for d in data2[configuration].values()], 
+        lines.append( ax.bar(
+            x=[k - width +i*width  for k in range(datalen)], 
+            height=[np.mean(d) for d in dataShareComputeCommitments[configuration].values()], 
             width=width,
-            yerr=[np.std(d) for d in data2[configuration].values()],
+            yerr=[np.std(d) for d in dataShareComputeCommitments[configuration].values()],
             bottom=height1,
             color=color[configuration],
-            label=legend[configuration] + " " + label2
+            label=legend[configuration]
             # marker=marker[configuration],
             # capsize=3
-            )
+            ))
         i += 1
         # leg.append(legend[configuration] + " Commitments")
-    plt.xticks([k for k in data1[configuration].keys()])
+    plt.xticks(ticks=range(datalen), labels=dataShareComputeShares[configuration].keys())
     ax.set_xlabel("number of parties")
     ax.set_ylabel("time (ms)")
     ax.set_yscale("log")
     ax.set_ylim(ax.get_ylim()[0], ax.get_ylim()[1] * 10)
-    if withLegend:
-        ax.legend(loc='upper left')
+    
+    first_legend = ax.legend(loc='upper left')
+    plt.gca().add_artist(first_legend)
+    plt.legend(handles=[lines[4], lines[5]], labels=["Share computation", "Commitment computation"], loc='upper right')
+    
     plt.grid(True)
     plt.show()
-    plt.savefig(filename)
+    plt.savefig(filename, bbox_inches="tight")
     plt.clf()
 
 def plotComparativeLine(data1, data2, configurationsToPlot, filename, withLegend=True):
@@ -159,29 +203,80 @@ def plotComparativeLine(data1, data2, configurationsToPlot, filename, withLegend
             y=[np.mean(d) for d in data1[configuration].values()],
             yerr=[np.std(d) for d in data1[configuration].values()],
             color=color[configuration],
-            marker=marker[configuration],
+            marker="x",
             capsize=3,
-            label=legend[configuration] + " Data1")
-        ax.set_xlabel("number of parties")
-        ax.set_ylabel("time (ms)")
-        
-        ax2 = ax.twinx()
-        ax2.errorbar(
+            label=" Strategy 1")
+        ax.errorbar(
             x=[k for k in data2[configuration].keys()], 
             y=[np.mean(d) for d in data2[configuration].values()], 
             yerr=[np.std(d) for d in data2[configuration].values()],
             color=color[configuration],
             linestyle="dashed",
+            marker="o",
+            capsize=3,
+            label=" Strategy 2")
+    plt.xticks([k for k in data1[configuration].keys()])
+    ax.set_xlabel("number of parties")
+    ax.set_ylabel("time (ms)")
+    if withLegend:
+        plt.legend(loc='upper left')
+    # ax = ax.twinx()   
+    plt.grid(True)
+    plt.show()
+    plt.savefig(filename, bbox_inches="tight")
+    plt.clf()
+
+def plotBlsComparison(time1, time2, size1, size2, configurationsToPlot, filename, withLegend=True):
+    # leg=[]
+    fig, ax = plt.subplots()
+    for configuration in configurationsToPlot:
+        ax.errorbar(
+            x=[k for k in time1[configuration].keys()], 
+            y=[np.mean(d) for d in time1[configuration].values()],
+            yerr=[np.std(d) for d in time1[configuration].values()],
+            color=color[configuration],
+            marker=marker[configuration],
+            capsize=3,
+            label=legend[configuration] + " Data1")
+        ax.errorbar(
+            x=[k for k in time2[configuration].keys()], 
+            y=[np.mean(d) for d in time2[configuration].values()], 
+            yerr=[np.std(d) for d in time2[configuration].values()],
+            color=color[configuration],
+            linestyle="dashed",
             marker=marker[configuration],
             capsize=3,
             label=legend[configuration] + " Data2")
-        # leg.append(legend[configuration] + " Commitments")    
-    # ax.set_yscale("log")
+        ax2 = ax.twinx()
+        ax2.errorbar(
+            x=[k for k in size1[configuration].keys()], 
+            y=[np.mean(d) for d in size1[configuration].values()],
+            yerr=[np.std(d) for d in size1[configuration].values()],
+            color=color[configuration],
+            marker=marker[configuration],
+            capsize=3,
+            label=legend[configuration] + " Data1")
+        ax2.errorbar(
+            x=[k for k in size2[configuration].keys()], 
+            y=[np.mean(d) for d in size2[configuration].values()], 
+            yerr=[np.std(d) for d in size2[configuration].values()],
+            color=color[configuration],
+            linestyle="dashed",
+            marker=marker[configuration],
+            capsize=3,
+            label=legend[configuration] + " Data2")
+    plt.xticks([k for k in time1[configuration].keys()])
+    ax.set_xlabel("number of parties")
+    ax.set_ylabel("time (ms)")
+    ax2.set_ylabel("K")
     if withLegend:
-        ax.legend(loc='upper left')
+        leg=[]
+        for configuration in configurationsToPlot:
+            leg.append(legend[configuration])
+        plt.legend(loc='upper left')
     plt.grid(True)
     plt.show()
-    plt.savefig(filename)
+    plt.savefig(filename, bbox_inches="tight")
     plt.clf()
 
 # blue, orange, green, red
@@ -202,7 +297,7 @@ def plotHist(dataList, filename, withLegend=True):
     #     ax.legend(loc='upper left')
     plt.grid(True)
     plt.show()
-    plt.savefig(filename)
+    plt.savefig(filename, bbox_inches="tight")
     plt.clf()
 
 
@@ -217,6 +312,8 @@ if __name__ == '__main__':
     elif sys.argv[1] == "coin":
         infile = 'res/microbench_coin.txt'
     elif sys.argv[1] == "bls":
+        infile = 'res/microbench_bls.txt'
+    elif sys.argv[1] == "blscomp":
         infile = 'res/microbench_bls.txt'
     elif sys.argv[1] == "auth":
         infile = 'res/microbench_auth.txt'
@@ -257,6 +354,14 @@ if __name__ == '__main__':
                 dataBitsInRecomb[configuration][int(n)].append(value)
             elif algo == "MSP_SIZE": #auth
                 dataMspSize[configuration][int(n)].append(value)
+            elif algo == "SCEN1": 
+                dataBlsScenario1Time[configuration][int(n)].append(value)
+            elif algo == "SCEN2": 
+                dataBlsScenario2Time[configuration][int(n)].append(value)
+            elif algo == "SIZE_SCEN1":
+                dataBlsScenario1Size[configuration][int(n)].append(value)
+            elif algo == "SIZE_SCEN2": 
+                dataBlsScenario2Size[configuration][int(n)].append(value)
             # if algo == "VERIF" and configuration == "THR":
             #     parties.append(int(n)) # n expected to be the same for all comb. of configuration and algo, and in ascending order
     
@@ -269,7 +374,7 @@ if __name__ == '__main__':
         plot(dataVerify, ["THR", "GEN_MAJ", "GEN_UNBAL", "GEN_KGRID"], "plots/vss_VERIFY_squares.png",  True)
         plot(dataRecons, ["THR", "GEN_MAJ", "GEN_UNBAL", "GEN_KGRID"], "plots/vss_RECONSTRUCT_squares.png",  True)
 
-        plotComparativeBar(dataShareComputeShares, dataShareComputeCommitments, "Compute shares", "Compute commitments", ["GEN_UNBAL", "GEN_KGRID"], "plots/vss_SHARE_shares_vs_commitments.png", True)
+        plotVssShareVsCommitment(["GEN_MAJ", "GEN_UNBAL", "GEN_KGRID"], "plots/vss_SHARE_shares_vs_commitments.png")
         plot(dataShareComputeShares, ["THR", "GEN_MAJ", "GEN_UNBAL", "GEN_KGRID"], "plots/vss_SHARE_shares.png", True)
         plotHist([ dataRecons["GEN_MAJ"][100], dataRecons["GEN_KGRID"][100] ], "plots/vss_RECONSTRUCT_timeHist.png", True)
 
@@ -288,6 +393,7 @@ if __name__ == '__main__':
         
         plotHist([ dataAuthGroupSize["GEN_MAJ"][100], dataAuthGroupSize["GEN_KGRID"][100] ], "plots/coin_COMBINE_authSizeHist.png", True)
         plotHist([ dataCombine["GEN_MAJ"][100], dataCombine["GEN_KGRID"][100] ], "plots/coin_COMBINE_timeHist.png", True)
+    
     elif sys.argv[1] == "bls":
         plot(dataSign, ["THR", "GEN", "UNBAL"], "plots/bls_SIGN.png", True)
         plot(dataVerify, ["THR", "GEN", "UNBAL"], "plots/bls_VERIFY.png", True)
@@ -297,10 +403,18 @@ if __name__ == '__main__':
         plot(dataVerify, ["THR", "GEN_MAJ", "GEN_UNBAL", "GEN_KGRID"], "plots/bls_VERIFY_squares.png", True)
         plot(dataCombine, ["THR", "GEN_MAJ", "GEN_UNBAL", "GEN_KGRID"], "plots/bls_COMBINE_squares.png", True)
    
+        plotBlsSignVerify(["THR", "GEN_MAJ", "GEN_UNBAL", "GEN_KGRID"], "plots/bls_SIGN_VERIFY_squares.png")
+   
     elif sys.argv[1] == "auth":
         plot(dataAuthGroupSize, ["GEN_MAJ", "GEN_UNBAL", "GEN_KGRID"], "plots/auth_SIZE.png", True, ylabel="number of parties in authorized set")
-        plot(dataActualMspRows, ["GEN_MAJ", "GEN_UNBAL", "GEN_KGRID"], "plots/auth_ACTUAL_SIZE.png", True, ylabel="number of shares")    
-        plot(dataBitsInRecomb, ["GEN_MAJ", "GEN_UNBAL", "GEN_KGRID"], "plots/auth_TOTAL_BITS.png", True, ylabel="Kbits", scaleChange=1000)    
+        plot(dataActualMspRows, ["GEN_MAJ", "GEN_UNBAL", "GEN_KGRID"], "plots/auth_ACTUAL_SIZE.png", True, ylabel="number of entries")    
+        plot(dataBitsInRecomb, ["GEN_MAJ", "GEN_UNBAL", "GEN_KGRID"], "plots/auth_TOTAL_BITS.png", True, ylabel="KBits", scaleChange=1000)    
         plot(dataMspSize, ["GEN_MAJ", "GEN_UNBAL", "GEN_KGRID"], "plots/auth_MSP_SIZE.png", True, ylabel="KB", scaleChange=1000)    
+    
+    elif sys.argv[1] == "blscomp":
+        plotComparativeLine(dataBlsScenario1Time, dataBlsScenario2Time, ["GEN_KGRID"], "plots/bls_comp.png", True)
+        plotComparativeLine(dataBlsScenario1Size, dataBlsScenario2Size, ["GEN_KGRID"], "plots/bls_BLS_compSize.png", True)
+        plotBlsComparison(dataBlsScenario1Time, dataBlsScenario2Time, dataBlsScenario1Size, dataBlsScenario2Size, ["GEN_KGRID"], "plots/bls_compTimeSize.png", True)
+        
     
      

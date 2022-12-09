@@ -120,7 +120,6 @@ int benchThreshold( long t, long n, string marker, int repetitions = 1){
             lagrange_coefs[j] = Fr_ntl_to_mcl_Id(lagrange_coefs_ntl[j]); 
         
         s.recoverGeneralised(sigsToCombine, lagrange_coefs);
-
         end = std::chrono::steady_clock::now();
         elapsedCombine.push_back(end-begin);
         elapsedCombineAvg += end - begin;
@@ -157,9 +156,17 @@ int benchGeneralized(const string& quorumsConfFile, long n, string marker, int r
     std::vector<std::chrono::duration<double, std::milli>> elapsedSign;
     std::vector<std::chrono::duration<double, std::milli>> elapsedVerify;
     std::vector<std::chrono::duration<double, std::milli>> elapsedCombine;
+    std::vector<std::chrono::duration<double, std::milli>> elapsedScenario1;
+    std::vector<std::chrono::duration<double, std::milli>> elapsedScenario2;
+    std::vector<long> sigSizeScenario1;
+    std::vector<long> sigSizeScenario2;
     std::chrono::duration<double, std::milli> elapsedSignAvg = std::chrono::milliseconds(0);
     std::chrono::duration<double, std::milli> elapsedVerifyAvg = std::chrono::milliseconds(0);
     std::chrono::duration<double, std::milli> elapsedCombineAvg = std::chrono::milliseconds(0);
+    std::chrono::duration<double, std::milli> elapsedScenario1Avg = std::chrono::milliseconds(0);
+    std::chrono::duration<double, std::milli> elapsedScenario2Avg = std::chrono::milliseconds(0);
+    long sigSizeScenario1Avg = 0;
+    long sigSizeScenario2Avg = 0;
     std::chrono::steady_clock::time_point begin;
     std::chrono::steady_clock::time_point end;
     std::chrono::steady_clock::time_point begin2;
@@ -276,8 +283,50 @@ int benchGeneralized(const string& quorumsConfFile, long n, string marker, int r
             cout << "Problem with combined generalized signature " << endl;
                 return 1;
         }
+
+        //Test the 2 different scenaria
+        A = getAuthorizedSet(n, as.msp);
+
+        // SCENARIO 1: Verify all signatures of authorized set
+        begin = std::chrono::steady_clock::now();
+        for (long j = 0; j < as.msp.m(); j++){
+            if (A.count(as.msp.L[j]) == 0) {
+                continue;
+            }
+            if (!(sigVec[j].verify(pubVec[j], msg))){
+                cout << "Problem: " << j << endl;
+                return 1;
+            }
+        }    
+        end = std::chrono::steady_clock::now();
+        elapsedScenario1.push_back(end-begin);
+        elapsedScenario1Avg += end-begin;
         
+        // SCENARIO 1: Combine the signatures of an authorized group and then verify only the combined signature
+        sigsToCombine.clear();
+        for (int j = 0; j < as.msp.m(); j++){
+            if (A.count(as.msp.L[j]) > 0){
+                sigsToCombine.push_back(sigVec[j]);
+            }
+        }
+        begin = std::chrono::steady_clock::now();
+        recomb_vector_ntl = as.msp.getRecombinationVector(A);
+        bls::IdVec recomb_vector_mcl2(recomb_vector_ntl.length());
+        for (long j = 0; j < recomb_vector_ntl.length(); j++){
+            recomb_vector_mcl2[j] = Fr_ntl_to_mcl_Id(recomb_vector_ntl[j]);
+        }
+        s.recoverGeneralised(sigsToCombine, recomb_vector_mcl2);
+        s.verify(pub, msg);
+        end = std::chrono::steady_clock::now();
+        elapsedScenario2.push_back(end-begin);
+        elapsedScenario2Avg += end-begin;
+        sigSizeScenario1.push_back(A.size() * 48); //BLS signature over BLS12-381 curve is 48 bytes
+        sigSizeScenario1Avg += A.size() * 48;
+        sigSizeScenario2.push_back(48); //not useful, just write data for the Python script to find it
+        sigSizeScenario2Avg += 48;
+
     }
+
     for (std::chrono::duration<double, std::milli> s : elapsedSign){
         std::cout << marker << "." << n << ".SIGN. " << s.count() << endl;    
     }
@@ -287,9 +336,26 @@ int benchGeneralized(const string& quorumsConfFile, long n, string marker, int r
     for (std::chrono::duration<double, std::milli> c : elapsedCombine){
         std::cout << marker << "." << n << ".COMB. " << c.count() << endl;    
     }
+    for (std::chrono::duration<double, std::milli> c : elapsedScenario1){
+        std::cout << marker << "." << n << ".SCEN1. " << c.count() << endl;    
+    }
+    for (std::chrono::duration<double, std::milli> c : elapsedScenario2){
+        std::cout << marker << "." << n << ".SCEN2. " << c.count() << endl;    
+    }
+    for (long b : sigSizeScenario1){
+        std::cout << marker << "." << n << ".SIZE_SCEN1. " << b << endl;    
+    }
+    for (long b : sigSizeScenario2){
+        std::cout << marker << "." << n << ".SIZE_SCEN2. " << b << endl;    
+    }
+    
     std::cout << marker << "." << n << ".SIGNAVG. " << elapsedSignAvg.count() / repetitions << endl;
     std::cout << marker << "." << n << ".VERIFAVG. " << elapsedVerifyAvg.count() / repetitions << endl;
     std::cout << marker << "." << n << ".COMBAVG. " << elapsedCombineAvg.count() / repetitions << endl;
+    std::cout << marker << "." << n << ".SCEN1AVG. " << elapsedScenario1Avg.count() / repetitions << endl;
+    std::cout << marker << "." << n << ".SCEN2AVG. " << elapsedScenario2Avg.count() / repetitions << endl;
+    std::cout << marker << "." << n << ".SIZE_SCEN1AVG. " << sigSizeScenario1Avg / repetitions << endl;
+    std::cout << marker << "." << n << ".SIZE_SCEN2AVG. " << sigSizeScenario2Avg / repetitions << endl;
     return 0;
 }
 
@@ -324,7 +390,7 @@ int main(){
     //     benchGeneralized(quorumSpec, n, "UNBAL", repetitions);
     // }
     
-    int repetitions = 10;
+    int repetitions = 50;
     for (auto n: {4, 16, 36, 64, 100}){
         benchThreshold(n / 2 + 1, n, "THR", repetitions);
         std::string quorumSpec = "conf/quorum_confs/quorums_maj_thres_" + std::to_string(n) + ".json";
