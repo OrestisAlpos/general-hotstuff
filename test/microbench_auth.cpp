@@ -17,6 +17,26 @@
 using namespace NTL;
 using namespace std;
 
+std::unordered_set<hotstuff::ReplicaID> getRandomSet(const int n){
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    srand(seed);
+    int randomBits = std::rand();
+    int randomBitsUsed = 0;
+    int randomBitsAvailable = 8 * sizeof(RAND_MAX);
+    std::unordered_set<hotstuff::ReplicaID> randomSet;
+    for (int i = 0; i < n; i++)
+    {
+        bool b = randomBits & 1;
+        randomBits = randomBits >> 1;
+        randomBitsUsed++;
+        if (randomBitsUsed == randomBitsAvailable){
+            randomBits = std::rand();
+            randomBitsUsed = 0;
+        }
+        if (b  == 1) randomSet.insert(hotstuff::ReplicaID(i));
+    }
+    return randomSet;
+}
 
 void benchAuthorizedGroupSize(PrimeOrderModGroup G, const string& quorumsConfFile, long n, string marker, int repetitions, bool onlyAvg = false){
     ZZ_p::init(G.q);
@@ -84,6 +104,30 @@ void benchAuthorizedGroupSize(PrimeOrderModGroup G, const string& quorumsConfFil
     cout << marker << "." << n << ".TOTAL_BITS_AVG. " << totalBitsAvg / repetitions << endl;
 }
 
+void benchMbfSizeAndTime(const string& quorumsConfFile, long n, string marker, int repetitions, bool onlyAvg = false){
+    hotstuff::quorums::AccessStructure as;
+    hotstuff::quorums::JsonParser *jp = new hotstuff::quorums::ConfigJsonParser();
+    as = hotstuff::quorums::AccessStructure(jp);
+    as.initialize(quorumsConfFile);
+
+    double mbfSize = as.thetaOperatorFormula.size() * 0.001; // Memory in KB
+    cout << marker << "." << n << ".mem. " << mbfSize << endl;
+    
+    std::chrono::duration<double, std::micro> elapsed = std::chrono::microseconds(0);
+    std::chrono::steady_clock::time_point begin;
+    std::chrono::steady_clock::time_point end;
+    for (int i = 0; i < repetitions; i++)
+    {
+        std::unordered_set<hotstuff::ReplicaID> randomSet = getRandomSet(n);
+        //FORMULA
+        begin = std::chrono::steady_clock::now();
+        as.evalFomula(randomSet);
+        end = std::chrono::steady_clock::now();
+        elapsed = end - begin;
+    
+        cout << marker << "." << n << ".time. " << elapsed.count() << std::endl; // time in microseconds
+    }
+}
 
 int main(){    
     // ZZ p = ZZ(23);
@@ -97,11 +141,14 @@ int main(){
     int repetitions = 1000;
     for (auto n: {4, 16, 36, 64, 100}){
         std::string quorumSpec = "conf/quorum_confs/quorums_maj_thres_" + std::to_string(n) + ".json";
-        benchAuthorizedGroupSize(G, quorumSpec, n, "GEN_MAJ", repetitions, false);
+        // benchAuthorizedGroupSize(G, quorumSpec, n, "GEN_MAJ", repetitions, false);
+        benchMbfSizeAndTime(quorumSpec, n, "GEN_MAJ", repetitions, false);
         quorumSpec = "conf/quorum_confs/unbalanced_" + std::to_string(n) + ".json";
-        benchAuthorizedGroupSize(G, quorumSpec, n, "GEN_UNBAL", repetitions, false);
+        // benchAuthorizedGroupSize(G, quorumSpec, n, "GEN_UNBAL", repetitions, false);
+        benchMbfSizeAndTime(quorumSpec, n, "GEN_UNBAL", repetitions, false);
         quorumSpec = "conf/quorum_confs/kgrid_" + std::to_string(n) + ".json";
-        benchAuthorizedGroupSize(G, quorumSpec, n, "GEN_KGRID", repetitions, false);
+        // benchAuthorizedGroupSize(G, quorumSpec, n, "GEN_KGRID", repetitions, false);
+        benchMbfSizeAndTime(quorumSpec, n, "GEN_KGRID", repetitions, false);
     }
     ZZ_p x = ZZ_p(8);
    return 0;

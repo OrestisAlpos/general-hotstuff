@@ -25,6 +25,8 @@ dataBlsScenario1Time = defaultdict(dict)
 dataBlsScenario2Time = defaultdict(dict)
 dataBlsScenario1Size = defaultdict(dict)
 dataBlsScenario2Size = defaultdict(dict)
+dataMbfSize = defaultdict(dict)
+dataMbfTime = defaultdict(dict)
 
 for configuration in configurations:
     dataSign[configuration] = defaultdict(list)
@@ -44,6 +46,8 @@ for configuration in configurations:
     dataBlsScenario2Time[configuration] = defaultdict(list)    
     dataBlsScenario1Size[configuration] = defaultdict(list)    
     dataBlsScenario2Size[configuration] = defaultdict(list)    
+    dataMbfSize[configuration] = defaultdict(list)    
+    dataMbfTime[configuration] = defaultdict(list)    
 
 pattern=dict()
 pattern["THR"] = "."
@@ -160,7 +164,7 @@ def plotVssShareVsCommitment(configurationsToPlot, filename):
             yerr=[np.std(d) for d in dataShareComputeShares[configuration].values()], 
             color=color[configuration],
             edgecolor="white",
-            hatch='//',
+            hatch='///',
             # label=legend[configuration] 
             # marker=marker[configuration],
             # capsize=3
@@ -317,6 +321,8 @@ if __name__ == '__main__':
         infile = 'res/microbench_bls.txt'
     elif sys.argv[1] == "auth":
         infile = 'res/microbench_auth.txt'
+    elif sys.argv[1] == "mbf":
+        infile = 'res/microbench_mbf.txt'
     else:
         raise ValueError('vss/coin/bls/auth?')
     
@@ -362,6 +368,10 @@ if __name__ == '__main__':
                 dataBlsScenario1Size[configuration][int(n)].append(value)
             elif algo == "SIZE_SCEN2": 
                 dataBlsScenario2Size[configuration][int(n)].append(value)
+            elif algo == "mem": #mbf 
+                dataMbfSize[configuration][int(n)].append(value)
+            elif algo == "time": #mbf 
+                dataMbfTime[configuration][int(n)].append(value)
             # if algo == "VERIF" and configuration == "THR":
             #     parties.append(int(n)) # n expected to be the same for all comb. of configuration and algo, and in ascending order
     
@@ -408,7 +418,7 @@ if __name__ == '__main__':
     elif sys.argv[1] == "auth":
         plot(dataAuthGroupSize, ["GEN_MAJ", "GEN_UNBAL", "GEN_KGRID"], "plots/auth_SIZE.png", True, ylabel="number of parties in authorized set")
         plot(dataActualMspRows, ["GEN_MAJ", "GEN_UNBAL", "GEN_KGRID"], "plots/auth_ACTUAL_SIZE.png", True, ylabel="number of entries")    
-        plot(dataBitsInRecomb, ["GEN_MAJ", "GEN_UNBAL", "GEN_KGRID"], "plots/auth_TOTAL_BITS.png", True, ylabel="KBits", scaleChange=1000)    
+        plot(dataBitsInRecomb, ["GEN_MAJ", "GEN_UNBAL", "GEN_KGRID"], "plots/auth_TOTAL_BITS.png", True, ylabel="Kbits", scaleChange=1000)    
         plot(dataMspSize, ["GEN_MAJ", "GEN_UNBAL", "GEN_KGRID"], "plots/auth_MSP_SIZE.png", True, ylabel="KB", scaleChange=1000)    
     
     elif sys.argv[1] == "blscomp":
@@ -416,5 +426,6 @@ if __name__ == '__main__':
         plotComparativeLine(dataBlsScenario1Size, dataBlsScenario2Size, ["GEN_KGRID"], "plots/bls_BLS_compSize.png", True)
         plotBlsComparison(dataBlsScenario1Time, dataBlsScenario2Time, dataBlsScenario1Size, dataBlsScenario2Size, ["GEN_KGRID"], "plots/bls_compTimeSize.png", True)
         
-    
-     
+    elif sys.argv[1] == "mbf":
+        plot(dataMbfSize, ["GEN_MAJ", "GEN_UNBAL", "GEN_KGRID"], "plots/mbf_SIZE.png", True, ylabel="KB")
+        plot(dataMbfTime, ["GEN_MAJ", "GEN_UNBAL", "GEN_KGRID"], "plots/mbf_TIME.png", True, ylabel="time (μs)")
