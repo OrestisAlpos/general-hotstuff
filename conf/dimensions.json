@@ -1,0 +1,15 @@
+{
+    "access-structure": {"and": [
+        {"select": 3, "out-of": ["OS1", "OS2", "OS3", "OS4" ]},
+        {"select": 3, "out-of": ["CP1", "CP2", "CP3", "CP4" ]}
+    ]},
+    "OS1": {"select": 3, "out-of": [1, 5, 9, 13]},
+    "OS2": {"select": 3, "out-of": [2, 6, 10, 14]},
+    "OS3": {"select": 3, "out-of": [3, 7, 11, 15]},
+    "OS4": {"select": 3, "out-of": [4, 8, 12, 16]},
+    "CP1": {"select": 3, "out-of": [1, 2, 3, 4]},
+    "CP2": {"select": 3, "out-of": [5, 6, 7, 8]},
+    "CP3": {"select": 3, "out-of": [9, 10, 11, 12]},
+    "CP4": {"select": 3, "out-of": [13, 14, 15, 16]}
+}
+
