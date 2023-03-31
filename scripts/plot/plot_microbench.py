@@ -25,10 +25,14 @@ def plot_n():
     # line_Form = ax1.plot(x_Axis, y_Axis_Form_mem, label=formLabel, color='C3', marker='1', lw=1)
     # line_Gen = ax1.plot(x_Axis, y_Axis_Gen_mem, label=onLabel, color='C1', marker='3', lw=1)
     
-    line_Form1C, = plt.plot(x_Axis, y_Axis_Form_1C_mem, label=formLabel+", 2L1C BQS", color=formColor, marker='2')
-    line_FormSimpleQS, = plt.plot(x_Axis, y_Axis_Form_mem, label=formLabel+", threshold BQS", color=formColor, linestyle='dashed', marker='1')
-    line_Mix1C, = plt.plot(x_Axis, y_Axis_Gen_1C_mem, label=mixLabel+", 2L1C BQS", color=mixColor, marker='+')
-    line_MixSimpleQS, = plt.plot(x_Axis, y_Axis_Gen_mem, label=mixLabel+", threshold BQS", color=mixColor, linestyle='dashed', marker='x', markersize=7)
+    # line_Form1C, = plt.plot(x_Axis, y_Axis_Form_1C_mem, label=formLabel+", 2L1C BQS", color=formColor, marker='2')
+    # line_FormSimpleQS, = plt.plot(x_Axis, y_Axis_Form_mem, label=formLabel+", threshold BQS", color=formColor, linestyle='dashed', marker='1')
+    # line_Mix1C, = plt.plot(x_Axis, y_Axis_Gen_1C_mem, label=mixLabel+", 2L1C BQS", color=mixColor, marker='+')
+    # line_MixSimpleQS, = plt.plot(x_Axis, y_Axis_Gen_mem, label=mixLabel+", threshold BQS", color=mixColor, linestyle='dashed', marker='x', markersize=7)
+
+   
+    line_Form1C, = plt.plot(x_Axis, y_Axis_Form_1C_mem, label="MBF", color=formColor, marker='2')
+    line_Mix1C, = plt.plot(x_Axis, y_Axis_Gen_1C_mem, label="MSP", color=mixColor, marker='+')
 
     plt.ylabel("Memory (KB)")
     plt.ylim(bottom=0)
@@ -52,11 +56,14 @@ def plot_n():
     # line_Form = ax2.plot(x_Axis, y_Axis_Form_time, linestyle='dashed', label=formLabel, color='C3', marker='1', lw=1)
     # line_Gen = ax2.plot(x_Axis, y_Axis_Gen_time, linestyle='dashed', label=onLabel, color='C1', marker='3', lw=1)
     
-    line_Form1C_time, = plt.plot(x_Axis, y_Axis_Form_1C_time, label=formLabel+", 2L1C BQS", color=formColor, marker='2')
-    line_FormSimpleQS_time, = plt.plot(x_Axis, y_Axis_Form_time, label=formLabel+", threshold BQS", color=formColor, linestyle='dashed', marker='1')
-    line_Mix1C_time, = plt.plot(x_Axis, y_Axis_Gen_1C_time, label=mixLabel+", 2L1C BQS", color=mixColor, marker='+')
-    line_MixSimpleQS_time, = plt.plot(x_Axis, y_Axis_Gen_time, label=mixLabel+", threshold BQS", color=mixColor, linestyle='dashed', marker='x', markersize=7)
+    # line_Form1C_time, = plt.plot(x_Axis, y_Axis_Form_1C_time, label=formLabel+", 2L1C BQS", color=formColor, marker='2')
+    # line_FormSimpleQS_time, = plt.plot(x_Axis, y_Axis_Form_time, label=formLabel+", threshold BQS", color=formColor, linestyle='dashed', marker='1')
+    # line_Mix1C_time, = plt.plot(x_Axis, y_Axis_Gen_1C_time, label=mixLabel+", 2L1C BQS", color=mixColor, marker='+')
+    # line_MixSimpleQS_time, = plt.plot(x_Axis, y_Axis_Gen_time, label=mixLabel+", threshold BQS", color=mixColor, linestyle='dashed', marker='x', markersize=7)
 
+    line_Mix1C_time, = plt.plot(x_Axis, y_Axis_Gen_1C_time, label="MSP", color=mixColor, marker='+')
+    line_Form1C_time, = plt.plot(x_Axis, y_Axis_Form_1C_time, label="MBF", color=formColor, marker='2')
+    
     plt.ylabel("Time (μsec)")
     plt.ylim(bottom=0)
     plt.legend(loc='upper left')

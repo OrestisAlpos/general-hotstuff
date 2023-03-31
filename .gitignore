@@ -44,3 +44,5 @@ conf/nodeips.txt
 conf/nodeips2.txt
 conf/nodes.txt
 quorums.json
+*.DS_Store
+*.pyc

@@ -77,15 +77,15 @@ marker["GEN_UNBAL"]=marker["UNBAL"]="p"
 marker["GEN_KGRID"]="x"
 
 legend=dict()
-legend["THR"] = "Threshold n/2"
+legend["THR"] = "Polynomial n/2"
 # legend["THRCOMPL"] = "Threshold  2n/3"
-legend["GEN"]="General n/2"
+legend["GEN"]="MSP n/2"
 # legend["GENCOMPL"]="General 2n/3"
-legend["UNBAL"]="General Unbalanced"
+legend["UNBAL"]="MSP Unbalanced"
 
 legend["GEN_MAJ"]=legend["GEN"]
 legend["GEN_UNBAL"]=legend["UNBAL"]
-legend["GEN_KGRID"]="General Grid"
+legend["GEN_KGRID"]="MSP Grid"
 
 legend
 
